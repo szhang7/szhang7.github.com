@@ -5,7 +5,7 @@ header: Posts By Index
 group: navigation
 ---
 {% include JB/setup %}
-<!--
+
 <h2>Recent Posts</h2>
 
 <ul class="posts">
@@ -13,8 +13,9 @@ group: navigation
     <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
   {% endfor %}
 </ul>
--->
 
+
+<!--
 <div class="row-fluid">
   <div class="span12">
     <div class="content splash">
@@ -32,4 +33,4 @@ group: navigation
     </div>
   </div>
 </div>
-
+-->

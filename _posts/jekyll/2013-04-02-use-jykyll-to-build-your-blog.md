@@ -71,16 +71,16 @@ Jekyll expects your website directory to be laid out like so:
 
 ## Create Jekyll Blog
 
-### Step1.Create a new repository named USERNAME.github.com
+### 1.Create a new repository named USERNAME.github.com
         
-### Step2.Install Jekyll-Bootstrap
+### 2.Install Jekyll-Bootstrap
 
     $ git clone https://github.com/plusjade/jekyll-bootstrap.git USERNAME.github.com
     $ cd USERNAME.github.com
     $ git remote set-url origin git@github.com:USERNAME/USERNAME.github.com.git
     $ git push origin master
 
-### Step3.Profit
+### 3.Profit
 
 Blog will be publicly available at <http://USERNAME.github.com>
 
@@ -90,19 +90,96 @@ Blog will be publicly available at <http://USERNAME.github.com>
 
 See it in action at <http://localhost:4000>
 
-### Step4.Rake post & page
+### 4.Rake post & page
 
     $ rake post title="Hello World"     # create a new post
     $ rake page name="about.md"         # create a new page
     $ rake page name="pages/about.md"   # create a new nested page
     $ rake page name="pages/about"      # create a page: ./pages/about/index.html
 
-### Step5. Using Themes
+### 5. Using Themes
 
     $ rake theme:install git="https://github.com/jekyllbootstrap/theme-the-program.git" # Install Themes
     $ rake theme:install name="THEME-NAME"  # Install Themes
     $ rake theme:switch name="the-program"  # Switch Themes
 
+### 6. Markdown
+
+Markdown is a lightweight markup language, originally created by John Gruber with substantial contributions from Aaron Swartz, allowing people “to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)”.
+
+*Headings*
+
+    HTML headings are produced by placing a number of hashes before the header text corresponding to the level of heading desired, like so:
+    # First-level heading
+    #### Fourth-level heading
+
+*Paragraphs*
+
+    A paragraph is one or more consecutive lines of text separated by one or more blank lines.
+
+*Lists*
+
+    * An item in a bulleted (unordered) list
+        * A subitem, indented with 4 spaces
+    * Another item in a bulleted list
+
+    1. An item in an enumerated (ordered) list
+        1.1 A subitem, indented with 4 spaces
+    2. Another item in an enumerated list
+
+*Emphasized text*
+
+    *emphasis* or _emphasis_ (e.g., italics)
+
+    **strong emphasis** or __strong emphasis__ (e.g., boldface)
+
+*Code*
+
+To include code (formatted in monospace font), you can either surround inline code with backticks(\`), like in
+
+    Some text with `some code` inside,
+
+or indent several lines of code by at least four spaces, as in:
+
+    line 1 of code
+    line 2 of code
+    line 3 of code
+
+*Line breaks*
+
+    A. end a line with two or more spaces, then type return
+    B. use two newlines
+
+*Blockquotes*
+
+    > "This entire paragraph of text will be enclosed in an HTML blockquote element.
+    Blockquote elements are reflowable. You may arbitrarily
+    wrap the text to your liking, and it will all be parsed
+    into a single blockquote element."
+
+*External links*
+
+    [link text here](link.address.here)
+    Alternatively, links can be placed in footnotes outside of the paragraph, being refrenced with some sort of reference tag.
+    [link text here][linkref]
+    [linkref]: link.address.here "link title here"      # link reference
+
+*Images*
+
+Images have similar syntax to links with a preceding exclamation point.
+
+    ![Alt text](/path/to/img.jpg)
+    ![Alt text](/path/to/img.jpg "Optional title")
+    Like links, images also have a footnote style syntax
+    ![Alt text][id]
+    [id]: url/to/image "Optional title attribute"
+
+*Horizontal rules*
+
+Horizontal rules are created by placing three or more hyphens(\-), asterisks(\*), or underscores(\_) on a line by themselves.
+
+(Read more:<http://en.wikipedia.org/wiki/Markdown>)
+    
 ## Github Release commands
 
     $ git clone git@github.com:USERNAME/USERNAME.github.com.git # grap a complete copy
