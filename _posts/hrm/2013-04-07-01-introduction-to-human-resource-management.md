@@ -151,9 +151,9 @@ Human resource management specialties include:
 
 **HR Organizational Chart (Small Company)**
 
-* Manager Human Resources   
-    * Human Resources Coordinator   
-    * Office Generalist   
+- Manager Human Resources   
+    - Human Resources Coordinator   
+    - Office Generalist   
 
 ####Cooperative Line and Staff HR Management
 
@@ -176,9 +176,7 @@ Companies expand abroad for several reasons.
 **Globalization's Implications**
 
 - For business people, globalization's essential characteristic is this: More globalization means more competition, and more competition means more pressure to be "world-class"--to lower costs, to make employees more productive, and to do things better and less expensively.
-
 - For consumers it means lower prices and higher quality on practically everything from computers to car to air travel, but also the prospect of working harder, and perhaps having less secure jobs.
-
 - For business owners globalizing means benefits like reaching millions of new consumers, but also the considerable threat of facing new and powerful global competitors at home.
 
 ####Technological Trends
@@ -292,19 +290,12 @@ Ethics refers to the standards someone uses to decide what his or her conduct sh
 ### SUMMARY
 
 1. All managers perform certain basic functions--planning, organizing, staffing, leading, and controlling. These represent the management process.
-
 2. Staffing, personnel management, or human resource management includes activities like recruiting, selecting, training, compensating, appraising, and developing employees.
-
 3. HR management is a part of every manager's responsibilities. These responsibilities include placing the right person in the right job, and then orienting, training, and compensating to improve his or her job performance.
-
 4. The HR department carries out three main functions. The HR manager exerts line authority in his or her unit and implied authority elseshere in the organization. He or she ensures that the organization's HR objectives and policies are coordinated and implemented. And he or she provides various staff services to line management, such as partnering with the CEO in designing the company's strategy, and assisting in the hiring, training, evaluating, rewarding, promoting, and disciplining of employees at all levels.
-
 5. Trends such as globalization, technological advances, and deregulation mean that companies must be more competitive today. Other important trends include growing workforce diversity and changes in the nature of work, such as the movement toward a service society and a growing emphasis on human capital.
-
 6. For the HR manager, the focus on competitiveness and productivity demands measurability. Management expects HR to provide measurable, benchmark-based evidence regarding HR's current efficiency and effectiveness, and regarding the expected efficiency and effectiveness of its new or proposed programs.
-
 7. HR managers often use HR Scorecards to facilitate the measurement process. The HR Scorecard is a visual and/or computerized model that enables managers to demonstrate how HR contributes to the company's financial success. It shows the measurable, cause-and-effect links between three things:(1) HR activities (such as improving the firm's incentive plan),(2)intermediate employee results (such as improved morale), and (3) end-result company metrics(such as improved customer service and higher profits).
-
 8. In this book, several themes and features emphasize particularly important issues, and provide continuity from chapter to chapter. For example, HR management is the responsibility of every manager--not just those in the HR department. HR is a strategic partner in the strategy development process. HR works with other top managers to formulate the company's trategy as well as to execute it.
 
 
