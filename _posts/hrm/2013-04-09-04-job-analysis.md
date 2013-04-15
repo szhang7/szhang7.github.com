@@ -77,7 +77,8 @@ To shorten job analysis time, the steps might include:
     (4) identify the job's broad functional or duty areas, such as "adminitrative" and "supervisory";
     (5) identify tasks within each duty area, using a flip chart or collaboration software; and, finally
     (6) print the task list and get the group to sign off on it.
-    
+ 
+
 ### METHODS FOR COLLECTING JOB ANALYSIS INFORMATION
 
 There are various ways(interviews, or questionnaires, for instance) to collect information on the duties, responsibilities, and activities of a job.
@@ -141,7 +142,8 @@ Another approach is to ask workers to keep a diary/log of what they do during th
 ####Quantitative Job Analysis Techniques
 The position analysis questionnaire and the Department of Labor approach are popular quantitative methods.
 
-**Position Analysis Questionnaire** PAQ is a very structured job analysis questionnaire(see: <http://www.paq.com>).
+**Position Analysis Questionnaire**
+PAQ is a very structured job analysis questionnaire(see: <http://www.paq.com>).
 
 The advantage of the PAQ is that it lets you assign a quantitative score to each job based on its decision-making, skilled activity, physical activity, vehicle/equipment operation, and information-processing characteristics.
 
@@ -173,26 +175,37 @@ Most description contain sections that cover:
 7. Job specifications
 
 ####Job Identification
-The job identification section contains several types of information. For example   
-JOB TITLE: Telesales Respresentive      JOB CODE: 100001    
-RECOMMENDED SALARY GRADE:               EXEMP/NONEXEMP STATUS: Nonexempt    
-JOB FAMILY: Sales                       EEOC: Sales Workers     
-DIVISION: Higher Education              REPORTS TO: District Sales Manager    
-DEPARTMENT: In-House Sales              LOCATION: Boston    
+The job identification section contains several types of information. For example
+
+JOB TITLE: Telesales Respresentive      JOB CODE: 100001 
+
+RECOMMENDED SALARY GRADE:               EXEMP/NONEXEMP STATUS: Nonexempt 
+
+JOB FAMILY: Sales                       EEOC: Sales Workers
+
+DIVISION: Higher Education              REPORTS TO: District Sales Manager 
+
+DEPARTMENT: In-House Sales              LOCATION: Boston 
+
                                         DATE: April 2007
 
 ####Job Summary
 The job summary should summarize the essence of the job, and include only its major functions or activities.
 
 ####Relationships
-Which shows the jobholder's relationships with others inside and outside the organization. For a HR manager, such a statement might look like this:     
-**Reports to**: Vice president of employee relations    
-**Supervises:**: HR clerk, test administrator, labor relations director, and one secretary.     
-**Works with:**: All department managers and executive management.      
+Which shows the jobholder's relationships with others inside and outside the organization. For a HR manager, such a statement might look like this:
+
+**Reports to**: Vice president of employee relations 
+
+**Supervises:**: HR clerk, test administrator, labor relations director, and one secretary.
+
+**Works with:**: All department managers and executive management. 
+
 **Outside the company**: Employeement agencies, executive recruiting firms, union representatives, state and federal employment offices, and various vendors.
 
 ####Responsibilities and Duties
-This is the heart of the job description. It should present a list of the job's significant responsibilities and duties.    
+This is the heart of the job description. It should present a list of the job's significant responsibilities and duties. 
+
 The SOC (Standard Occupational Classification) classifies all workers into one of 23 major groups of jobs. (Read more: <http://www.bls.gov/soc/socguide.htm>)
 
 ####Standards of Performance and Working conditins
@@ -206,7 +219,8 @@ This lists the standards the employee is expected to achieve under each of the j
 It shows what kind of person to recruit and for what qualities that person should be tested.
 
 ####Specifications for Trained Versus Untrained Personnel
-Writing job specifications for trained employees is relatively straightforward.     
+Writing job specifications for trained employees is relatively straightforward.
+
 For untrained people, you must specify qualities such as physical traits, personality, interests, or sensory skills that imply some potential for performing or for being trained to do the job.
 
 ####Specifications Based on Judgment
@@ -226,21 +240,31 @@ generic work behaviors:
 - Drug misuse(reverse): Drinks alcohol or takes drugs on company property; comes to work under the influence of alcohol or drugs.
 
 ####Using O\*NET
-Step 1. Decide on a Plan    
-Step 2. Develop an Organization Chart   
-Step 3. Use a Job Analysis/Description Questionnaire    
-Step 4. Obtain Lists of Job Duties from O\*NET   
-Step 5. Compile the Job's Human Requirements from O\*NET     
+Step 1. Decide on a Plan 
+
+Step 2. Develop an Organization Chart
+
+Step 3. Use a Job Analysis/Description Questionnaire 
+
+Step 4. Obtain Lists of Job Duties from O\*NET
+
+Step 5. Compile the Job's Human Requirements from O\*NET
+
 Step 6. Complete Your Job Description
 
 (Read more: <http://online.onetcenter.org>)
 
 ####Job Specifications Based on Statistical Analysis
-The procedure has five steps:   
-(1) analyze the job and decide how to measure job performance;  
-(2) select personal traits like finger dexterity that you believe should predict successful performance;    
-(3) test candidates for these traits;   
-(4) measure these candidates' subsequent job performance;   
+The procedure has five steps:
+
+(1) analyze the job and decide how to measure job performance;
+
+(2) select personal traits like finger dexterity that you believe should predict successful performance; 
+
+(3) test candidates for these traits;
+
+(4) measure these candidates' subsequent job performance;
+
 (5) statistically analyze the relationship between the human trait(finger dexterity) and job performance.
 
 This method is more defensible than the judgmental approach.
