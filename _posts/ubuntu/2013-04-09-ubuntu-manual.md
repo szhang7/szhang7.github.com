@@ -27,7 +27,6 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $ mount --bind /path/to/folder /home/username/folder_to_sync
     # This should make the contents of /path/to/folder available in both places
  
-
     Unbuntu-one doesn't support symlinks, but it might support binding mounts. If it does work, you can add a line to /etc/fstab
     /path/to/folder/ /home/username/forlder_to_sync none bind 0 0
     That way it will alsways mount on boot.
@@ -39,12 +38,16 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     Name:   ibus
     Command:/usr/bin/ibus-daemon
     Comment:ibus
- 
 
     $sudo apt-get install ibus-googlepinyin     #谷歌拼音输入法
     $sudo apt-get install ibus-sunpinyin        #Sun 拼音输入法
- 
 
+## Solve rhythmbox Chinse garbled--解决中文乱码
+
+    $ sudo apt-get insatll python-mutagen       # install mid3iconv
+    $ cd ~/Music                                # go to music directory
+    $ mid3iconv -e GBK *.mp3                    # converts ID3 tags from GBK to UTF-8
+    
 ## Samba server configuration
 
     $ sudo apt-get install samba smbfs          # install Samba Server
@@ -52,14 +55,11 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $ sudo apt-get install winbind              # synchronize user account of linux and windows
     $ sudo system-config-samba                  # start Samba Server Configuration
     system-->Administration-->Samba
- 
 
     /etc/samba/smb.conf                         # Samba configuration file
- 
 
     Optional
     $ sudo apt-get install nautilus-share       # File Manager
- 
 
 (Read more: <http://blog.sina.com.cn/s/blog_502691720100w8dl.html>)
 
@@ -85,11 +85,21 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     /dev/sda5 /data ntfs defaults,locale=en_US.UTF-8 0 0   # mount /dev/sda5
     Finally, restart your computer.
 
+## Mount Windows Share folder
+
+    $ sudo apt-get install smbfs        # install smbfs if not installed
+    $ mkdir ~/windows                   # make directory to be mount point
+    $ chmod -R 777 ~/windows            # modify the permission
+    $ sudo smbmount //\<ip\>/\<windows sharing folder\> /\<mount point\> -o username=\<windows username\>,rw
+    $ sudo umount \<mount point\>       # umount mount point
+    For example
+    $ sudo smbmount //192.168.2.10/d/Music ~/windows -o username=admin,uid=1000,gid=1000,rw
+    $ sudo umount ~/windows
+    
 ## Extract the 7z file
 
     $ sudo apt-get install p7zip-full   # install p7zip
     $ 7z x file                         # Extract file
- 
 
 ## Common Commands
 
@@ -102,7 +112,6 @@ Change the owner and/or group of each FILE to OWNER and/or GROUP.
     chown root /u       # Change the owner of /u to "root"
     chown root:staff /u # Likewise, but also change its group to "staff".
     chown -hR root /u   # Change the owner of /u and subfiles to "root".
- 
 
 **chgrp**
 
@@ -112,7 +121,6 @@ Chage the group of each FILE to GROUP
     Examples:
     chgrp staff /u      Change the group of /u to "staff".
     chgrp -hR staff /u  Change the group of /u and subfiles to "staff".
- 
 
 **chmod**
 
@@ -126,5 +134,11 @@ Change the mode of each FILE to MODE.
 Re-run the initialization file just modified to make it take effect immediately, without having to restart the system.
 
     source filename [arguments]
+
+**id**
+
+Print user and group information for the specified USERNAME, or (when USERNAME omitted) for the current user.
+
+    id [OPTION]... [USERNAME]
 
 
