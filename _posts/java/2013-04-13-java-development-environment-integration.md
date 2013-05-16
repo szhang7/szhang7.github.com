@@ -15,16 +15,16 @@ First, downloads [Java SE 6](http://www.oracle.com/technetwork/java/javasebusine
     
 Second, make directory /java/jdk, and unzip dk-6u32-linux-i586.bin to jdk, then you will get jdk1.6.0_32.
 
-    cbay@ubuntu:~$ sudo mkdir /java                 # make java folder
-    cbay@ubuntu:~$ sudo chown cbay:cbay /java       # change the owner and group of /java to cbay
-    cbay@ubuntu:~$ mkdir /java/jdk                  # make jdk folder in java
-    cbay@ubuntu:~$ cp ~/Downloads/jdk-6u32-linux-i586.bin /java/jdk
-    cbay@ubuntu:~$ cd /java/jdk
+    $ sudo mkdir /java                 # make java folder
+    $ sudo chown cbay:cbay /java       # change the owner and group of /java to cbay
+    $ mkdir /java/jdk                  # make jdk folder in java
+    $ cp ~/Downloads/jdk-6u32-linux-i586.bin /java/jdk
+    $ cd /java/jdk
     cbay@ubuntu:/java/jdk$ tar -zxvf jdk-6u32-linux-i586.bin    # Extract all files
     
 Third, edit /etc/profile to append some environment variables, save it and exit.
 
-    cbay@ubuntu:~$ sudo gedit /etc/profile
+    $ sudo gedit /etc/profile
     append the following to the bottom.
     # configure jdk environment
     export JAVA_HOME=/java/jdk/jdk1.6.0_32
@@ -36,7 +36,7 @@ Finally, source /etc/profile to make it take effect immediately, without having 
 
 Type java, and press Enter, you'll see:
 
-    cbay@ubuntu:~$ java
+    $ java
     Usage: java [-options] class [args...]
            (to execute a class)
     or  java [-options] -jar jarfile [args...]
@@ -89,4 +89,97 @@ Type java, and press Enter, you'll see:
 
 If you can see the above contents, congratulations! It means that you successfully configured the Java development environment.
 
+## Maven Environment Configuration
+
+    $ tar -xzvf apache-maven-3.0.4-bin.tar.gz       # unzip the package
+    $ sudo gedit /etc/profile                       # setup environment variable
+    export MAVEN_HOME=/data/ubuntu/maven/apache-maven-3.0.4
+    export MAVEN_OPTS="-Xms256m -Xmx512m"
+    export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+    $ source /etc/profile                           # 
+    $ mvn -version                                  # verify that the configuration was successful.
+(Read more: <http://blog.csdn.net/s_niper/article/details/6621019>)
+
+## Mysql Installation
+
+To install and use a MySQL binary distribution, the basic command sequence looks like this:
+
+    $ groupadd mysql
+    $ useradd -r -g mysql mysql
+    $ cd ~
+    $ tar zxvf /path/to/mysql-VERSION-OS.tar.gz
+    $ ln -s full-path-to-mysql-VERSION-OS mysql
+    $ cd mysql
+    $ mkdir tmp
+    $ sudo chown -R mysql .
+    $ sudo chgrp -R mysql .
+    $ sudo scripts/mysql_install_db --user=mysql    # database empty
+    $ sudo scripts/mysql_install_db --user=mysql --basedir=/home/zhang/mysql --datadir=/home/zhang/mysql/data       # Initialize database with user root
+    $ sudo chown -R root .
+    $ sudo chown -R mysql data tmp
+    # Next command is optional
+    $ sudo cp support-files/my-medium.cnf /etc/my.cnf
+    $ sudo bin/mysqld_safe --user=mysql &
+    # Next command is optional
+    $ sudo cp support-files/mysql.server /etc/init.d/mysqld
+    
+    $ sudo bin/mysqld_safe --user=mysql &       # start mysql or
+    $ sudo service mysqld start                 # start mysql
+    $ ps -A | grep mysql                        # list mysql processes
+    $ netstat -atln                             # check ip port
+    
+    $ sudo bin/mysqladmin -u root password 'new-password'
+    $ sudo bin/mysql -u root -p
+    mysql>CREATE USER 'cbay'@'localhost' IDENTIFIED BY 'cbay';
+    mysql>GRANT ALL PRIVILEGES ON *.* TO 'cbay'@'localhost' WITH GRANT OPTION;
+    mysql>CREATE USER 'cbay'@'%' IDENTIFIED BY 'cbay';
+    mysql>GRANT ALL PRIVILEGES ON *.* TO 'cbay'@'%' WITH GRANT OPTION;
+    mysql>exit
+    
+Readmore:
+- <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>
+- <http://lingshaohuprose.blog.163.com/blog/static/16957978220122844024875>
+- <http://www.linuxidc.com/Linux/2012-08/68615.htm>
+- <http://www.linux265.com/blog/index.php/archives/453>
+
+**Q&A**
+    bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+    $ sudo apt-get install libaio-dev
+    
+**Appendix**
+    my.cnf
+    
+    [client]
+    #password	= your_password
+    port		= 7077
+    socket		= /tmp/mysql.sock
+    default-character-set=utf8
+
+    # Here follows entries for some specific programs
+
+    # The MySQL server
+    [mysqld]
+    basedir = /home/zhang/mysql
+    datadir = /home/zhang/mysql/data
+    log-error = /home/zhang/mysql/data/error.log
+    pid-file = /home/zhang/mysql/data/mysql.pid
+    tmpdir = /home/zhang/mysql/tmp
+    user = mysql
+    collation-server=utf8_unicode_ci
+    character-set-server=utf8
+    #bind-address = 127.0.0.1
+    bind-address = 0.0.0.0
+
+    port		= 7077
+    socket		= /tmp/mysql.sock
+    skip-external-locking
+    key_buffer_size = 16M
+    max_allowed_packet = 1M
+    table_open_cache = 64
+    sort_buffer_size = 512K
+    net_buffer_length = 8K
+    read_buffer_size = 256K
+    read_rnd_buffer_size = 512K
+    myisam_sort_buffer_size = 8M
+    
 

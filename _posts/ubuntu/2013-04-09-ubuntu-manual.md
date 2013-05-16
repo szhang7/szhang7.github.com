@@ -30,6 +30,7 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     Unbuntu-one doesn't support symlinks, but it might support binding mounts. If it does work, you can add a line to /etc/fstab
     /path/to/folder/ /home/username/forlder_to_sync none bind 0 0
     That way it will alsways mount on boot.
+    
 (Read more: <http://askubuntu.com/questions/78924/is-it-possible-to-share-a-folder-using-ubuntu-one-outside-the-home-folder>)
 
 ## Chinese Input Method
@@ -42,48 +43,94 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $sudo apt-get install ibus-googlepinyin     #谷歌拼音输入法
     $sudo apt-get install ibus-sunpinyin        #Sun 拼音输入法
 
+## Optimize memory
+
+    $ cat /proc/sys/vm/swappiness
+    $ sudo sysctl vm.swappiness=10              # 10--1G memory
+    $ sudo chmod +w /etc/rc.local               # Lont-term effect
+    $ sudo vi /etc/rc.local
+    $ echo 10 > /proc/sys/vm/swappiness         # append to the end, then save and quit
+    $ sudo chmod -w /etc/rc.local
+
+(Read more: <http://blog.163.com/lixiangqiu_9202/blog/static/535750372011849522739/>)
+
 ## Solve rhythmbox Chinse garbled--解决中文乱码
 
-    $ sudo apt-get insatll python-mutagen       # install mid3iconv
+    $ sudo apt-get install python-mutagen       # install mid3iconv
     $ cd ~/Music                                # go to music directory
     $ mid3iconv -e GBK *.mp3                    # converts ID3 tags from GBK to UTF-8
-    
+
 ## Samba server configuration
 
     $ sudo apt-get install samba smbfs          # install Samba Server
     $ sudo apt-get install system-config-samba  # Samba Server Configuration
     $ sudo apt-get install winbind              # synchronize user account of linux and windows
-    $ sudo system-config-samba                  # start Samba Server Configuration
-    system-->Administration-->Samba
+    $ sudo gedit /etc/samba/smb.conf            # Samba configuration file
+    [global]
+    workgroup = WORKGROUP                       # windows workgroup
+    netbios name = ubuntu                       # computer name(terminal, after @)
+    
+    ;name resolve order = lmhosts host wins bcast # remove ;
+    Then, saved and close gedit
+    
+    $ sudo gedit /etc/nsswitch.conf
+    hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4  # changed to
+    hosts: files mdns4_minimal [NOTFOUND=return] wins dns mdns4
+    Then, saved and close gedit
+    
+    Finally, restart samba and winbind
+    $ sudo /etc/init.d/samba restart
+    $ sudo /etc/init.d/winbind restart
 
-    /etc/samba/smb.conf                         # Samba configuration file
+    $ sudo system-config-samba                  # start Samba Server Configuration
+    or system-->Administration-->Samba
 
     Optional
     $ sudo apt-get install nautilus-share       # File Manager
 
+    Q & A
+    - sudo /etc/init.d/samba restart            # command not found
+    $ sudo apt-get install samba-common-bin     # install common bin
+    $ sudo cp /etc/cron.daily/samba /etc/init.d/
+    
 (Read more: <http://blog.sina.com.cn/s/blog_502691720100w8dl.html>)
 
 ## Load windows partition
 
-    cbay@ubuntu:~$ sudo fdisk -l        # list partition table(s)
-    [sudo] password for cbay: 
+    $ sudo fdisk -l                            # list partition table(s)
+    $ ls -al /dev/disk/by-uuid                 # or sudo blkid -- list uuid
+    $ sudo gedit /etc/fstab                    # Open fstab to edit, add the followings:
+    # mount /dev/sda5
+    # /dev/sda5   /data   ntfs-3g    defaults,user,uid=1000,gid=1000,locale=en_US.UTF-8    0    0
+    UUID=00029B5700040ACB /data   ntfs-3g    defaults,user,exec,uid=1000,gid=1000,locale=en_US.UTF-8    0    0
+    $ sudo mount -a                            # or restart your computer.
 
-    Disk /dev/sda: 80.0 GB, 80026361856 bytes
-    255 heads, 63 sectors/track, 9729 cylinders, total 156301488 sectors
-    Units = sectors of 1 * 512 = 512 bytes
-    Sector size (logical/physical): 512 bytes / 512 bytes
-    I/O size (minimum/optimal): 512 bytes / 512 bytes
-    Disk identifier: 0xfcedc925
+(Read more: <http://blog.chinaunix.net/uid-25100840-id-271088.html>)
 
-       Device Boot      Start         End      Blocks   Id  System
-    /dev/sda1   *          63    51199154    25599546    7  HPFS/NTFS/exFAT
-    /dev/sda2        51199155   156280319    52540582+   f  W95 Ext'd (LBA)
-    /dev/sda5        51199218   156280319    52540551    7  HPFS/NTFS/exFAT
-    cbay@ubuntu:~$ sudo gedit /etc/fstab
+## Install skype
 
-    Open fstab to edit, add the following:
-    /dev/sda5 /data ntfs defaults,locale=en_US.UTF-8 0 0   # mount /dev/sda5
-    Finally, restart your computer.
+    $ sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+    $ sudo apt-get update && sudo apt-get install skype
+    
+(Read more: <https://help.ubuntu.com/community/Skype>)
+
+## Can't find wireless
+
+    $ sudo gedit /etc/NetworkManager/NetworkManager.conf
+    [ifupdown]
+    managed=false --> true                                  # modify false to true
+    $ sudo gedit /etc/network/interfaces
+    auto lo
+    iface lo inet loopback                                  # only remain the two lines.
+    $ sudo mv /etc/resolvconf/ /etc/resolvconf_backup       # delete dns settings
+    $ sudo service network-manager restart                  # restart network-manager then you'll see wifi
+    
+    Set static ip
+    Edit connections->Wireless->IPv4 Settings
+    Address: 192.168.2.20
+    Netmask: 255.255.255.0
+    Gateway: 192.168.2.1
+    DNS: 8.8.8.8 or 202.102.128.68                          # Unicom
 
 ## Mount Windows Share folder
 
@@ -100,6 +147,15 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
 
     $ sudo apt-get install p7zip-full   # install p7zip
     $ 7z x file                         # Extract file
+
+## Alias
+
+    alias [name]=[value]
+    $ gedit ~/.bashrc                   # alias configure file
+    alias ll='ls -alF'                  # for example
+    $ source .bashrc
+
+**Note** be sure to add '/' at the end of the directory name, otherwise prompt error.
 
 ## Common Commands
 
