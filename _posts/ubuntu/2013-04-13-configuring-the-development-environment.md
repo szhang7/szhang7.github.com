@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Java Development Environment Integration"
-description: "The purpose of this article is to establish a continuous integrated java development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
-category: java
-tags: [java, jdk, jre, development environment, jenkins, maven, tomcat, mysql, svn]
+title: "Configuring the Development Environment"
+description: "The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
+category: ubuntu
+tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, mysql, svn]
 ---
 {% include JB/setup %}
 
-The purpose of this article is to establish a continuous integrated java development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
+# Configuring the Development Environment
+
+The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
 
 ## Java Development Environment Configuration
 
@@ -136,15 +138,27 @@ To install and use a MySQL binary distribution, the basic command sequence looks
     mysql>GRANT ALL PRIVILEGES ON *.* TO 'cbay'@'%' WITH GRANT OPTION;
     mysql>exit
     
+    mysql GUI
+    $ sudo apt-get install emma                         # Install emma
+    $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
+    "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
+    
 Readmore:
 - <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>
 - <http://lingshaohuprose.blog.163.com/blog/static/16957978220122844024875>
 - <http://www.linuxidc.com/Linux/2012-08/68615.htm>
 - <http://www.linux265.com/blog/index.php/archives/453>
+- <http://blog.csdn.net/lcz_ptr/article/details/7798510>
 
 **Q&A**
-    bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+    1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
     $ sudo apt-get install libaio-dev
+    
+    2. emma: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+    $ sudo mkdir /var/run/mysqld
+    $ sudo ln -s /tmp/mysql.sock  /var/run/mysqld/mysqld.sock
+    
+    (Read more: <http://www.2cto.com/kf/201305/210034.html>)
     
 **Appendix**
     my.cnf
@@ -182,4 +196,16 @@ Readmore:
     read_rnd_buffer_size = 512K
     myisam_sort_buffer_size = 8M
     
+## SVN Client
+
+    $ sudo apt-get install rapidsvn
+    $ sudo apt-get install scite kdiff3
+    View-->Preferences-->Programs
+    Standard Editor: /usr/bin/SciTE
+    Standard Explorer: /usr/bin/nautilus
+    Diff Tool: /usr/bin/kdiff3
+    Merge Tool: /usr/bin/kdiff3
+    
+(Read more: <http://www.cnblogs.com/end/archive/2012/11/22/2782241.html>)
+
 

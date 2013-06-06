@@ -143,10 +143,12 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $ sudo smbmount //192.168.2.10/d/Music ~/windows -o username=admin,uid=1000,gid=1000,rw
     $ sudo umount ~/windows
     
-## Extract the 7z file
+## Extract software
 
     $ sudo apt-get install p7zip-full   # install p7zip
     $ 7z x file                         # Extract file
+    $ sudo apt-get install rar          # Install rar
+    $ rar e file.rar                    # Extract file.rar
 
 ## Alias
 

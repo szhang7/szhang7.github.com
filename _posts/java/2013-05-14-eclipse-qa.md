@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "eclipse QA"
-description: "eclipse question and answers"
+title: "Eclipse QA"
+description: "Eclipse question and answers"
 category: java
 tags: [java, eclipse]
 ---
