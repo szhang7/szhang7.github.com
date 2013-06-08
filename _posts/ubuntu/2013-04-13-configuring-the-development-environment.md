@@ -102,7 +102,7 @@ If you can see the above contents, congratulations! It means that you successful
     $ mvn -version                                  # verify that the configuration was successful.
 (Read more: <http://blog.csdn.net/s_niper/article/details/6621019>)
 
-## Mysql Installation
+## Mysql Configuration
 
 To install and use a MySQL binary distribution, the basic command sequence looks like this:
 
@@ -138,29 +138,29 @@ To install and use a MySQL binary distribution, the basic command sequence looks
     mysql>GRANT ALL PRIVILEGES ON *.* TO 'cbay'@'%' WITH GRANT OPTION;
     mysql>exit
     
-    mysql GUI
-    $ sudo apt-get install emma                         # Install emma
-    $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
-    "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
-    
 Readmore:
 - <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>
 - <http://lingshaohuprose.blog.163.com/blog/static/16957978220122844024875>
 - <http://www.linuxidc.com/Linux/2012-08/68615.htm>
 - <http://www.linux265.com/blog/index.php/archives/453>
-- <http://blog.csdn.net/lcz_ptr/article/details/7798510>
 
-**Q&A**
+
+###emma--mysql GUI
+    $ sudo apt-get install emma                         # Install emma
+    $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
+    "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
+(Read more: <http://blog.csdn.net/lcz_ptr/article/details/7798510>)
+
+###Q & A
     1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
     $ sudo apt-get install libaio-dev
     
     2. emma: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
-    $ sudo mkdir /var/run/mysqld
-    $ sudo ln -s /tmp/mysql.sock  /var/run/mysqld/mysqld.sock
+    $ sudo mkdir /run/mysqld
+    $ sudo ln -s /tmp/mysql.sock  /run/mysqld/mysqld.sock
+(Read more: <http://www.2cto.com/kf/201305/210034.html>)
     
-    (Read more: <http://www.2cto.com/kf/201305/210034.html>)
-    
-**Appendix**
+###Appendix
     my.cnf
     
     [client]
@@ -207,5 +207,93 @@ Readmore:
     Merge Tool: /usr/bin/kdiff3
     
 (Read more: <http://www.cnblogs.com/end/archive/2012/11/22/2782241.html>)
+
+## Github
+
+###Install Git
+    $ sudo apt-get install git git-core git-gui git-doc
+
+###Configure Git
+    $ ssh-keygen -t rsa -C "your_email@example.com"
+    # Create a new ssh key (press Enter while need to type a passphrase)
+
+    $ sudo apt-get install xclip
+    # Install xclip
+
+    $ xclip -sel clip < ~/.ssh/id_rsa.pub
+    # Copy the contents to clipboard, add to github account setting.
+
+    $ ssh -T git@github.com
+    # Showing 'Hi username!' means you've successfully authenticated.
+
+    $ git config --global user.name "Your Name Here"
+    # Set the default name for git to use when you commit
+
+    $ git config --global user.email "your_email@example.com"
+    # Set the email associated with your GitHub account
+
+    $ git config --global credential.helper 'cache --timeout=3600'
+    # Set the cache to timeout after 1 hour (setting is in seconds)
+    
+Read more:
+- <https://help.github.com/articles/generating-ssh-keys>
+- <https://help.github.com/articles/set-up-git>
+
+###Commands
+    $ git clone git@github.com:USERNAME/USERNAME.github.com.git # grap a complete copy
+    $ cd USERNAME.github.com        # locate to blog
+    $ git pull origin master        # fetch remote origin and merge it into local master
+    $ git status                    # see the state of the project
+    $ git add .                     # add unexisting files into remote
+    $ git commit * -m "add comment" # add a comment
+    $ git push origin master        # update to remote
+
+    git clone URL                           # grab a complete copy of user's repository
+    git://github.com/user/repo.git          # a read-only URL
+    https://github.com/user/repo.git        # an HTTPS write-able URL
+    git@github.com:user/repo.git            # a private SSH URL
+    https://user@github.com/user/repo.git   # a private HTTPS URL
+
+    git pull <REMOTENAME> <BRANCHNAME>      # fetch a specific branch and merge it into current local branch.
+
+(Read more: <https://help.github.com/articles/fetching-a-remote>)
+
+## RVM Ruby Jekyll
+
+Use RVM to manage different version of ruby.
+
+###Install RVM
+    $ sudo apt-get install build-essential curl
+    $ curl -L get.rvm.io | bash -s stable
+    $ source ~/.bashrc
+    $ source ~/.bash_profile
+
+###Commands
+    $ rvm list known            # list known ruby
+    $ rvm install 1.9.3
+    $ rvm use 1.9.3
+    $ rvm use 1.9.3 --default   # set 1.9.3 as default
+    $ rvm list                  # list installed ruby
+    $ rvm remove 1.8.7
+    
+Read more:
+- <http://ruby-china.org/wiki/rvm-guide>
+- <http://www.cnblogs.com/keen-allan/archive/2012/04/22/2464541.html>
+
+###Q & A
+    1.RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+    
+A: This error happens because under RVM's installation directory (normally $HOME/.rvm/bin), there is an executable named 'rvm'; whereas under $HOME/.rvm/scripts directory, there is a script called 'rvm'. By default, the 'rvm' executable is used, which cannot handle many rvm commands such as 'rvm use'. 
+
+One should load RVM into a shell session as a function (run the 'rvm' script). To do that, add the following line to '~/.bash_profile':
+
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" #load RVM into a shell session as a function
+    PATH=$PATH:$HOME/.rvm/bin #Add RVM to PATH for scripting
+    
+Open a new terminal or run the following command to reload /.bash_profile in the current terminal. The problem should be solved.
+
+    $ source ~/.bash_profile
+
+(Read more:<http://blog.sina.com.cn/s/blog_9d6e035501010lol.html>)
 
 

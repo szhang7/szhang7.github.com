@@ -88,7 +88,7 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     Optional
     $ sudo apt-get install nautilus-share       # File Manager
 
-    Q & A
+###Q & A
     - sudo /etc/init.d/samba restart            # command not found
     $ sudo apt-get install samba-common-bin     # install common bin
     $ sudo cp /etc/cron.daily/samba /etc/init.d/
@@ -155,48 +155,70 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     alias [name]=[value]
     $ gedit ~/.bashrc                   # alias configure file
     alias ll='ls -alF'                  # for example
+    
     $ source .bashrc
 
 **Note** be sure to add '/' at the end of the directory name, otherwise prompt error.
 
 ## Common Commands
 
-**chown**
-
+###chown
 Change the owner and/or group of each FILE to OWNER and/or GROUP.
-
     chown [OPTION]... [OWNER][:[GROUP]] FILE...
     Examples:
     chown root /u       # Change the owner of /u to "root"
     chown root:staff /u # Likewise, but also change its group to "staff".
     chown -hR root /u   # Change the owner of /u and subfiles to "root".
 
-**chgrp**
-
+###chgrp
 Chage the group of each FILE to GROUP
-
     chgrp [OPTION]... GROUP FILE...
     Examples:
     chgrp staff /u      Change the group of /u to "staff".
     chgrp -hR staff /u  Change the group of /u and subfiles to "staff".
 
-**chmod**
-
+###chmod
 Change the mode of each FILE to MODE.
-
     chmod [OPTION]... MODE[,MODE]... FILE...
     Each MODE is of the form `[ugoa]*([-+=]([rwxXst]*|[ugo]))+'.
  
-**source**
-
+###source
 Re-run the initialization file just modified to make it take effect immediately, without having to restart the system.
-
     source filename [arguments]
 
-**id**
-
+###id
 Print user and group information for the specified USERNAME, or (when USERNAME omitted) for the current user.
-
     id [OPTION]... [USERNAME]
+
+###mkdir
+Create the DIRECTORY(ies), if they do not already exist.
+     mkdir [OPTION]... DIRECTORY...
+
+###rmdir
+Remove the DIRECTORY(ies), if they are empty.
+    rmdir [OPTION]... DIRECTORY...
+
+###rm
+Remove (unlink) the FILE(s).
+    rm [OPTION]... FILE...
+    rm -rf DIRECTORY            # Remove an unempty directory
+
+###touch
+Create new file, Update the access and modification times of each FILE to the current time.
+    touch [OPTION]... FILE...
+
+###mv
+Rename SOURCE to DEST, or move SOURCE(s) to DIRECTORY.
+    mv [OPTION]... SOURCE... DIRECTORY
+    mv file1 file2              # rename file1 to file2
+
+###rename
+Rename filenames.
+    rename [-v] [-n] [-f] perlexpr [filenames]
+    rename foo foo0 foo?        # rename foo1--foo9 to foo01--foo09
+    rename foo foo0 foo??       # rename foo01--foo99 to foo001--foo099
+    rename foo foo0 foo*        # rename foo001--foo999 to foo0001--foo0999
+    rename foo0 foo foo0[2]*    # rename foo0200--foo0299 to foo200--foo299
+
 
 
