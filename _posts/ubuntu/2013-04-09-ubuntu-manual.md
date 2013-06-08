@@ -160,7 +160,7 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
 
 **Note** be sure to add '/' at the end of the directory name, otherwise prompt error.
 
-## Common Commands
+## Linux/Unix Commands
 
 ###chown
 Change the owner and/or group of each FILE to OWNER and/or GROUP.
@@ -219,6 +219,92 @@ Rename filenames.
     rename foo foo0 foo??       # rename foo01--foo99 to foo001--foo099
     rename foo foo0 foo*        # rename foo001--foo999 to foo0001--foo0999
     rename foo0 foo foo0[2]*    # rename foo0200--foo0299 to foo200--foo299
+
+###tput
+Initialize a terminal or query terminfo database.
+    tput init                   # Initialize the terminal according to the type of terminal in the environment variable TERM.
+    tput -T5620 reset           # Reset an AT&T 5620 terminal.
+    tput cup 0 0                # Send the sequence to mvoe the cursor to row 0, column 0.
+    tput clear                  # Echo the clear-screen sequence for the current terminal.
+    tput cols                   # Print the number of columns for the current terminal.
+    
+(Read more: <http://linux.about.com/library/cmd/blcmdl1_tput.htm>)
+
+###echo
+display a line of text.
+    echo [OPTION]...[STRING]...
+    -n      # do not output the trailing newline
+    -e      # enable interpretation of the backslash-escaped characters listed below.
+    -E      # disable interpretation of those sequences in STRINGs
+    Without -E, the following sequences are recognized and interpolated:
+    \NNN    # the character whose ASCII code is NNN(octal)
+    \\      # backslash
+    \a      # alert(BELL)
+    \b      # backspace
+    \c      # suppress trailing newline
+    \f      # form feed
+    \n      # new line
+    \v      # vertical tab
+(Read more: <http://linux.about.com/library/cmd/blcmdl1_echo.htm>)
+
+###read
+Use to get input (data from user) from keyboard and store (data) to variable.
+    read variable1, variable2,...,variableN
+(Read more: <http://freeos.com/guides/lsst/ch02sec10.html>)
+
+###while
+Execute script repeatedly as long as a condition is met.
+    while [condition]
+    do
+        command1
+        command2
+        ...
+    done                    # end do
+(Read more: <http://freeos.com/guides/lsst/ch03sec07.html>)
+
+###if...else...fi
+If given condition is true then command1 is executed otherwise command2 is executed.
+    if condition
+    then
+        condition is zero(true - 0)
+        execute all commands to else statement
+    else
+        if condition is not true then
+        execute all commands up to fi
+    fi                      # end if
+(Read more: <http://freeos.com/guides/lsst/ch03sec03.html>)
+
+###for Loop
+    for {variable name} in {list}
+    do
+        execute one for each item in the list until the list is
+        not finished (And repeat all statement between do and done)
+    done
+(Read more: <http://freeos.com/guides/lsst/ch03sec06.html>)
+
+###The case Statement
+The case statement is good alternative to Multilevel if-then-else-fi statement. It enable you to match several values against one variable. Its easier to read and write.
+    case $variable-name in
+    pattern1)
+        command
+        ...
+        command;;
+    pattern2)
+        command
+        ...
+        command;;
+    ...
+    patternN)
+        command
+        ...
+        command;;
+    *)
+        command
+        ...
+        command;;
+    esac                        # end case
+The $variable-name is compared against the patterns until a match is found. The shell then executes all the statements up to the two semicolons that are next to each other. The default is *) and its executed if no match is found.
+
 
 
 
