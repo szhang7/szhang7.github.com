@@ -49,7 +49,7 @@ Jekyll expects your website directory to be laid out like so:
     $ sudo apt-get install xclip
     # Install xclip
 
-    $ xclip -sel clip < ~/.ssh/id_rsa.pub               
+    $ xclip -sel clip < ~/.ssh/id_rsa.pub
     # Copy the contents to clipboard, add to github account setting.
 
     $ ssh -T git@github.com
@@ -107,17 +107,17 @@ See it in action at <http://localhost:4000>
 
 Markdown is a lightweight markup language, originally created by John Gruber with substantial contributions from Aaron Swartz, allowing people “to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)”.
 
-*Headings*
+####Headings
 
     HTML headings are produced by placing a number of hashes before the header text corresponding to the level of heading desired, like so:
     # First-level heading
     #### Fourth-level heading
 
-*Paragraphs*
+####Paragraphs
 
     A paragraph is one or more consecutive lines of text separated by one or more blank lines.
 
-*Lists*
+####Lists
 
     * An item in a bulleted (unordered) list
         * A subitem, indented with 4 spaces
@@ -127,13 +127,13 @@ Markdown is a lightweight markup language, originally created by John Gruber wit
         1.1 A subitem, indented with 4 spaces
     2. Another item in an enumerated list
 
-*Emphasized text*
+####Emphasized text
 
     *emphasis* or _emphasis_ (e.g., italics)
 
     **strong emphasis** or __strong emphasis__ (e.g., boldface)
 
-*Code*
+####Code
 
 To include code (formatted in monospace font), you can either surround inline code with backticks(\`), like in
 
@@ -145,26 +145,26 @@ or indent several lines of code by at least four spaces, as in:
     line 2 of code
     line 3 of code
 
-*Line breaks*
+####Line breaks
 
     A. end a line with two or more spaces, then type return
     B. use two newlines
 
-*Blockquotes*
+####Blockquotes
 
     > "This entire paragraph of text will be enclosed in an HTML blockquote element.
     Blockquote elements are reflowable. You may arbitrarily
     wrap the text to your liking, and it will all be parsed
     into a single blockquote element."
 
-*External links*
+####External links
 
     [link text here](link.address.here)
     Alternatively, links can be placed in footnotes outside of the paragraph, being refrenced with some sort of reference tag.
     [link text here][linkref]
     [linkref]: link.address.here "link title here"      # link reference
 
-*Images*
+####Images
 
 Images have similar syntax to links with a preceding exclamation point.
 
@@ -174,7 +174,7 @@ Images have similar syntax to links with a preceding exclamation point.
     ![Alt text][id]
     [id]: url/to/image "Optional title attribute"
 
-*Horizontal rules*
+####Horizontal rules
 
 Horizontal rules are created by placing three or more hyphens(\-), asterisks(\*), or underscores(\_) on a line by themselves.
 
@@ -202,13 +202,13 @@ Horizontal rules are created by placing three or more hyphens(\-), asterisks(\*)
 
 ## Q & A
 
-**Q1.gem install jekyll error**
+###1.gem install jekyll error
 
     ERROR: Loading command:install(LoadError)
     no such file to load -- zlib
 
-**A1:**
-    download [ruby source code](http://archive.ubuntu.com/ubuntu/pool/universe/r/ruby1.9.1/ruby1.9.1_1.9.1.378.orig.tar.gz) and install zlib package.
+###A1:
+Download [ruby source code](http://archive.ubuntu.com/ubuntu/pool/universe/r/ruby1.9.1/ruby1.9.1_1.9.1.378.orig.tar.gz) and install zlib package.
 
     $ tar -zxvf ruby1.9.1_1.9.1.378.orig.tar.gz
     $ cd ext/zlib
@@ -216,7 +216,7 @@ Horizontal rules are created by placing three or more hyphens(\-), asterisks(\*)
     $ make
     $ make install
 
-  For more details to see [gem install error](http://www.linuxidc.com/Linux/2012-06/62073.htm)
+For more details to see [gem install error](http://www.linuxidc.com/Linux/2012-06/62073.htm)
 
 ## Refrences
 

@@ -100,10 +100,27 @@ If you can see the above contents, congratulations! It means that you successful
     export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
     $ source /etc/profile                           # 
     $ mvn -version                                  # verify that the configuration was successful.
+
 (Read more: <http://blog.csdn.net/s_niper/article/details/6621019>)
+
+###Q & A
+1. Failure to find net.sf:pinyin4j:jar:2.5.0 in http://repo.maven.apache.org/maven2.
+
+    Download pinyin4j-2.5.0.jar
+    $ mvn install:install-file -DgroupId=net.sf -DartifactId=pinyin4j -Dversion=2.5.0 -Dpackaging=jar -DgeneratePom=true -DcreateChecksum=true -Dfile=./pinyin4j-2.5.0.jar
+
+(Read more: <http://blog.csdn.net/jiushuai/article/details/7919793>)
+
+2. Failure to find com.oracle:ojdbc14:jar:10.2.0.4.0 in http://repo.maven.apache.org/maven2.
+
+    Download ojdbc14-10.2.0.4.0.jar
+    $ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.4.0 -Dpackaging=jar -DgeneratePom=true -DcreateChecksum=true -Dfile=./ojdbc14-10.2.0.4.0.jar
+
+(Read more: <http://lowkeyfeng.iteye.com/blog/907148>)
 
 ## Mysql Configuration
 
+###Install MySQL
 To install and use a MySQL binary distribution, the basic command sequence looks like this:
 
     $ groupadd mysql
@@ -124,12 +141,15 @@ To install and use a MySQL binary distribution, the basic command sequence looks
     $ sudo bin/mysqld_safe --user=mysql &
     # Next command is optional
     $ sudo cp support-files/mysql.server /etc/init.d/mysqld
-    
-    $ sudo bin/mysqld_safe --user=mysql &       # start mysql or
+
+###Start MySQL service
+    $ sudo bin/mysqld_safe --user=mysql &       # start mysql service
     $ sudo service mysqld start                 # start mysql
     $ ps -A | grep mysql                        # list mysql processes
-    $ netstat -atln                             # check ip port
-    
+    $ netstat -atln                             # list ip ports
+    $ sudo netstat -tap | grep mysql            # list mysql ip port
+
+###Create super user
     $ sudo bin/mysqladmin -u root password 'new-password'
     $ sudo bin/mysql -u root -p
     mysql>CREATE USER 'cbay'@'localhost' IDENTIFIED BY 'cbay';
@@ -137,14 +157,57 @@ To install and use a MySQL binary distribution, the basic command sequence looks
     mysql>CREATE USER 'cbay'@'%' IDENTIFIED BY 'cbay';
     mysql>GRANT ALL PRIVILEGES ON *.* TO 'cbay'@'%' WITH GRANT OPTION;
     mysql>exit
-    
+
+    The 'cbay'@'localhost' account can be used only when connecting from the local host. The 'cbay'@'%' account uses the '%' wildcard fro the host part, so it can be used to connect from any host.
+
 Readmore:
 - <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>
 - <http://lingshaohuprose.blog.163.com/blog/static/16957978220122844024875>
 - <http://www.linuxidc.com/Linux/2012-08/68615.htm>
 - <http://www.linux265.com/blog/index.php/archives/453>
 
+###Common Commands
+    $ mysql -u username -p password             # login
+    $ mysql -u username -p
+    $ mysql -h localhost -u username -p
+    $ mysql -h 192.168.0.100 -u username -p
+    
+    mysql> show database;
+    mysql> create database db_name;
+    mysql> drop database db_name;
+    mysql> use db_name;
+    mysql> show tables;
+    mysql> describe tb_name;                 # display table structure
+    mysql> create table tb_name;
+    mysql> drop table tb_name;
+    mysql> insert into tb_name values("Johnny","Zhang");
+    mysql> update tb_name set sex="male" where name='Zhang';
+    mysql> select * from tb_name;
+    mysql> delete from tb_name where ...
+    mysql> exit
+    
+    $ mysqladmin -u username -p old_password -password new_password
+    $ mysql -u username -p db_name < db_name.sql        # import from db_name.sql
+    
+    # Dumping data with mysqldump
+    $ mysqldump [arguments] > filename
+    $ mysqldump --all-databases > dump.sql
+    $ mysqldump --databases db1 db2 db3 > dump.sql
+    $ mysqldump --databases test > dump.sql             # the dump output contains CREATE DATABASE and USE statements.
+    $ mysqldump test > dump.sql                         # without --databases, no CREATE DATABASE or USE statements.
 
+###Forgot password
+    $ sudo /etc/init.d/mysqld stop              # Stop mysql
+    $ sudo bin/mysqld_safe --skip-grant-tables  # Start mysql in safe mode
+    $ mysql -uroot
+    
+    mysql> use mysql;
+    mysql> update user set Password = PASSWORD('root') where User ='root';
+    mysql> exit
+    
+    $ sudo /etc/init.d/mysqld restart
+
+(Read more: <http://www.cnblogs.com/yuxc/archive/2012/07/25/2607587.html>)
 ###emma--mysql GUI
     $ sudo apt-get install emma                         # Install emma
     $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
@@ -152,14 +215,16 @@ Readmore:
 (Read more: <http://blog.csdn.net/lcz_ptr/article/details/7798510>)
 
 ###Q & A
-    1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+
     $ sudo apt-get install libaio-dev
     
-    2. emma: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+2. emma: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
+
     $ sudo mkdir /run/mysqld
     $ sudo ln -s /tmp/mysql.sock  /run/mysqld/mysqld.sock
 (Read more: <http://www.2cto.com/kf/201305/210034.html>)
-    
+
 ###Appendix
     my.cnf
     
@@ -281,7 +346,7 @@ Read more:
 - <http://www.cnblogs.com/keen-allan/archive/2012/04/22/2464541.html>
 
 ###Q & A
-    1.RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+Q1.RVM is not a function, selecting rubies with 'rvm use ...' will not work.
     
 A: This error happens because under RVM's installation directory (normally $HOME/.rvm/bin), there is an executable named 'rvm'; whereas under $HOME/.rvm/scripts directory, there is a script called 'rvm'. By default, the 'rvm' executable is used, which cannot handle many rvm commands such as 'rvm use'. 
 

@@ -89,7 +89,7 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $ sudo apt-get install nautilus-share       # File Manager
 
 ###Q & A
-    - sudo /etc/init.d/samba restart            # command not found
+    $ sudo /etc/init.d/samba restart            # command not found
     $ sudo apt-get install samba-common-bin     # install common bin
     $ sudo cp /etc/cron.daily/samba /etc/init.d/
     
@@ -164,6 +164,7 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
 
 ###chown
 Change the owner and/or group of each FILE to OWNER and/or GROUP.
+
     chown [OPTION]... [OWNER][:[GROUP]] FILE...
     Examples:
     chown root /u       # Change the owner of /u to "root"
@@ -172,6 +173,7 @@ Change the owner and/or group of each FILE to OWNER and/or GROUP.
 
 ###chgrp
 Chage the group of each FILE to GROUP
+
     chgrp [OPTION]... GROUP FILE...
     Examples:
     chgrp staff /u      Change the group of /u to "staff".
@@ -179,41 +181,50 @@ Chage the group of each FILE to GROUP
 
 ###chmod
 Change the mode of each FILE to MODE.
+
     chmod [OPTION]... MODE[,MODE]... FILE...
     Each MODE is of the form `[ugoa]*([-+=]([rwxXst]*|[ugo]))+'.
  
 ###source
 Re-run the initialization file just modified to make it take effect immediately, without having to restart the system.
+
     source filename [arguments]
 
 ###id
 Print user and group information for the specified USERNAME, or (when USERNAME omitted) for the current user.
+
     id [OPTION]... [USERNAME]
 
 ###mkdir
 Create the DIRECTORY(ies), if they do not already exist.
+
      mkdir [OPTION]... DIRECTORY...
 
 ###rmdir
 Remove the DIRECTORY(ies), if they are empty.
+
     rmdir [OPTION]... DIRECTORY...
 
 ###rm
 Remove (unlink) the FILE(s).
+
     rm [OPTION]... FILE...
     rm -rf DIRECTORY            # Remove an unempty directory
 
 ###touch
 Create new file, Update the access and modification times of each FILE to the current time.
+
     touch [OPTION]... FILE...
 
 ###mv
 Rename SOURCE to DEST, or move SOURCE(s) to DIRECTORY.
+
     mv [OPTION]... SOURCE... DIRECTORY
     mv file1 file2              # rename file1 to file2
 
 ###rename
 Rename filenames.
+
     rename [-v] [-n] [-f] perlexpr [filenames]
     rename foo foo0 foo?        # rename foo1--foo9 to foo01--foo09
     rename foo foo0 foo??       # rename foo01--foo99 to foo001--foo099
@@ -222,6 +233,7 @@ Rename filenames.
 
 ###tput
 Initialize a terminal or query terminfo database.
+
     tput init                   # Initialize the terminal according to the type of terminal in the environment variable TERM.
     tput -T5620 reset           # Reset an AT&T 5620 terminal.
     tput cup 0 0                # Send the sequence to mvoe the cursor to row 0, column 0.
@@ -232,6 +244,7 @@ Initialize a terminal or query terminfo database.
 
 ###echo
 display a line of text.
+
     echo [OPTION]...[STRING]...
     -n      # do not output the trailing newline
     -e      # enable interpretation of the backslash-escaped characters listed below.
@@ -245,25 +258,31 @@ display a line of text.
     \f      # form feed
     \n      # new line
     \v      # vertical tab
+
 (Read more: <http://linux.about.com/library/cmd/blcmdl1_echo.htm>)
 
 ###read
 Use to get input (data from user) from keyboard and store (data) to variable.
+
     read variable1, variable2,...,variableN
+
 (Read more: <http://freeos.com/guides/lsst/ch02sec10.html>)
 
 ###while
 Execute script repeatedly as long as a condition is met.
+
     while [condition]
     do
         command1
         command2
         ...
     done                    # end do
+
 (Read more: <http://freeos.com/guides/lsst/ch03sec07.html>)
 
 ###if...else...fi
 If given condition is true then command1 is executed otherwise command2 is executed.
+
     if condition
     then
         condition is zero(true - 0)
@@ -272,6 +291,7 @@ If given condition is true then command1 is executed otherwise command2 is execu
         if condition is not true then
         execute all commands up to fi
     fi                      # end if
+
 (Read more: <http://freeos.com/guides/lsst/ch03sec03.html>)
 
 ###for Loop
@@ -280,10 +300,12 @@ If given condition is true then command1 is executed otherwise command2 is execu
         execute one for each item in the list until the list is
         not finished (And repeat all statement between do and done)
     done
+
 (Read more: <http://freeos.com/guides/lsst/ch03sec06.html>)
 
 ###The case Statement
 The case statement is good alternative to Multilevel if-then-else-fi statement. It enable you to match several values against one variable. Its easier to read and write.
+
     case $variable-name in
     pattern1)
         command
@@ -303,8 +325,12 @@ The case statement is good alternative to Multilevel if-then-else-fi statement. 
         ...
         command;;
     esac                        # end case
+
 The $variable-name is compared against the patterns until a match is found. The shell then executes all the statements up to the two semicolons that are next to each other. The default is *) and its executed if no match is found.
 
-
+###netstat
+    netstat [-vWnNcaeol] [<Socket> ...]
+    
+    $ sudo netstat -tap | grep mysql          # list mysql ip port
 
 
