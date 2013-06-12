@@ -7,8 +7,6 @@ tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, 
 ---
 {% include JB/setup %}
 
-# Configuring the Development Environment
-
 The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
 
 ## Java Development Environment Configuration
