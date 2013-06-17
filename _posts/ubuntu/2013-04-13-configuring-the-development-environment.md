@@ -9,6 +9,40 @@ tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, 
 
 The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
 
+## Environment Variables
+
+Environment variables provide a way to influence the behaviour of software on the system.
+
+###Setting values to environment variables
+    LANG=en_US.UTF-8
+    
+    EDITOR=nano
+    export EDITOR
+    
+    export EDITOR=nano
+
+###Examining values of enviroment variables
+    printenv                    # prints all currently defined environment variables
+    printenv TERM               # print TERM
+    echo $TERM
+
+###Erasing environment variables
+    export LC_ALL=
+    unset LC_ALL
+    export -n LC_ALL
+
+###Session-wide environment variables
+    ~/.profile                  # It gets executed automatically by the DisplayManager during the start-up process desktop session as well as by the login shell when one log-in from the textual console.
+    ~/.bash_profile             # whent it is started as a login shell. won't influence a graphical session by default.
+    ~/.bashrc                   # this file will be executed in each an every invocation of bash as well as while logging in to the graphical environment.
+
+###System-wide environment variables
+    /etc/environment            # Specifically, this file stores the system-wide locale and path settings.
+    /etc/profile                # This file gets executed whenever a bash login shell is entered, as well as by the DisplayManager when the desktop session loads.
+    /etc/bash.bashrc - This is the system-wide version of the ~/.bashrc file. Ubuntu is configured by default to execute this file whenever a user enters a shell or the desktop environment.
+
+(Read more: <https://help.ubuntu.com/community/EnvironmentVariables>)
+
 ## Java Development Environment Configuration
 
 First, downloads [Java SE 6](http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html#jdk-6u22-oth-JPR), choose the stable version--[jdk1.6.0_32](http://download.oracle.com/otn/java/jdk/6u32-b05/jdk-6u32-linux-i586.bin).
@@ -101,7 +135,7 @@ If you can see the above contents, congratulations! It means that you successful
 
 (Read more: <http://blog.csdn.net/s_niper/article/details/6621019>)
 
-###Q & A
+###Q&A
 1. Failure to find net.sf:pinyin4j:jar:2.5.0 in http://repo.maven.apache.org/maven2.
 
     Download pinyin4j-2.5.0.jar
@@ -212,7 +246,7 @@ Readmore:
     "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
 (Read more: <http://blog.csdn.net/lcz_ptr/article/details/7798510>)
 
-###Q & A
+###Q&A
 1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
 
     $ sudo apt-get install libaio-dev
@@ -343,7 +377,7 @@ Read more:
 - <http://ruby-china.org/wiki/rvm-guide>
 - <http://www.cnblogs.com/keen-allan/archive/2012/04/22/2464541.html>
 
-###Q & A
+###Q&A
 Q1.RVM is not a function, selecting rubies with 'rvm use ...' will not work.
     
 A: This error happens because under RVM's installation directory (normally $HOME/.rvm/bin), there is an executable named 'rvm'; whereas under $HOME/.rvm/scripts directory, there is a script called 'rvm'. By default, the 'rvm' executable is used, which cannot handle many rvm commands such as 'rvm use'. 
@@ -358,5 +392,23 @@ Open a new terminal or run the following command to reload /.bash_profile in the
     $ source ~/.bash_profile
 
 (Read more:<http://blog.sina.com.cn/s/blog_9d6e035501010lol.html>)
+
+## Google Chrome
+Download google chrome deb package:
+
+- 32 bit: <https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb>
+- 64 bit: <https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb>
+
+    $ sudo dpkg -i google-chrome-stable_current_i386.deb
+
+###Q&A
+1. Dependency problems, uninstall libnss3-1d
+
+A: Solve dependency problems.
+
+    $ sudo apt-get -f install
+
+(Read more: <http://hi.baidu.com/kevin276/item/29bc1c96a208fabc82d29542>)
+
 
 
