@@ -193,6 +193,7 @@ To install and use a MySQL binary distribution, the basic command sequence looks
     The 'cbay'@'localhost' account can be used only when connecting from the local host. The 'cbay'@'%' account uses the '%' wildcard fro the host part, so it can be used to connect from any host.
 
 Readmore:
+
 - <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>
 - <http://lingshaohuprose.blog.163.com/blog/static/16957978220122844024875>
 - <http://www.linuxidc.com/Linux/2012-08/68615.htm>
@@ -240,10 +241,12 @@ Readmore:
     $ sudo /etc/init.d/mysqld restart
 
 (Read more: <http://www.cnblogs.com/yuxc/archive/2012/07/25/2607587.html>)
+
 ###emma--mysql GUI
     $ sudo apt-get install emma                         # Install emma
     $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
     "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
+
 (Read more: <http://blog.csdn.net/lcz_ptr/article/details/7798510>)
 
 ###Q&A
@@ -255,6 +258,7 @@ Readmore:
 
     $ sudo mkdir /run/mysqld
     $ sudo ln -s /tmp/mysql.sock  /run/mysqld/mysqld.sock
+
 (Read more: <http://www.2cto.com/kf/201305/210034.html>)
 
 ###Appendix
@@ -323,6 +327,8 @@ Readmore:
     $ ssh -T git@github.com
     # Showing 'Hi username!' means you've successfully authenticated.
 
+(Read more: <https://help.github.com/articles/generating-ssh-keys>)
+
     $ git config --global user.name "Your Name Here"
     # Set the default name for git to use when you commit
 
@@ -332,9 +338,7 @@ Readmore:
     $ git config --global credential.helper 'cache --timeout=3600'
     # Set the cache to timeout after 1 hour (setting is in seconds)
     
-Read more:
-- <https://help.github.com/articles/generating-ssh-keys>
-- <https://help.github.com/articles/set-up-git>
+(Read more: <https://help.github.com/articles/set-up-git>)
 
 ###Commands
     $ git clone git@github.com:USERNAME/USERNAME.github.com.git # grap a complete copy

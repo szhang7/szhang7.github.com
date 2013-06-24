@@ -326,11 +326,18 @@ The case statement is good alternative to Multilevel if-then-else-fi statement. 
         command;;
     esac                        # end case
 
-The $variable-name is compared against the patterns until a match is found. The shell then executes all the statements up to the two semicolons that are next to each other. The default is *) and its executed if no match is found.
+The `$variable-name` is compared against the patterns until a match is found. The shell then executes all the statements up to the two semicolons that are next to each other. The default is `*)` and its executed if no match is found.
 
 ###netstat
     netstat [-vWnNcaeol] [<Socket> ...]
     
     $ sudo netstat -tap | grep mysql          # list mysql ip port
+
+###nm-tool
+NetworkManager Tool, list devices, IPv4 settings(address, gateway,DNS)
+    
+    $ nm-tool
+
+
 
 
