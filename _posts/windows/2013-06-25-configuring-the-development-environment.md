@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Configuring the Development Environment on Ubuntu 12.04 LTS"
-description: "The purpose of this article is to establish a continuous integrated development environment on Ubuntu 12.04 LTS. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
-category: ubuntu
+title: "Configuring the Development Environment on Windows 7"
+description: "The purpose of this article is to establish a continuous integrated development environment on Windows 7. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
+category: windows
 tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, mysql, svn]
 ---
 {% include JB/setup %}
 
-The purpose of this article is to establish a continuous integrated development environment on Ubuntu 12.04 LTS. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
+The purpose of this article is to establish a continuous integrated development environment on Windows 7. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
 
 ## Environment Variables
 
@@ -20,28 +20,6 @@ Environment variables provide a way to influence the behaviour of software on th
     export EDITOR
     
     export EDITOR=nano
-
-###Examining values of enviroment variables
-    printenv                    # prints all currently defined environment variables
-    printenv TERM               # print TERM
-    echo $TERM
-
-###Erasing environment variables
-    export LC_ALL=
-    unset LC_ALL
-    export -n LC_ALL
-
-###Session-wide environment variables
-    ~/.profile                  # It gets executed automatically by the DisplayManager during the start-up process desktop session as well as by the login shell when one log-in from the textual console.
-    ~/.bash_profile             # whent it is started as a login shell. won't influence a graphical session by default.
-    ~/.bashrc                   # this file will be executed in each an every invocation of bash as well as while logging in to the graphical environment.
-
-###System-wide environment variables
-    /etc/environment            # Specifically, this file stores the system-wide locale and path settings.
-    /etc/profile                # This file gets executed whenever a bash login shell is entered, as well as by the DisplayManager when the desktop session loads.
-    /etc/bash.bashrc - This is the system-wide version of the ~/.bashrc file. Ubuntu is configured by default to execute this file whenever a user enters a shell or the desktop environment.
-
-(Read more: <https://help.ubuntu.com/community/EnvironmentVariables>)
 
 ## Java Development Environment Configuration
 
@@ -180,7 +158,7 @@ Download nexus from <http://www.sonatype.org/nexus>.
     7. Reduce the Burden on Central
     8. Save Yourself some Bandwidth
     9. Speed up Your Builds
-
+    
 ## Maven Environment Configuration
 
     $ tar -xzvf apache-maven-3.0.4-bin.tar.gz       # unzip the package
@@ -192,33 +170,6 @@ Download nexus from <http://www.sonatype.org/nexus>.
     $ mvn -version                                  # verify that the configuration was successful.
 
 (Read more: <http://blog.csdn.net/s_niper/article/details/6621019>)
-
-###Configure settings.xml
-$M2_HOME/conf/settings.xml
-
-    <servers>
-    <server>
-        <id>nexus-snapshots</id>
-        <username>deployment</username>
-        <password>deployment</password>
-    </server>
-    <server>
-        <id>nexus-releases</id>
-        <username>deployment</username>
-        <password>deployment</password>
-    </server>
-    </servers>
-
-    <mirrors>
-    <mirror>
-        <id>nexus</id>
-        <name>Internal Nexus Repository</name>
-        <url>http://192.168.2.10:7076/nexus/content/groups/public/</url>
-        <mirrorOf>central</mirrorOf>
-    </mirror>
-    </mirrors>
-
-(Read more: <http://www.iteye.com/topic/1126678>)
 
 ###Q&A
 1. Failure to find net.sf:pinyin4j:jar:2.5.0 in http://repo.maven.apache.org/maven2.

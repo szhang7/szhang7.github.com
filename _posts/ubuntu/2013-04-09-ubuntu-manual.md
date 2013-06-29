@@ -43,6 +43,16 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $sudo apt-get install ibus-googlepinyin     #谷歌拼音输入法
     $sudo apt-get install ibus-sunpinyin        #Sun 拼音输入法
 
+## Cairo-dock2
+
+    $ sudo apt-get install cairo-dock
+    
+    System->Startup Application->Add
+    /usr/bin/cairo-dock -o                      #Cairo-Dock with OpenGL
+    /usr/bin/cairo-dock -c                      #Cairo-Dock without OpenGL
+
+(Read more: <http://wobu.blog.163.com/blog/static/170709620124110715716/>)
+
 ## Optimize memory
 
     $ cat /proc/sys/vm/swappiness
