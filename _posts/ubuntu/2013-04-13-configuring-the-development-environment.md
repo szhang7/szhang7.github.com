@@ -68,58 +68,12 @@ Third, edit /etc/profile to append some environment variables, save it and exit.
 
 Finally, source /etc/profile to make it take effect immediately, without having to restart the system.
 
-Type java, and press Enter, you'll see:
+Type java -version, and press Enter, you'll see:
 
-    $ java
-    Usage: java [-options] class [args...]
-           (to execute a class)
-    or  java [-options] -jar jarfile [args...]
-           (to execute a jar file)
-
-    where options include:
-    -d32          use a 32-bit data model if available
-
-    -d64          use a 64-bit data model if available
-    -client	  to select the "client" VM
-    -server	  to select the "server" VM
-    -hotspot	  is a synonym for the "client" VM  [deprecated]
-                  The default VM is client.
-                  
-    -cp <class search path of directories and zip/jar files>
-    -classpath <class search path of directories and zip/jar files>
-                  A : separated list of directories, JAR archives,
-                  and ZIP archives to search for class files.
-    -D<name>=<value>
-                  set a system property
-    -verbose[:class|gc|jni]
-                  enable verbose output
-    -version      print product version and exit
-    -version:<value>
-                  require the specified version to run
-    -showversion  print product version and continue
-    -jre-restrict-search | -jre-no-restrict-search
-                  include/exclude user private JREs in the version search
-    -? -help      print this help message
-    -X            print help on non-standard options
-    -ea[:<packagename>...|:<classname>]
-    -enableassertions[:<packagename>...|:<classname>]
-                  enable assertions
-    -da[:<packagename>...|:<classname>]
-    -disableassertions[:<packagename>...|:<classname>]
-                  disable assertions
-    -esa | -enablesystemassertions
-                  enable system assertions
-    -dsa | -disablesystemassertions
-                  disable system assertions
-    -agentlib:<libname>[=<options>]
-                  load native agent library <libname>, e.g. -agentlib:hprof
-                    see also, -agentlib:jdwp=help and -agentlib:hprof=help
-    -agentpath:<pathname>[=<options>]
-                  load native agent library by full pathname
-    -javaagent:<jarpath>[=<options>]
-                  load Java programming language agent, see java.lang.instrument
-    -splash:<imagepath>
-                  show splash screen with specified image
+    $ java -version
+    java version "1.6.0_32"
+    Java(TM) SE Runtime Environment (build 1.6.0_32-b05)
+    Java HotSpot(TM) Client VM (build 20.7-b02, mixed mode, sharing)
 
 If you can see the above contents, congratulations! It means that you successfully configured the Java development environment.
 
@@ -169,6 +123,15 @@ Download nexus from <http://www.sonatype.org/nexus>.
     PIDDIR=$NEXUS_HOME/../run
 
 (Read more: <http://www.codesky.net/article/201202/172819.html>)
+
+###Update maven repository index
+    1. Downloads http://repo1.maven.org/maven2/.index/nexus-maven-repository-index.gz
+    2. Stop nexus
+    3. Delete all files in sonatype-work\nexus\indexer\central-ctx
+    4. Unzip nexus-maven-repository-index.zip to sonatype-work\nexus\indexer\central-ctx
+    5. Restart nexus to update automatically index
+
+(Readmore: <http://blog.sina.com.cn/s/blog_604c7cdd0101c5v5.html>)
 
 ###9 Reasons to use Sonatype Nexus
     1. Nexus is Easy to Install
@@ -473,12 +436,12 @@ A: This error happens because under RVM's installation directory (normally $HOME
 
 One should load RVM into a shell session as a function (run the 'rvm' script). To do that, add the following line to '~/.bash_profile':
 
-    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" #load RVM into a shell session as a function
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" #Load RVM into a shell session as a function
     PATH=$PATH:$HOME/.rvm/bin #Add RVM to PATH for scripting
     
-Open a new terminal or run the following command to reload /.bash_profile in the current terminal. The problem should be solved.
+Open a new terminal or run the following command to reload /.bashrc in the current terminal. The problem should be solved.
 
-    $ source ~/.bash_profile
+    $ source ~/.bashrc
 
 (Read more:<http://blog.sina.com.cn/s/blog_9d6e035501010lol.html>)
 

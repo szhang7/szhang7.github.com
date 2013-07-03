@@ -271,6 +271,10 @@ display a line of text.
 
 (Read more: <http://linux.about.com/library/cmd/blcmdl1_echo.htm>)
 
+Modify the terminal title
+
+    echo -ne "\033]0;$MY_TITLE\007"
+
 ###read
 Use to get input (data from user) from keyboard and store (data) to variable.
 
