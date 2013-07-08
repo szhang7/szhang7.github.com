@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Configuring the Development Environment on Ubuntu 12.04 LTS"
-description: "The purpose of this article is to establish a continuous integrated development environment on Ubuntu 12.04 LTS. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
-category: ubuntu
+title: "Configuring the Development Environment"
+description: "The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
+category: java
 tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, mysql, svn]
 ---
 {% include JB/setup %}
 
-The purpose of this article is to establish a continuous integrated development environment on Ubuntu 12.04 LTS. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
+The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
+
+#  Ubuntu 12.04 LTS
 
 ## Environment Variables
 
@@ -434,7 +436,7 @@ Q1.RVM is not a function, selecting rubies with 'rvm use ...' will not work.
     
 A: This error happens because under RVM's installation directory (normally $HOME/.rvm/bin), there is an executable named 'rvm'; whereas under $HOME/.rvm/scripts directory, there is a script called 'rvm'. By default, the 'rvm' executable is used, which cannot handle many rvm commands such as 'rvm use'. 
 
-One should load RVM into a shell session as a function (run the 'rvm' script). To do that, add the following line to '~/.bash_profile':
+One should load RVM into a shell session as a function (run the 'rvm' script). To do that, add the following line to '~/.bashrc':
 
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" #Load RVM into a shell session as a function
     PATH=$PATH:$HOME/.rvm/bin #Add RVM to PATH for scripting

@@ -7,7 +7,7 @@ tags: [maven, manual, java]
 ---
 {% include JB/setup %}
 
-## What is Maven? [1]
+## What is Maven?
 At first glance Maven can appear to be many things, but in a nutshell Maven is an attempt to apply patterns to a project's build infrastructure in order to promote comprehension and productivity by providing a clear path in the use of best practices. Maven is essentially a project management and comprehension tool and as such provides a way to help with managing:
 
 - Builds
@@ -18,7 +18,7 @@ At first glance Maven can appear to be many things, but in a nutshell Maven is a
 - Releases
 - Distribution
 
-## How do I make my first Maven project? [1]
+## How do I make my first Maven project?
 In order to create the simplest of Maven projects, execute the following from the command line:
 
     mvn archetype:generate \
@@ -116,7 +116,7 @@ Here's an example:
       <version>1.0.0</version>
     </project>
 
-## Installation [2]
+## Installation
 Maven is a Java tool, so you must have [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed in order to proceed.
 
 First, [download Maven](http://maven.apache.org/download.html) and follow the [installation instructions](http://maven.apache.org/download.html#Installation). After that, type the following in a terminal or in a command prompt:
@@ -125,7 +125,7 @@ First, [download Maven](http://maven.apache.org/download.html) and follow the [i
 
 Depending upon your network setup, you may require extra configuration. Check out the [Guide to Configuring Maven](http://maven.apache.org/guides/mini/guide-configuring-maven.html) if necessary.
 
-## Creating a Project [2]
+## Creating a Project
 You will need somewhere for your project to reside, create a directory somewhere and start a shell in that directory. On your command line, execute the following Maven goal:
 
     mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
@@ -146,7 +146,7 @@ You may test the newly compiled and packaged JAR with the following command:
 
     java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
 
-## Running Maven Tools [2]
+## Running Maven Tools
 
 ###Maven Phases
 Although hardly a comprehensive list, these are the most common default lifecycle phases executed.
@@ -178,7 +178,7 @@ This phase generates a site based upon information on the project's pom.
 
 
 ## REFERENCES
-- [1. Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
-- [2. Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-- [3. Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
+- [Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
+- [Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+- [Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
 
