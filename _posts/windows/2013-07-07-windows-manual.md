@@ -7,7 +7,24 @@ tags: [Windows, Manual]
 ---
 {% include JB/setup %}
 
+## Multi-User remote login
+Download [Remote Server Administration Tools](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=7887)
+
+    安装升级包后，在控制面板--程序和功能--打开或关闭WINDOWS功能---远程服务器管理工具--角色管理工具--远程桌面服务工具，选中前面的选择框。
+    
+    在开始--命令框输入cmd,在弹出的Dos界面输入netstat -na ,如果出现 3389 端口，就说明远程终端已经启动了。
+    
+    1.下载补丁[UniversalTermsrvPatch]()，功能就是去除单用户登陆的限制，允许多人多用户同时并行访问登录。
+    2.需要管理员权限。右键点程序，选择以管理员身份运行。
+    3.破解后需要重启生效。
+    4.备份文件： \windows\system32\termsrv.dll.backup.(如果想还原设置请将备份文件改名为termsrv.dll替换破解的文件即可)
+    5.远程桌面的其它可能的设置：
+    运行gpedit.msc打开组策略，计算机配置－管理模板－Windows组件－远程桌面服务－远程桌面会话主机-连接-“限制连接数量”，如果将状态设置为“禁用”或“未配置”，则在“组策略”级别上不强制限制连接的数量。
+
+(Read more: <http://blog.163.com/zangyunling@126/blog/static/1646245052012312475824/>)
+
 ## Windows Commands
+
 The command shell is a separate software program that provides direct communication between the user and the operating system. [Command-line reference A-Z](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds.mspx?mfr=true)
 
     %OS%                Returns the operating system name. Windows 2000 displays the operating system as Windows_NT.
@@ -21,23 +38,25 @@ The command shell is a separate software program that provides direct communicat
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ntcmds_shelloverview.mspx?mfr=true>)
 
 ###cls
+
 Clears the Command Prompt window.
 
     $ cls
     $ cls /?                    #Display help at the command prompt.
     
-    Parameters
+####Parameters
 
     /? : Displays help at the command prompt. 
 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/cls.mspx?mfr=true>)
 
 ###call
+
 Calls one batch program from another without stopping the parent batch program. The call command accepts labels as the target of the call. Call has no effect at the command-line when used outside of a script or batch file. 
 
     call [[Drive:][Path] FileName [BatchParameters]] [:label [arguments]]
  
-    Parameters
+####Parameters
 
     [Drive:][Path] FileName : Specifies the location and name of the batch program you want to call. The FileName parameter must have a .bat or .cmd extension.
 
@@ -52,11 +71,12 @@ Calls one batch program from another without stopping the parent batch program. 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/call.mspx?mfr=true>)
 
 ###chcp
+
 Displays the number of the active console code page, or changes the console's active console code page. Used without parameters, chcp displays the number of the active console code page.
 
     chcp [nnn]
     
-    Parameters
+####Parameters
 
     nnn : Specifies the code page. The following table lists each code page supported and its country/region or language: 
     
@@ -69,11 +89,12 @@ Displays the number of the active console code page, or changes the console's ac
 - <http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx>
 
 ###color
+
 Changes the Command Prompt window foreground and background colors for the current session. Used without parameters, color restores the default Command Prompt window foreground and background colors.
 
     color [fb]
     
-    Parameters
+####Parameters
 
     fb : Sets the foreground f and background g colors. The following tables lists valid hexadecimal digits that you can use as the values for f and g. 
 
@@ -98,12 +119,13 @@ Changes the Command Prompt window foreground and background colors for the curre
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/color.mspx?mfr=true>)
 
 ###del(erase)
+
 Deletes specified files.
 
     del [Drive:][Path] FileName [ ...] [/p] [/f] [/s] [/q] [/a[:attributes]]
     erase [Drive:][Path] FileName [ ...] [/p] [/f] [/s] [/q] [/a[:attributes]]
     
-    Parameters
+####Parameters
 
     [Drive:][Path] FileName : Specifies the location and name of the file or set of files you want to delete. Filename is required. You can use multiple file names. Separate file names with spaces, commas, or semicolons.
 
@@ -121,11 +143,12 @@ Deletes specified files.
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/del.mspx?mfr=true>)
 
 ###dir
+
 Displays a list of a directory's files and subdirectories.
 
     dir [Drive:][Path][FileName] [...] [/p] [/q] [/w] [/d] [/a[[:]attributes]][/o[[:]SortOrder]] [/t[[:]TimeField]] [/s] [/b] [/l] [/n] [/x] [/c] [/4]
     
-    Parameters
+####Parameters
 
     [Drive:][Path] : Specifies the drive and directory for which you want to see a listing.
 
@@ -149,7 +172,7 @@ Turns the command-echoing feature on or off, or displays a message. Used without
     echo [{on|off}][message]
     @echo off   #turn echo off and do not echo the echo command
     
-    Parameters
+####Parameters
 
     {on|off} : Specifies whether to turn the command-echoing feature on or off.
 
@@ -161,11 +184,12 @@ Turns the command-echoing feature on or off, or displays a message. Used without
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/echo.mspx?mfr=true>)
 
 ###exit
+
 Exits the current batch script or the Cmd.exe program (that is, the command interpreter) and returns to the program that started Cmd.exe or to the Program Manager.
 
     exit [/b] [ExitCode]
 
-    Parameters
+####Parameters
 
     /b : Exits the current batch script.
 
@@ -176,11 +200,12 @@ Exits the current batch script or the Cmd.exe program (that is, the command inte
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/exit.mspx?mfr=true>)
 
 ###find
+
 Searches for a specific string of text in a file or files. After searching the specified file or files, find displays any lines of text that contain the specified string.
 
     find [/v] [/c] [/n] [/i] "string" [[Drive:][Path]FileName[...]]
     
-    Parameters
+####Parameters
 
     /v : Displays all lines that do not contain the specified string.
 
@@ -205,11 +230,12 @@ Searches for a specific string of text in a file or files. After searching the s
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/find.mspx?mfr=true>)
 
 ###goto
+
 Within a batch program, directs Windows XP to a line identified by a label. When the label is found, it processes the commands that begin on the next line.
 
     goto label
 
-    Parameters
+####Parameters
 
     label : Specifies the line in a batch program that you want to go to.
 
@@ -222,6 +248,7 @@ Within a batch program, directs Windows XP to a line identified by a label. When
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/goto.mspx?mfr=true>)
 
 ###if
+
 Performs conditional processing in batch programs.
 
     if [not] errorlevel number command [else expression]
@@ -238,7 +265,7 @@ Performs conditional processing in batch programs.
 
     if defined variable command [else expression]
     
-    Parameters
+####Parameters
 
     not : Specifies that the command should be carried out only if the condition is false.
 
@@ -273,41 +300,15 @@ Performs conditional processing in batch programs.
 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/if.mspx?mfr=true>)
 
-###ipconfig
-Displays all current TCP/IP network configuration values and refreshes Dynamic Host Configuration Protocol (DHCP) and Domain Name System (DNS) settings. Used without parameters, ipconfig displays the IP address, subnet mask, and default gateway for all adapters.
-
-    ipconfig [/all] [/renew [Adapter]] [/release [Adapter]] [/flushdns] [/displaydns] [/registerdns] [/showclassid Adapter] [/setclassid Adapter [ClassID]]
-
-    Parameters
-
-    /all : Displays the full TCP/IP configuration for all adapters. Without this parameter, ipconfig displays only the IP address, subnet mask, and default gateway values for each adapter. Adapters can represent physical interfaces, such as installed network adapters, or logical interfaces, such as dial-up connections.
-
-    /renew [Adapter] : Renews DHCP configuration for all adapters (if an adapter is not specified) or for a specific adapter if the Adapter parameter is included. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically. To specify an adapter name, type the adapter name that appears when you use ipconfig without parameters.
-
-    /release [Adapter] : Sends a DHCPRELEASE message to the DHCP server to release the current DHCP configuration and discard the IP address configuration for either all adapters (if an adapter is not specified) or for a specific adapter if the Adapter parameter is included. This parameter disables TCP/IP for adapters configured to obtain an IP address automatically. To specify an adapter name, type the adapter name that appears when you use ipconfig without parameters.
-
-    /flushdns : Flushes and resets the contents of the DNS client resolver cache. During DNS troubleshooting, you can use this procedure to discard negative cache entries from the cache, as well as any other entries that have been added dynamically.
-
-    /displaydns : Displays the contents of the DNS client resolver cache, which includes both entries preloaded from the local Hosts file and any recently obtained resource records for name queries resolved by the computer. The DNS Client service uses this information to resolve frequently queried names quickly, before querying its configured DNS servers.
-
-    /registerdns : Initiates manual dynamic registration for the DNS names and IP addresses that are configured at a computer. You can use this parameter to troubleshoot a failed DNS name registration or resolve a dynamic update problem between a client and the DNS server without rebooting the client computer. The DNS settings in the advanced properties of the TCP/IP protocol determine which names are registered in DNS.
-
-    /showclassid Adapter : Displays the DHCP class ID for a specified adapter. To see the DHCP class ID for all adapters, use the asterisk (*) wildcard character in place of Adapter. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically.
-
-    /setclassid Adapter [ClassID] : Configures the DHCP class ID for a specified adapter. To set the DHCP class ID for all adapters, use the asterisk (*) wildcard character in place of Adapter. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically. If a DHCP class ID is not specified, the current class ID is removed.
-
-    /?: Displays help at the command prompt. 
-
-(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ipconfig.mspx?mfr=true>)
-
 ###label
+
 Creates, changes, or deletes the volume label (that is, the name) of a disk. Used without parameters, label changes the current volume label or deletes the existing label.
 
     label [Drive:][label]
 
     label [/MP][volume][label]
 
-    Parameters
+####Parameters
 
     Drive: : Specifies the drive letter (followed by a colon) of the disk you want to name.
 
@@ -322,13 +323,14 @@ Creates, changes, or deletes the volume label (that is, the name) of a disk. Use
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/label.mspx?mfr=true>)
 
 ###mode
+
 Displays system status, changes system settings, or reconfigures ports or devices.
 
     mode comm[:] [baud=b] [parity=p] [data=d] [stop=s] [to={on|off}] [xon={on|off}] [odsr={on|off}] [octs={on|off}] [dtr={on|off|hs}] [rts={on|off|hs|tg}] [idsr={on|off}]
 
 To configure a serial communications port.
 
-    Parameters
+####Parameters
 
     comm[:] : Specifies the number of the asynchronous-communications (COM) port.
 
@@ -398,6 +400,7 @@ To configure a device
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/mode.mspx?mfr=true>)
 
 ###more
+
 Displays one screen of output at a time.
 
     command | more [/c] [/p] [/s] [/tn] [+n]
@@ -406,7 +409,7 @@ Displays one screen of output at a time.
 
     more [/c] [/p] [/s] [/tn] [+n] [files]
     
-    Parameters
+####Parameters
 
     [Drive:] [Path] FileName : Specifies the file to display.
 
@@ -429,11 +432,12 @@ Displays one screen of output at a time.
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/more.mspx?mfr=true>)
 
 ###move
+
 Moves one or more files from one directory to the specified directory.
 
     move [{/y|/-y}] [Source] [target]
     
-    Parameters
+####Parameters
 
     /y : Suppresses prompting to confirm you want to overwrite an existing destination file.
 
@@ -450,6 +454,7 @@ Moves one or more files from one directory to the specified directory.
 ###net services
 
 ####Net services overview
+
 Many services use networking commands that begin with the word net. These net commands have some common properties:
 
 - You can see a list of all available net commands by typing net /? at a command prompt.
@@ -465,6 +470,7 @@ Many services use networking commands that begin with the word net. These net co
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/net_command_options.mspx?mfr=true>)
 
 ####Net services commands
+
     net help command : Displays help for the specified net command.
 
 #####Net config
@@ -473,7 +479,7 @@ Displays the configurable services that are running, or displays and changes set
 
     net config [{server|workstation}]
     
-    Parameters
+####Parameters
 
     server : Displays and allows you to make changes to the settings for the Server service while the service is running.
 
@@ -489,7 +495,7 @@ Starts a service. Used without parameters, net start displays a list of services
 
     net start [service]
     
-    Parameters
+####Parameters
 
     service : Starts the specified service. The following table lists values for service. 
     
@@ -502,60 +508,16 @@ Starts a service. Used without parameters, net start displays a list of services
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/net_start.mspx?mfr=true>)
 
 #####Net stop
+
 Stops a running service.
 
     net stop service
 
-    Parameters
+####Parameters
 
     service : Stops the specified service.
 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/net_stop.mspx?mfr=true>)
-
-###Netstat
-Displays active TCP connections, ports on which the computer is listening, Ethernet statistics, the IP routing table, IPv4 statistics (for the IP, ICMP, TCP, and UDP protocols), and IPv6 statistics (for the IPv6, ICMPv6, TCP over IPv6, and UDP over IPv6 protocols). Used without parameters, netstat displays active TCP connections.
-
-    netstat [-a] [-e] [-n] [-o] [-p Protocol] [-r] [-s] [Interval]
-    
-    Parameters
-
-    -a : Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
-
-    -e : Displays Ethernet statistics, such as the number of bytes and packets sent and received. This parameter can be combined with -s.
-
-    -n : Displays active TCP connections, however, addresses and port numbers are expressed numerically and no attempt is made to determine names.
-
-    -o : Displays active TCP connections and includes the process ID (PID) for each connection. You can find the application based on the PID on the Processes tab in Windows Task Manager. This parameter can be combined with -a, -n, and -p.
-
-    -p Protocol : Shows connections for the protocol specified by Protocol. In this case, the Protocol can be tcp, udp, tcpv6, or udpv6. If this parameter is used with -s to display statistics by protocol, Protocol can be tcp, udp, icmp, ip, tcpv6, udpv6, icmpv6, or ipv6.
-
-    -s : Displays statistics by protocol. By default, statistics are shown for the TCP, UDP, ICMP, and IP protocols. If the IPv6 protocol for Windows XP is installed, statistics are shown for the TCP over IPv6, UDP over IPv6, ICMPv6, and IPv6 protocols. The -p parameter can be used to specify a set of protocols.
-
-    -r : Displays the contents of the IP routing table. This is equivalent to the route print command.
-
-    Interval : Redisplays the selected information every Interval seconds. Press CTRL+C to stop the redisplay. If this parameter is omitted, netstat prints the selected information only once.
-
-    /? : Displays help at the command prompt. 
-
-(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/netstat.mspx?mfr=true>)
-
-###Nslookup
-
-Displays information that you can use to diagnose Domain Name System (DNS) infrastructure. Before using this tool, you should be familiar with how DNS works. The Nslookup command-line tool is available only if you have installed the TCP/IP protocol.
-
-    nslookup [-SubCommand ...] [{ComputerToFind| [-Server]}]
-    
-    Parameters
-
-    -SubCommand ... : Specifies one or more nslookup subcommands as a command-line option. For a list of subcommands, see Related Topics.
-
-    ComputerToFind : Looks up information for ComputerToFind using the current default DNS name server, if no other server is specified. To look up a computer not in the current DNS domain, append a period to the name.
-
-    -Server : Specifies to use this server as the DNS name server. If you omit -Server, the default DNS name server is used.
-
-    {help|?} : Displays a short summary of nslookup subcommands. 
-
-(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/nslookup.mspx?mfr=true>)
 
 ###Pause
 
@@ -563,49 +525,11 @@ Suspends processing of a batch program and displays a message prompting the user
 
     pause
 
-    Parameters
+####Parameters
 
     /? : Displays help at the command prompt. 
 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/pause.mspx?mfr=true>)
-
-###Ping
-
-Verifies IP-level connectivity to another TCP/IP computer by sending Internet Control Message Protocol (ICMP) Echo Request messages. The receipt of corresponding Echo Reply messages are displayed, along with round-trip times. Ping is the primary TCP/IP command used to troubleshoot connectivity, reachability, and name resolution. Used without parameters, ping displays help.
-
-    ping [-t] [-a] [-n Count] [-l Size] [-f] [-i TTL] [-v TOS] [-r Count] [-s Count] [{-j HostList | -k HostList}] [-w Timeout] [TargetName]
-    
-    Parameters
-
-    -t : Specifies that ping continue sending Echo Request messages to the destination until interrupted. To interrupt and display statistics, press CTRL-BREAK. To interrupt and quit ping, press CTRL-C.
-
-    -a : Specifies that reverse name resolution is performed on the destination IP address. If this is successful, ping displays the corresponding host name.
-
-    -n Count : Specifies the number of Echo Request messages sent. The default is 4.
-
-    -l Size : Specifies the length, in bytes, of the Data field in the Echo Request messages sent. The default is 32. The maximum size is 65,527.
-
-    -f : Specifies that Echo Request messages are sent with the Don't Fragment flag in the IP header set to 1. The Echo Request message cannot be fragmented by routers in the path to the destination. This parameter is useful for troubleshooting path Maximum Transmission Unit (PMTU) problems.
-
-    -i TTL : Specifies the value of the TTL field in the IP header for Echo Request messages sent. The default is the default TTL value for the host. For Windows XP hosts, this is typically 128. The maximum TTL is 255.
-
-    -v TOS : Specifies the value of the Type of Service (TOS) field in the IP header for Echo Request messages sent. The default is 0. TOS is specified as a decimal value from 0 to 255.
-
-    -r Count : Specifies that the Record Route option in the IP header is used to record the path taken by the Echo Request message and corresponding Echo Reply message. Each hop in the path uses an entry in the Record Route option. If possible, specify a Count that is equal to or greater than the number of hops between the source and destination. The Count must be a minimum of 1 and a maximum of 9.
-
-    -s Count : Specifies that the Internet Timestamp option in the IP header is used to record the time of arrival for the Echo Request message and corresponding Echo Reply message for each hop. The Count must be a minimum of 1 and a maximum of 4.
-
-    -j HostList : Specifies that the Echo Request messages use the Loose Source Route option in the IP header with the set of intermediate destinations specified in HostList. With loose source routing, successive intermediate destinations can be separated by one or multiple routers. The maximum number of addresses or names in the host list is 9. The host list is a series of IP addresses (in dotted decimal notation) separated by spaces.
-
-    -k HostList : Specifies that the Echo Request messages use the Strict Source Route option in the IP header with the set of intermediate destinations specified in HostList. With strict source routing, the next intermediate destination must be directly reachable (it must be a neighbor on an interface of the router). The maximum number of addresses or names in the host list is 9. The host list is a series of IP addresses (in dotted decimal notation) separated by spaces.
-
-    -w Timeout : Specifies the amount of time, in milliseconds, to wait for the Echo Reply message that corresponds to a given Echo Request message to be received. If the Echo Reply message is not received within the time-out, the "Request timed out" error message is displayed. The default time-out is 4000 (4 seconds).
-
-    TargetName : Specifies the destination, which is identified either by IP address or host name.
-
-    /? : Displays help at the command prompt. 
-
-(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ping.mspx?mfr=true>)
 
 ###Prompt
 
@@ -613,7 +537,7 @@ Changes the Cmd.exe prompt.
 
     prompt [text]
 
-    Parameters
+####Parameters
 
     text : Specifies any text and information you want included in your system prompt.
 
@@ -627,7 +551,7 @@ Adds, changes, and displays registry subkey information and values in registry e
 
     reg add KeyName [/v EntryName|/ve] [/t DataType] [/s separator] [/d value] [/f]
     
-    Parameters
+####Parameters
 
     KeyName : Specifies the full path of the subkey. For remote computers, include the computer name before the path of the subkey in the \\ComputerName\PathToSubkey format. Omitting ComputerName causes the operation to default to the local computer. Start the path with the appropriate subtree. The valid subtrees are HKLM, HKCU, HKCR, HKU, and HKCC.
 
@@ -671,7 +595,7 @@ Enables you to include comments (remarks) in a batch file or in your configurati
 
     rem [comment]
 
-    Parameters
+####Parameters
 
     comment : Specifies any string of characters you want to include as a comment.
 
@@ -687,7 +611,7 @@ Changes the name of a file or a set of files.
 
     ren [Drive:][Path] filename1 filename2
     
-    Parameters
+####Parameters
 
     [Drive:][Path] filename1 : Specifies the location and name of the file or set of files you want to rename.
 
@@ -697,15 +621,450 @@ Changes the name of a file or a set of files.
 
 (Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/rename.mspx?mfr=true>)
 
-###set
+###Replace
+
+Replaces files in the destination directory with files in the source directory that have the same name. You can also use replace to add unique file names to the destination directory.
+
+    replace [drive1:][path1] FileName [drive2:][path2] [/a] [/p] [/r] [/w]
+
+    replace [drive1:][path1] FileName [drive2:][path2] [/p] [/r] [/s] [/w] [/u]
+    
+####Parameters
+
+    [drive1:][path1] FileName : Specifies the location and name of the source file or set of files.
+
+    [drive2:][path2] : Specifies the location of the destination file. You cannot specify a file name for files you replace. If you specify neither a drive nor a directory, replace uses the current drive and directory as the destination.
+
+    /a : Adds new files to the destination directory instead of replacing existing files. You cannot use this command-line option with the /s or /u command-line option.
+
+    /p : Prompts you for confirmation before replacing a destination file or adding a source file.
+
+    /r : Replaces read-only files as well as unprotected files. If you do not specify this command-line option but attempt to replace a read-only file, an error results and stops the replacement operation.
+
+    /w : Waits for you to insert a disk before replace begins to search for source files. If you do not specify /w, replace begins replacing or adding files immediately after you press ENTER.
+
+    /s : Searches all subdirectories of the destination directory and replaces matching files. You cannot use the /s command-line option with the /a command-line option. The replace command does not search subdirectories specified in path1.
+
+    /u : Replaces (updates) only those files on the destination directory that are older than those in the source directory. You cannot use the /u command-line option with the /a command-line option.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/replace.mspx?mfr=true>)
+
+###Rmdir (rd)
+
+Removes (that is, deletes) a directory.
+
+    rmdir [Drive:]Path [/s] [/q]
+
+    rd [Drive:]Path [/s] [/q]
+    
+####Parameters
+
+    [Drive:]Path : Specifies the location and name of the directory that you want to delete.
+
+    /s : Removes the specified directory and all subdirectories including any files. Use /s to remove a tree.
+
+    /q : Runs rmdir in quiet mode. Deletes directories without confirmation.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/rmdir.mspx?mfr=true>)
+
+###SC
+
+Communicates with the Service Controller and installed services. SC.exe retrieves and sets control information about services. You can use SC.exe for testing and debugging service programs. Service properties stored in the registry can be set to control how service applications are started at boot time and run as background processes. SC.exe parameters can configure a specific service, retrieve the current status of a service, as well as stop and start a service. You can create batch files that call various SC.exe commands to automate the startup or shutdown sequence of services. SC.exe provides capabilities similar to Services in the Administrative Tools item in Control Panel. 
+
+    sc [ServerName] config [ServiceName] [type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}}] [start= {boot|system|auto|demand|disabled}] [error= {normal|severe|critical|ignore}] [binpath= BinaryPathName] [group= LoadOrderGroup] [tag= {yes|no}] [depend= dependencies] [obj= {AccountName|ObjectName}] [displayname= DisplayName] [password= Password]
+
+####Parameters
+
+    ServerName : Specifies the name of the remote server on which the service is located. The name must use the Universal Naming Convention (UNC) format ("\\myserver"). To run SC.exe locally, ignore this parameter.
+
+    ServiceName : Specifies the service name returned by the getkeyname operation.
+
+    type= {own|share|kernel|filesys|rec|adapt|interact type= {own|share}} : Specifies the service type. 
+
+    start= {boot|system|auto|demand|disabled} : Specifies the start type for the service. 
+
+    error= {normal|severe|critical|ignore} : Specifies the severity of the error if the service fails to start during boot. 
+
+    binpath= BinaryPathName : Specifies a path to the service binary file.
+
+    group= LoadOrderGroup : Specifies the name of the group of which this service is a member. The list of groups is stored in the registry in the HKLM\System\CurrentControlSet\Control\ServiceGroupOrder subkey. The default is null.
+
+    tag= {yes|no} : Specifies whether or not to obtain a TagID from the CreateService call. Tags are only used for boot-start and system-start drivers.
+
+    depend= dependencies : Specifies the names of services or groups which must start before this service. The names are separated by forward slashes (/).
+
+    obj= {AccountName|ObjectName} : Specifies a name of an account in which a service will run, or specifies a name of the Windows driver object in which the driver will run. The default is LocalSystem.
+
+    displayname= DisplayName : Specifies a friendly, meaningful name that can be used in user-interface programs to identify the service to users. For example, the subkey name of one service is wuauserv, which is not be helpful to the user, and the display name is Automatic Updates.
+
+    password= Password : Specifies a password. This is required if an account other than the LocalSystem account is used.
+
+    /?: Displays help at the command prompt.
+
+####Remarks
+
+    Without a space between a parameter and its value (for example, type= own, not type=own), the operation will fail.
+
+####Examples
+
+    The following example shows how you can use the sc config command:
+
+    sc config NewService binpath= "ntsd -d c:\windows\system32\NewServ.exe"
+
+    sc continue
+
+    Sends a CONTINUE control request to a service in order to resume a paused service.
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/sc.mspx?mfr=true>)
+
+###Set
+
+Displays, sets, or removes environment variables. Used without parameters, set displays the current environment settings.
+
+    set [[/a [expression]] [/p [variable=]] string]
+
+####Parameters
+
+    /a : Sets string to a numerical expression that is evaluated.
+
+    /p : Sets the value of variable to a line of input.
+
+    variable : Specifies the variable you want to set or modify.
+
+    string : Specifies the string you want to associate with the specified variable.
+
+    /? : Displays help at the command prompt. 
+
 Use the set command to create, change, delete, or display environment variables. The set command alters variables in the current shell environment only.
 
     $ set VariableName          #To view a variable
     $ set variablename=value    #To add a variable
     $ set VariableName=         #To delete a variable
 
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/set.mspx?mfr=true>)
+
+###Shutdown
+
+Allows you to shut down or restart a local or remote computer. Used without parameters, shutdown will logoff the current user.
+Syntax
+
+    shutdown [{-l|-s|-r|-a}] [-f] [-m [\\ComputerName]] [-t xx] [-c "message"] [-d[u][p]:xx:yy]
+
+####Parameters
+
+    -l : Logs off the current user, this is also the defualt. -m ComputerName takes precedence.
+
+    -s : Shuts down the local computer.
+
+    -r : Reboots after shutdown.
+
+    -a : Aborts shutdown. Ignores other parameters, except -l and ComputerName. You can only use -a during the time-out period.
+
+    -f : Forces running applications to close.
+
+    -m [\\ComputerName] : Specifies the computer that you want to shut down.
+
+    -t xx : Sets the timer for system shutdown in xx seconds. The default is 20 seconds.
+
+    -c "message" : Specifies a message to be displayed in the Message area of the System Shutdown window. You can use a maximum of 127 characters. You must enclose the message in quotation marks.
+
+    -d [u][p]:xx:yy : Lists the reason code for the shutdown. The following table lists the different values.
+
+    /? : Displays help at the command prompt. 
+
+####Examples
+
+To shut down \\MyServer in 60 seconds, force running applications to close, restart the computer after shutdown, indicate a user code, indicate that the shutdown is planned, log major reason code 125, and log minor reason code 1, type:
+
+    shutdown -r -f -m \\MyServer -t 60 -d up:125:1 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/shutdown.mspx?mfr=true>)
+
+###Start
+
+Starts a separate Command Prompt window to run a specified program or command. Used without parameters, start opens a second command prompt window.
+Syntax
+
+    start ["title"] [/dPath] [/i] [/min] [/max] [{/separate | /shared}] [{/low | /normal | /high | /realtime | /abovenormal | belownormal}] [/wait] [/b] [FileName] [parameters]
+
+####Parameters
+
+    "title" : Specifies the title to display in Command Prompt window title bar.
+
+    /dPath : Specifies the startup directory.
+
+    /i : Passes the Cmd.exe startup environment to the new Command Prompt window.
+
+    /min : Starts a new minimized Command Prompt window.
+
+    /max : Starts a new maximized Command Prompt window.
+
+    /separate : Starts 16-bit programs in a separate memory space.
+
+    /shared : Starts 16-bit programs in a shared memory space.
+
+    /low : Starts an application in the idle priority class.
+
+    /normal : Starts an application in the normal priority class.
+
+    /high : Starts an application in the high priority class.
+
+    /realtime : Starts an application in the realtime priority class.
+
+    /abovenormal : Starts an application in the abovenormal priority class.
+
+    /belownormal : Starts an application in the belownormal priority class.
+
+    /wait : Starts an application and waits for it to end.
+
+    /b : Starts an application without opening a new Command Prompt window. CTRL+C handling is ignored unless the application enables CTRL+C processing. Use CTRL+BREAK to interrupt the application.
+
+    FileName : Specifies the command or program to start.
+
+    parameters : Specifies parameters to pass to the command or program. 
+
+####Examples
+
+To start the Myapp program at the command prompt and retain use of the current Command Prompt window, type:
+
+    start myapp
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/start.mspx?mfr=true>)
+
+###TCP/IP utilities and services
+
+TCP/IP utilities offer network connections to other computers, such as UNIX workstations. You must have the TCP/IP network protocol installed to use the TCP/IP utilities.
+
+####Nslookup
+
+Displays information that you can use to diagnose Domain Name System (DNS) infrastructure. Before using this tool, you should be familiar with how DNS works. The Nslookup command-line tool is available only if you have installed the TCP/IP protocol.
+
+    nslookup [-SubCommand ...] [{ComputerToFind| [-Server]}]
+    
+#####Parameters
+
+    -SubCommand ... : Specifies one or more nslookup subcommands as a command-line option. For a list of subcommands, see Related Topics.
+
+    ComputerToFind : Looks up information for ComputerToFind using the current default DNS name server, if no other server is specified. To look up a computer not in the current DNS domain, append a period to the name.
+
+    -Server : Specifies to use this server as the DNS name server. If you omit -Server, the default DNS name server is used.
+
+    {help|?} : Displays a short summary of nslookup subcommands. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/nslookup.mspx?mfr=true>)
+
+####Ping
+
+Verifies IP-level connectivity to another TCP/IP computer by sending Internet Control Message Protocol (ICMP) Echo Request messages. The receipt of corresponding Echo Reply messages are displayed, along with round-trip times. Ping is the primary TCP/IP command used to troubleshoot connectivity, reachability, and name resolution. Used without parameters, ping displays help.
+
+    ping [-t] [-a] [-n Count] [-l Size] [-f] [-i TTL] [-v TOS] [-r Count] [-s Count] [{-j HostList | -k HostList}] [-w Timeout] [TargetName]
+    
+#####Parameters
+
+    -t : Specifies that ping continue sending Echo Request messages to the destination until interrupted. To interrupt and display statistics, press CTRL-BREAK. To interrupt and quit ping, press CTRL-C.
+
+    -a : Specifies that reverse name resolution is performed on the destination IP address. If this is successful, ping displays the corresponding host name.
+
+    -n Count : Specifies the number of Echo Request messages sent. The default is 4.
+
+    -l Size : Specifies the length, in bytes, of the Data field in the Echo Request messages sent. The default is 32. The maximum size is 65,527.
+
+    -f : Specifies that Echo Request messages are sent with the Don't Fragment flag in the IP header set to 1. The Echo Request message cannot be fragmented by routers in the path to the destination. This parameter is useful for troubleshooting path Maximum Transmission Unit (PMTU) problems.
+
+    -i TTL : Specifies the value of the TTL field in the IP header for Echo Request messages sent. The default is the default TTL value for the host. For Windows XP hosts, this is typically 128. The maximum TTL is 255.
+
+    -v TOS : Specifies the value of the Type of Service (TOS) field in the IP header for Echo Request messages sent. The default is 0. TOS is specified as a decimal value from 0 to 255.
+
+    -r Count : Specifies that the Record Route option in the IP header is used to record the path taken by the Echo Request message and corresponding Echo Reply message. Each hop in the path uses an entry in the Record Route option. If possible, specify a Count that is equal to or greater than the number of hops between the source and destination. The Count must be a minimum of 1 and a maximum of 9.
+
+    -s Count : Specifies that the Internet Timestamp option in the IP header is used to record the time of arrival for the Echo Request message and corresponding Echo Reply message for each hop. The Count must be a minimum of 1 and a maximum of 4.
+
+    -j HostList : Specifies that the Echo Request messages use the Loose Source Route option in the IP header with the set of intermediate destinations specified in HostList. With loose source routing, successive intermediate destinations can be separated by one or multiple routers. The maximum number of addresses or names in the host list is 9. The host list is a series of IP addresses (in dotted decimal notation) separated by spaces.
+
+    -k HostList : Specifies that the Echo Request messages use the Strict Source Route option in the IP header with the set of intermediate destinations specified in HostList. With strict source routing, the next intermediate destination must be directly reachable (it must be a neighbor on an interface of the router). The maximum number of addresses or names in the host list is 9. The host list is a series of IP addresses (in dotted decimal notation) separated by spaces.
+
+    -w Timeout : Specifies the amount of time, in milliseconds, to wait for the Echo Reply message that corresponds to a given Echo Request message to be received. If the Echo Reply message is not received within the time-out, the "Request timed out" error message is displayed. The default time-out is 4000 (4 seconds).
+
+    TargetName : Specifies the destination, which is identified either by IP address or host name.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ping.mspx?mfr=true>)
+
+####ipconfig
+
+Displays all current TCP/IP network configuration values and refreshes Dynamic Host Configuration Protocol (DHCP) and Domain Name System (DNS) settings. Used without parameters, ipconfig displays the IP address, subnet mask, and default gateway for all adapters.
+
+    ipconfig [/all] [/renew [Adapter]] [/release [Adapter]] [/flushdns] [/displaydns] [/registerdns] [/showclassid Adapter] [/setclassid Adapter [ClassID]]
+
+#####Parameters
+
+    /all : Displays the full TCP/IP configuration for all adapters. Without this parameter, ipconfig displays only the IP address, subnet mask, and default gateway values for each adapter. Adapters can represent physical interfaces, such as installed network adapters, or logical interfaces, such as dial-up connections.
+
+    /renew [Adapter] : Renews DHCP configuration for all adapters (if an adapter is not specified) or for a specific adapter if the Adapter parameter is included. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically. To specify an adapter name, type the adapter name that appears when you use ipconfig without parameters.
+
+    /release [Adapter] : Sends a DHCPRELEASE message to the DHCP server to release the current DHCP configuration and discard the IP address configuration for either all adapters (if an adapter is not specified) or for a specific adapter if the Adapter parameter is included. This parameter disables TCP/IP for adapters configured to obtain an IP address automatically. To specify an adapter name, type the adapter name that appears when you use ipconfig without parameters.
+
+    /flushdns : Flushes and resets the contents of the DNS client resolver cache. During DNS troubleshooting, you can use this procedure to discard negative cache entries from the cache, as well as any other entries that have been added dynamically.
+
+    /displaydns : Displays the contents of the DNS client resolver cache, which includes both entries preloaded from the local Hosts file and any recently obtained resource records for name queries resolved by the computer. The DNS Client service uses this information to resolve frequently queried names quickly, before querying its configured DNS servers.
+
+    /registerdns : Initiates manual dynamic registration for the DNS names and IP addresses that are configured at a computer. You can use this parameter to troubleshoot a failed DNS name registration or resolve a dynamic update problem between a client and the DNS server without rebooting the client computer. The DNS settings in the advanced properties of the TCP/IP protocol determine which names are registered in DNS.
+
+    /showclassid Adapter : Displays the DHCP class ID for a specified adapter. To see the DHCP class ID for all adapters, use the asterisk (*) wildcard character in place of Adapter. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically.
+
+    /setclassid Adapter [ClassID] : Configures the DHCP class ID for a specified adapter. To set the DHCP class ID for all adapters, use the asterisk (*) wildcard character in place of Adapter. This parameter is available only on computers with adapters that are configured to obtain an IP address automatically. If a DHCP class ID is not specified, the current class ID is removed.
+
+    /?: Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/ipconfig.mspx?mfr=true>)
+
+####Route
+
+Displays and modifies the entries in the local IP routing table. Used without parameters, route displays help.
+
+    route [-f] [-p] [Command [Destination] [mask Netmask] [Gateway] [metric Metric]] [if Interface]]
+    
+#####Parameters
+
+    -f : Clears the routing table of all entries that are not host routes (routes with a netmask of 255.255.255.255), the loopback network route (routes with a destination of 127.0.0.0 and a netmask of 255.0.0.0), or a multicast route (routes with a destination of 224.0.0.0 and a netmask of 240.0.0.0). If this is used in conjunction with one of the commands (such as add, change, or delete), the table is cleared prior to running the command.
+
+    -p : When used with the add command, the specified route is added to the registry and is used to initialize the IP routing table whenever the TCP/IP protocol is started.
+    
+#####Examples
+
+    route print         #To display the entire contents of the IP routing table
+    route print 10.*    #To display the routes in the IP routing table that begin with 10.
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/route.mspx?mfr=true>)
+
+####Netstat
+
+Displays active TCP connections, ports on which the computer is listening, Ethernet statistics, the IP routing table, IPv4 statistics (for the IP, ICMP, TCP, and UDP protocols), and IPv6 statistics (for the IPv6, ICMPv6, TCP over IPv6, and UDP over IPv6 protocols). Used without parameters, netstat displays active TCP connections.
+
+    netstat [-a] [-e] [-n] [-o] [-p Protocol] [-r] [-s] [Interval]
+    
+#####Parameters
+
+    -a : Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
+
+    -e : Displays Ethernet statistics, such as the number of bytes and packets sent and received. This parameter can be combined with -s.
+
+    -n : Displays active TCP connections, however, addresses and port numbers are expressed numerically and no attempt is made to determine names.
+
+    -o : Displays active TCP connections and includes the process ID (PID) for each connection. You can find the application based on the PID on the Processes tab in Windows Task Manager. This parameter can be combined with -a, -n, and -p.
+
+    -p Protocol : Shows connections for the protocol specified by Protocol. In this case, the Protocol can be tcp, udp, tcpv6, or udpv6. If this parameter is used with -s to display statistics by protocol, Protocol can be tcp, udp, icmp, ip, tcpv6, udpv6, icmpv6, or ipv6.
+
+    -s : Displays statistics by protocol. By default, statistics are shown for the TCP, UDP, ICMP, and IP protocols. If the IPv6 protocol for Windows XP is installed, statistics are shown for the TCP over IPv6, UDP over IPv6, ICMPv6, and IPv6 protocols. The -p parameter can be used to specify a set of protocols.
+
+    -r : Displays the contents of the IP routing table. This is equivalent to the route print command.
+
+    Interval : Redisplays the selected information every Interval seconds. Press CTRL+C to stop the redisplay. If this parameter is omitted, netstat prints the selected information only once.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/netstat.mspx?mfr=true>)
 
 
 
+###Time
 
+Displays or sets the system time. Used without parameters, time displays the system time and prompts you to enter a new time.
+Syntax
+
+    time [/t] [/time] [hours:[minutes[:seconds[.hundredths]]][{A|P}]]
+
+####Parameters
+
+    /t : Displays the current system time, without prompting you to enter a new time.
+
+    /time : Same as /t.
+
+    hours : Specifies the hour. Valid values are in the range 0 through 23.
+
+    minutes : Specifies minutes. Valid values are in the range 0 through 59.
+
+    seconds : Specifies seconds. Valid values are in the range 0 through 59.
+
+    hundredths : Specifies hundredths of a second. Valid values are in the range 0 through 99.
+
+    {A|P} : Specifies A.M or P.M. for the 12-hour time format. If you type a valid 12-hour time but do not type A or P, time uses A for A.M.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/time.mspx?mfr=true>)
+
+###Telnet commands
+
+The telnet commands allow you to communicate with a remote computer that is using the Telnet protocol. You can run telnet without parameters in order to enter the telnet context, indicated by the Telnet prompt (telnet>). From the Telnet prompt, use the following commands to manage a computer running Telnet Client.
+
+    telnet [\\RemoteServer]
+
+####Parameters
+
+    \\RemoteServer : Specifies the name of the server to which you want to connect.
+
+    /?: Displays help at the command prompt.
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/telnet_commands.mspx?mfr=true>)
+
+###Title
+
+Creates a title for the command prompt window.
+
+    title [string]
+
+####Parameters
+
+    string : Specifies the title for the command prompt window.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/title.mspx?mfr=true>)
+
+###Tree
+
+Graphically displays the directory structure of a path or of the disk in a drive.
+
+    tree [Drive:][Path] [/f] [/a]
+
+####Parameters
+
+    Drive: : Specifies the drive that contains the disk for which you want to display the directory structure.
+
+    Path : Specifies the directory for which you want to display the directory structure.
+
+    /f : Displays the names of the files in each directory.
+
+    /a : Specifies that tree is to use text characters instead of graphic characters to show the lines linking subdirectories.
+
+    /? : Displays help at the command prompt. 
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/tree.mspx?mfr=true>)
+
+###Type
+
+Displays the contents of a text file. Use the type command to view a text file without modifying it.
+Syntax
+
+    type [Drive:][Path] FileName
+
+####Parameters
+
+    [Drive:][Path] FileName : Specifies the location and name of the file or files that you want to view. Separate multiple file names with spaces.
+
+    /? : Displays help at the command prompt.
+
+####Examples
+
+    type holiday.mar            #To display the contents of a file named Holiday.mar
+
+    type holiday.mar | more     #To display the contents of a lengthy file one screen at a time
+
+(Read more: <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/type.mspx?mfr=true>)
 

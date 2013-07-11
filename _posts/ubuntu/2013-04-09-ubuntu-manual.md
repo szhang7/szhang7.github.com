@@ -160,6 +160,21 @@ tags: [ubuntu, Manual, fdisk, mount, fstab]
     $ sudo apt-get install rar          # Install rar
     $ rar e file.rar                    # Extract file.rar
 
+### Q & A
+
+####Q1. Chinese garbled.
+ 
+A1. install unrar
+
+    $ sudo apt-get remove rar
+    $ sudo apt-get install unrar
+    
+A2. install p7zip
+
+    $ sudo apt-get install p7zip-rar
+
+(Read more: <http://www.cnblogs.com/feng_013/archive/2012/04/23/2466224.html>)
+
 ## Alias
 
     alias [name]=[value]
