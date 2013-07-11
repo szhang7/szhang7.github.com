@@ -1,13 +1,13 @@
 ---
 layout: post
 title: "Configuring the Development Environment"
-description: "The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN."
+description: "The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, Mongodb, and SVN."
 category: java
-tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, mysql, svn]
+tags: [ubuntu, java, jdk, jre, development environment, jenkins, maven, tomcat, mysql,mongodb, svn]
 ---
 {% include JB/setup %}
 
-The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, and SVN.
+The purpose of this article is to establish a continuous integrated development environment. The main tools include JDK, Jenkins, Maven, Tomcan, Mysql, Mongodb, and SVN.
 
 #  Ubuntu 12.04 LTS
 
@@ -82,22 +82,26 @@ If you can see the above contents, congratulations! It means that you successful
 ## Sonatype Nexus
 Download nexus from <http://www.sonatype.org/nexus>.
 
-    1. Setup environment variable
+###Setup environment variable
+
     $ sudo gedit /etc/profile
     export NEXUS_HOME=/data/ubuntu/nexus/nexus-2.1.1
     export PATH=$NEXUS_HOME/bin:$PATH
     $ source /etc/profile
     
-    2. Run
+###Run
+
     $ nexus start
     
-    3. Create system service
+###Create system service
+
     $ cd etc/init.d
     $ sudo cp $NEXUS_HOME/../nexus
     $ sudo update-rc.d nexus
     $ sudo service nexus start
 
 ###shell nexus
+
     # Add some variables
     NEXUS_HOME=/data/ubuntu/nexus/nexus-2.1.1
     JAVA_HOME=/data/ubuntu/jdk/jdk1.6.0_32
@@ -358,6 +362,80 @@ Readmore:
     Merge Tool: /usr/bin/kdiff3
     
 (Read more: <http://www.cnblogs.com/end/archive/2012/11/22/2782241.html>)
+
+## MongoDB configuration
+Download [mongodb](http://www.mongodb.org/downloads)
+
+    $ curl http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.4.5.tgz
+
+    $ tar -zxvf mongodb-linux-i686-2.4.5.tgz
+    $ mkdir data
+    $ mkdir log
+
+###Setup environment variable
+    $ sudo gedit /etc/profile
+    export MONGO_HOME=/data/ubuntu/mongodb/mongodb-linux-i686-2.4.5
+    export PATH=$MONGO_HOME/bin:$PATH
+    $ source /etc/profile
+
+###mongodb.conf
+    dbpath=/data/ubuntu/mongodb/data/
+    logpath=/data/ubuntu/mongodb/log/mongodb.log
+    logappend=true
+    port=27017
+    fork=true
+    noauth=true
+
+###Run mongodb
+    $ mongod -f /etc/mongodb.conf
+
+###Use mongodb
+    $ mongo
+    > db.test.save({name:'admin'}) { "_id" : ObjectId("50d1440ef328346cb06c319f"), "name" : "admin" }
+    > db.test.find()
+    > db.test.remove()
+    > db.test.find()
+
+###Mongod--start shell
+    #!/bin/sh
+
+    . /lib/lsb/init-functions
+    CONFIG="/etc/mongodb.conf"
+    PROGRAM="/data/ubuntu/mongodb/mongodb-linux-i686-2.4.5/bin/mongod"
+    MONGOPID=`ps -ef | grep 'mongod' | grep -v grep | awk '{print $2}'`
+
+    test -x $PROGRAM || exit 0
+
+    case "$1" in
+    start)
+    ulimit -n 3000
+    log_begin_msg "Starting MongoDB Server"
+    $PROGRAM -f $CONFIG &
+    log_end_msg 0
+    ;;
+    stop)
+    log_begin_msg "Stopping MongoDB Server"
+    if [ ! -z "$MONGOPID" ]; then
+    kill -15 $MONGOPID
+    fi
+    log_end_msg 0
+    ;;
+    *)
+    log_success_msg "Usage:/etc/init.d/mongod {start|stop}"
+    exit 1
+    esac
+
+    exit 0
+
+####Setup boot start
+    $ update-rc.d mongod defaults
+    
+    $ sudo service mongodb start
+    $ sudo service mongodb stop
+    $ /etc/init.d/mongodb start
+    $ /etc/init.d/mongodb stop
+
+(Read more: <http://blog.163.com/minhao_123/blog/static/12195262012111903242928/>)
 
 ## Github
 
