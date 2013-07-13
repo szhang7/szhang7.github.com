@@ -286,7 +286,7 @@ display a line of text.
 
 (Read more: <http://linux.about.com/library/cmd/blcmdl1_echo.htm>)
 
-Modify the terminal title
+Set the terminal title
 
     echo -ne "\033]0;$MY_TITLE\007"
 
