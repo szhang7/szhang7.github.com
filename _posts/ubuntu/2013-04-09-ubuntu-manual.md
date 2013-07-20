@@ -323,6 +323,45 @@ If given condition is true then command1 is executed otherwise command2 is execu
 
 (Read more: <http://freeos.com/guides/lsst/ch03sec03.html>)
 
+###test command or \[ expr \]
+test command or \[ expr \] is used to see if an expression is true, and if it is true it return zero(0), otherwise returns nonzero for false.
+
+    test expression OR [ expression ]
+
+####Mathematical operators
+    -eq	is equal to	                5 == 6	    if test 5 -eq 6	    if [ 5 -eq 6 ]
+    -ne	is not equal to	            5 != 6	    if test 5 -ne 6	    if [ 5 -ne 6 ]
+    -lt	is less than	            5 < 6	    if test 5 -lt 6	    if [ 5 -lt 6 ]
+    -le	is less than or equal to	5 <= 6	    if test 5 -le 6	    if [ 5 -le 6 ]
+    -gt	is greater than	            5 > 6	    if test 5 -gt 6	    if [ 5 -gt 6 ]
+    -ge	is greater than or equal to	5 >= 6	    if test 5 -ge 6	    if [ 5 -ge 6 ]
+
+####String comparisons
+    string1 = string2	string1 is equal to string2
+    string1 != string2	string1 is NOT equal to string2
+    string1	            string1 is NOT NULL or not defined 
+    -n string1	        string1 is NOT NULL and does exist
+    -z string1	        string1 is NULL and does exist
+
+####Test for file and directory types
+    -s file   	Non empty file
+    -f file   	Is File exist or normal file and not a directory 
+    -d dir    	Is Directory exist and not a file
+    -w file  	Is writeable file
+    -r file   	Is read-only file
+    -x file   	Is file is executable
+
+####Logical Operators
+    ! expression	                Logical NOT
+    expression1 -a expression2	    Logical AND
+    expression1 -o expression2	    Logical OR
+
+Read more:
+
+- <http://freeos.com/guides/lsst/ch03sec02.html>
+- <http://www.tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html>
+- <http://andrew913.iteye.com/blog/277801>
+
 ###for Loop
     for {variable name} in {list}
     do
@@ -367,6 +406,76 @@ NetworkManager Tool, list devices, IPv4 settings(address, gateway,DNS)
     
     $ nm-tool
 
+###sed
+sed is a stream editor. A stream editor is used to perform basic text transformations on an input stream (a file or input from a pipeline).
 
+    sed OPTIONS... [SCRIPT] [INPUTFILE...]
 
+####command-line options
+    -n, --quiet, --silent
+                 suppress automatic printing of pattern space
+    -e script, --expression=script
+                 add the script to the commands to be executed
+    -f script-file, --file=script-file
+                 add the contents of script-file to the commands to be executed
+    --follow-symlinks
+                 follow symlinks when processing in place
+    -i[SUFFIX], --in-place[=SUFFIX]
+                 edit files in place (makes backup if extension supplied)
+    -l N, --line-length=N
+                 specify the desired line-wrap length for the `l' command
+    --posix
+                 disable all GNU extensions.
+    -r, --regexp-extended
+                 use extended regular expressions in the script.
+    -s, --separate
+                 consider files as separate rather than as a single continuous
+                 long stream.
+    -u, --unbuffered
+                 load minimal amounts of data from the input files and flush
+                 the output buffers more often
+    --help     display this help and exit
+    --version  output version information and exit
+
+####The s Command
+The syntax of the s (as in substitute) command is ‘s/regexp/replacement/flags’.
+
+The s command can be followed by zero or more of the following flags: 
+
+    g   Apply the replacement to all matches to the regexp, not just the first. 
+    i   The I modifier to regular-expression matching is a GNU extension which makes sed match regexp in a case-insensitive manner. 
+    p   If the substitution was made, then print the new pattern space. 
+
+(Read more: <http://www.gnu.org/software/sed/manual/sed.html>)
+
+###cp
+Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
+
+    cp [OPTION]... [-T] SOURCE DEST
+    cp [OPTION]... SOURCE... DIRECTORY
+    cp [OPTION]... -t DIRECTORY SOURCE...
+
+####Parameters
+    -f, --force                  if an existing destination file cannot be
+                                 opened, remove it and try again (redundant if
+                                 the -n option is used)
+    -i, --interactive            prompt before overwrite (overrides a previous -n
+                                  option)
+    -R, -r, --recursive          copy directories recursively
+      --reflink[=WHEN]           control clone/CoW copies. See below
+      --remove-destination       remove each existing destination file before
+                                 attempting to open it (contrast with --force)
+      --sparse=WHEN              control creation of sparse files. See below
+      --strip-trailing-slashes   remove any trailing slashes from each SOURCE
+                                 argument
+    -t, --target-directory=DIRECTORY  copy all SOURCE arguments into DIRECTORY
+    -T, --no-target-directory    treat DEST as a normal file
+
+###Linux System Services
+Services are put into /etc/init.d
+
+    update-rc.d mysqld defaults     #Create service mysqld
+    update-rc.d -f mysqld remove    #Delete service mysqld
+
+(Read more: <http://blog.sina.com.cn/s/blog_79159ef50100z1ax.html>)
 
