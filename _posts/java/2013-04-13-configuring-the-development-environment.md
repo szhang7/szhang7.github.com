@@ -276,6 +276,11 @@ Readmore:
     $ mysqladmin -u username -p old_password -password new_password
     $ mysql -u username -p db_name < db_name.sql        # import from db_name.sql
     
+    mysql> use db_name;
+    mysql> source < db_name.sql                         # import from db_name.sql
+    
+    $ mysql -u username -p db_name > db_name.sql        # backup database db_name
+    
     # Dumping data with mysqldump
     $ mysqldump [arguments] > filename
     $ mysqldump --all-databases > dump.sql
@@ -296,6 +301,19 @@ Readmore:
 
 (Read more: <http://www.cnblogs.com/yuxc/archive/2012/07/25/2607587.html>)
 
+###Create database by using command
+    1.use channel
+    echo "create database if not exists abcd character set utf8;" | mysql -u username -p password
+
+    2. use here document
+    mysql -u username -p password <<!
+    create database if not exists abc character set utf8;
+    !
+    
+    3. mysqladmin -h localhost(ip address) -u username -p password create db_name
+
+(Read more: <http://bbs.csdn.net/topics/380238926>)
+
 ###emma--mysql GUI
     $ sudo apt-get install emma                         # Install emma
     $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
@@ -314,6 +332,16 @@ Readmore:
     $ sudo ln -s /tmp/mysql.sock  /run/mysqld/mysqld.sock
 
 (Read more: <http://www.2cto.com/kf/201305/210034.html>)
+
+3. can't import long script
+
+    mysql>source data.sql      #size 99M
+    Error
+    
+    modify my.cnf
+    max_allowed_packet=100M
+
+(Read more: <http://www.hackbase.com/tech/2011-03-23/63052.html>)
 
 ###Appendix
     my.cnf
