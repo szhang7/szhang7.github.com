@@ -63,6 +63,19 @@ shell hello
         project_name="$str"
     }
 
+### return string value
+    is_true(){
+    if [ 5 -gt 3 ] ; then
+        echo "yes"
+    else
+        echo "no"
+    fi
+    }
+    ret=$(is_true)
+    echo "ret is : $ret"
+
+(Read more: <http://blog.chinaunix.net/uid-20686716-id-201383.html>)
+
 ### function pause
     function pause(){
         #if test -z "$1"     # zero length string

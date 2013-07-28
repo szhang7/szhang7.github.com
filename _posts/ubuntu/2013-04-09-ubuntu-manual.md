@@ -312,7 +312,7 @@ Execute script repeatedly as long as a condition is met.
 ###if...else...fi
 If given condition is true then command1 is executed otherwise command2 is executed.
 
-    if condition
+    if condition    #0-->true-->then, condition not support integar variable.
     then
         condition is zero(true - 0)
         execute all commands to else statement
@@ -478,4 +478,101 @@ Services are put into /etc/init.d
     update-rc.d -f mysqld remove    #Delete service mysqld
 
 (Read more: <http://blog.sina.com.cn/s/blog_79159ef50100z1ax.html>)
+
+###grep
+Search for PATTERN in each FILE or standard input.
+
+    grep [OPTION]... PATTERN [FILE]...
+
+####Example:
+    grep -i 'hello world' menu.h main.c
+    grep -rn "hello,world!" ./              #search "hello,world!" in current directory and sub directories.
+
+####Regexp selection and interpretation:
+    -E, --extended-regexp     PATTERN is an extended regular expression (ERE)
+    -F, --fixed-strings       PATTERN is a set of newline-separated fixed strings
+    -G, --basic-regexp        PATTERN is a basic regular expression (BRE)
+    -P, --perl-regexp         PATTERN is a Perl regular expression
+    -e, --regexp=PATTERN      use PATTERN for matching
+    -f, --file=FILE           obtain PATTERN from FILE
+    -i, --ignore-case         ignore case distinctions
+    -w, --word-regexp         force PATTERN to match only whole words
+    -x, --line-regexp         force PATTERN to match only whole lines
+    -z, --null-data           a data line ends in 0 byte, not newline
+
+####Miscellaneous:
+    -s, --no-messages         suppress error messages
+    -v, --invert-match        select non-matching lines
+    -V, --version             print version information and exit
+      --help                display this help and exit
+      --mmap                ignored for backwards compatibility
+
+####Output control:
+    -m, --max-count=NUM       stop after NUM matches
+    -b, --byte-offset         print the byte offset with output lines
+    -n, --line-number         print line number with output lines
+      --line-buffered       flush output on every line
+    -H, --with-filename       print the file name for each match
+    -h, --no-filename         suppress the file name prefix on output
+      --label=LABEL         use LABEL as the standard input file name prefix
+    -o, --only-matching       show only the part of a line matching PATTERN
+    -q, --quiet, --silent     suppress all normal output
+      --binary-files=TYPE   assume that binary files are TYPE;
+                            TYPE is `binary', `text', or `without-match'
+    -a, --text                equivalent to --binary-files=text
+    -I                        equivalent to --binary-files=without-match
+    -d, --directories=ACTION  how to handle directories;
+                            ACTION is `read', `recurse', or `skip'
+    -D, --devices=ACTION      how to handle devices, FIFOs and sockets;
+                            ACTION is `read' or `skip'
+    -R, -r, --recursive       equivalent to --directories=recurse
+      --include=FILE_PATTERN  search only files that match FILE_PATTERN
+      --exclude=FILE_PATTERN  skip files and directories matching FILE_PATTERN
+      --exclude-from=FILE   skip files matching any file pattern from FILE
+      --exclude-dir=PATTERN  directories that match PATTERN will be skipped.
+    -L, --files-without-match  print only names of FILEs containing no match
+    -l, --files-with-matches  print only names of FILEs containing matches
+    -c, --count               print only a count of matching lines per FILE
+    -T, --initial-tab         make tabs line up (if needed)
+    -Z, --null                print 0 byte after FILE name
+
+####Context control:
+    -B, --before-context=NUM  print NUM lines of leading context
+    -A, --after-context=NUM   print NUM lines of trailing context
+    -C, --context=NUM         print NUM lines of output context
+    -NUM                      same as --context=NUM
+      --color[=WHEN],
+      --colour[=WHEN]       use markers to highlight the matching strings;
+                            WHEN is `always', `never', or `auto'
+    -U, --binary              do not strip CR characters at EOL (MSDOS)
+    -u, --unix-byte-offsets   report offsets as if CRs were not there (MSDOS)
+
+    `egrep' means `grep -E'.  `fgrep' means `grep -F'.
+
+###type
+Display information about command type.
+
+    help type           #see type help
+    type [-afptP] name [name ...]
+
+####Options:
+    -a	display all locations containing an executable named NAME;
+        includes aliases, builtins, and functions, if and only if
+        the `-p' option is not also used
+    -f	suppress shell function lookup
+    -P	force a PATH search for each NAME, even if it is an alias,
+        builtin, or function, and returns the name of the disk file
+        that would be executed
+    -p	returns either the name of the disk file that would be executed,
+        or nothing if `type -t NAME' would not return `file'.
+    -t	output a single word which is one of `alias', `keyword',
+        `function', `builtin', `file' or `', if NAME is an alias, shell
+        reserved word, shell function, shell builtin, disk file, or not
+        found, respectively
+
+####Examples
+    type -t NAME
+    type -t init_pr
+
+
 
