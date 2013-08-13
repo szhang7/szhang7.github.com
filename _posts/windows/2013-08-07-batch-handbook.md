@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "Batch Manual"
-description: "Batch Manual document"
+title: "Batch Handbook"
+description: "Batch handbok"
 category: windows
-tags: [Batch, Manual]
+tags: [batch, handbook]
 ---
 {% include JB/setup %}
 
 ## Introduction
 In DOS, OS/2, and also Microsoft Windows, batch file is the name given to a type of script file, a text file containing a series of commands to be executed by the command interpreter.
 
-## Batch Function
+## Common batch scripts
 
 ###current path
     @echo off
@@ -143,15 +143,15 @@ In DOS, OS/2, and also Microsoft Windows, batch file is the name given to a type
     set i=0
     set str=
 
-    :start
+    :string_start
     if %i% LSS 100 (
         set /a i=i+1
         if !i! EQU 1 (
         set str=%str%!i!.mpg
-        goto :start
+        goto :string_start
         )
         set str=%str%+!i!.mpg
-        goto :start
+        goto :string_start
     )
     echo %str%
 
@@ -162,17 +162,19 @@ In DOS, OS/2, and also Microsoft Windows, batch file is the name given to a type
     set str=%str:"=%
     :format_start
     if %i% LSS 50 (
-    set /a i=i+1
-    rem set str=%str%-
-    if "!str:~%i%,1!"=="" set str=%str%-
-    goto :format_start
+        set /a i=i+1
+        rem set str=%str%-
+        if "!str:~%i%,1!"=="" set str=%str%-
+        goto :format_start
     )
     rem echo %str%
     rem return the result in 2nd parameter
     set %2=%str%
     goto :eof
 
-## Batch Menu
+## Examples
+
+###Batch Menu
     @echo off
     rem setlocal enabledelayedexpansion
     rem created by Johnny.Zhang
@@ -306,6 +308,6 @@ In DOS, OS/2, and also Microsoft Windows, batch file is the name given to a type
     rem function end
     exit
 
-###References
+## REFERENCES
 - <http://en.wikipedia.org/wiki/Batch_file>
 

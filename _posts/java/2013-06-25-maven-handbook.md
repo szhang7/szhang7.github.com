@@ -1,11 +1,27 @@
 ---
 layout: post
-title: "Maven Manual"
-description: ""
+title: "Maven Handbook"
+description: "Maven Handbook"
 category: java
-tags: [maven, manual, java]
+tags: [maven, mvn, handbook, java]
 ---
 {% include JB/setup %}
+
+## Introduction
+
+## Install Maven
+
+## Configuring Maven
+
+## Maven Build Lifecycle
+
+## Creating Maven Project
+
+## REFERENCES
+- [Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+- [Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
+- [Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
+
 
 ## What is Maven?
 At first glance Maven can appear to be many things, but in a nutshell Maven is an attempt to apply patterns to a project's build infrastructure in order to promote comprehension and productivity by providing a clear path in the use of best practices. Maven is essentially a project management and comprehension tool and as such provides a way to help with managing:
@@ -177,8 +193,4 @@ This command will clean the project, copy dependencies, and package the project 
 This phase generates a site based upon information on the project's pom.
 
 
-## REFERENCES
-- [Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
-- [Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-- [Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
 

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Windows Manual"
+title: "Windows Handbook"
 description: "Outline how to use windows 7"
 category: windows
-tags: [Windows, Manual]
+tags: [windows, handbook]
 ---
 {% include JB/setup %}
 

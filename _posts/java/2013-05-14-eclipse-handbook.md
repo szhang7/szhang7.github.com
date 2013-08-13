@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eclipse QA"
-description: "Eclipse question and answers"
+title: "Eclipse Handbook"
+description: "Eclipse handbook"
 category: java
-tags: [java, eclipse]
+tags: [eclipse, handbook, java]
 ---
 {% include JB/setup %}
 
@@ -23,4 +23,5 @@ A:
 
 (Read more: <http://www.cnblogs.com/jerome-rong/archive/2012/12/18/2822783.html>)
 
+## REFERENCES
 

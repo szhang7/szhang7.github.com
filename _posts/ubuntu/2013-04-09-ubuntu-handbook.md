@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Ubuntu Manual"
+title: "Ubuntu Handbook"
 description: "Outline how to use Ubuntu."
 category: ubuntu
-tags: [ubuntu, Manual, fdisk, mount, fstab]
+tags: [ubuntu, Handbook, fdisk, mount, fstab]
 ---
 {% include JB/setup %}
 
@@ -574,5 +574,79 @@ Display information about command type.
     type -t NAME
     type -t init_pr
 
+###wc
+Print newline, word, and byte counts for each FILE, and a total line if more than one FILE is specified.  With no FILE, or when FILE is -, read standard input.  A word is a non-zero-length sequence of characters delimited by white space.
+
+    wc [OPTION]... [FILE]...
+    wc [OPTION]... --files0-from=F
+
+####options
+    -c, --bytes            print the byte counts
+    -m, --chars            print the character counts
+    -l, --lines            print the newline counts
+        --files0-from=F    read input from the files specified by
+                           NUL-terminated names in file F;
+                           If F is - then read names from standard input
+    -L, --max-line-length  print the length of the longest line
+    -w, --words            print the word counts
+        --help     display this help and exit
+        --version  output version information and exit
+
+###tee
+Copy standard input to each FILE, and also to standard output.
+
+    tee [OPTION]... [FILE]...
+
+####Options
+    -a, --append              append to the given FILEs, do not overwrite
+    -i, --ignore-interrupts   ignore interrupt signals
+        --help     display this help and exit
+        --version  output version information and exit
+
+If a FILE is -, copy again to standard output.
+
+###find
+
+    find [-H] [-L] [-P] [-Olevel] [-D help|tree|search|stat|rates|opt|exec] [path...] [expression]
+
+default path is the current directory; default expression is -print expression may consist of: operators, options, tests, and actions:
+
+####operators
+    (decreasing precedence; -and is implicit where no others are given):
+    ( EXPR )   ! EXPR   -not EXPR   EXPR1 -a EXPR2   EXPR1 -and EXPR2
+    EXPR1 -o EXPR2   EXPR1 -or EXPR2   EXPR1 , EXPR2
+
+####positional options (always true):
+    -daystart -follow -regextype
+
+####normal options (always true, specified before other expressions):
+    -depth --help -maxdepth LEVELS -mindepth LEVELS -mount -noleaf
+    --version -xdev -ignore_readdir_race -noignore_readdir_race
+
+####tests (N can be +N or -N or N): -amin N -anewer FILE -atime N -cmin N
+    -cnewer FILE -ctime N -empty -false -fstype TYPE -gid N -group NAME
+    -ilname PATTERN -iname PATTERN -inum N -iwholename PATTERN -iregex PATTERN
+    -links N -lname PATTERN -mmin N -mtime N -name PATTERN -newer FILE
+    -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN
+    -readable -writable -executable
+    -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N
+    -used N -user NAME -xtype [bcdpfls]
+
+####actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print 
+    -fprint0 FILE -fprint FILE -ls -fls FILE -prune -quit
+    -exec COMMAND ; -exec COMMAND {} + -ok COMMAND ;
+    -execdir COMMAND ; -execdir COMMAND {} + -okdir COMMAND ;
+
+###xargs
+
+    xargs [-0prtx] [--interactive] [--null] [-d|--delimiter=delim]
+    [-E eof-str] [-e[eof-str]]  [--eof[=eof-str]]
+    [-L max-lines] [-l[max-lines]] [--max-lines[=max-lines]]
+    [-I replace-str] [-i[replace-str]] [--replace[=replace-str]]
+    [-n max-args] [--max-args=max-args]
+    [-s max-chars] [--max-chars=max-chars]
+    [-P max-procs]  [--max-procs=max-procs] [--show-limits]
+    [--verbose] [--exit] [--no-run-if-empty] [--arg-file=file]
+    [--version] [--help] [command [initial-arguments]]
 
 
