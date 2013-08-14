@@ -124,6 +124,13 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
     
 (Read more: <https://help.ubuntu.com/community/Skype>)
 
+## AsciiDoc
+AsciiDoc is a text document format for writing notes, documentation, articles, books, ebooks, slideshows, web pages, man pages and blogs. AsciiDoc files can be translated to many formats including HTML, PDF, EPUB, man page.
+
+    $ sudo apt-get install asciidoc
+
+(Read more: <http://www.methods.co.nz/asciidoc/>)
+
 ## Can't find wireless
 
     $ sudo gedit /etc/NetworkManager/NetworkManager.conf

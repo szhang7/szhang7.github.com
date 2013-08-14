@@ -8,69 +8,213 @@ tags: [maven, mvn, handbook, java]
 {% include JB/setup %}
 
 ## Introduction
+Maven, a Yiddish word meaning accumulator of knowledge, was originally started as an attempt to simplify the build processes in the Jakarta Turbine project. There were several projects each with their own Ant build files that were all slightly different and JARs were checked into CVS. We wanted a standard way to build the projects, a clear definition of what the project consisted of, an easy way to publish project information and a way to share JARs across several projects.
 
-## Install Maven
+The result is a tool that can now be used for building and managing any Java-based project. We hope that we have created something that will make the day-to-day work of Java developers easier and generally help with the comprehension of any Java-based project.
+
+## Installation Instructions
+Maven is a Java tool, so you must have Java installed in order to proceed. More precisely, you need a Java Development Kit (JDK), the Java Runtime Environment (JRE) is not sufficient. Additional optional installation steps are listed after the platform specific instructions. For more details, please refer to the [Download and Installation](http://maven.apache.org/download.cgi) instructions.
+
+###Windows 2000/XP/Win7
+
+1. Unzip the distribution archive, i.e. apache-maven-3.1.0-bin.zip to the directory you wish to install Maven 3.1.0. These instructions assume you chose C:\Program Files\Apache Software Foundation. The subdirectory apache-maven-3.1.0 will be created from the archive.
+
+2. Add the M2_HOME environment variable by opening up the system properties (WinKey + Pause), selecting the "Advanced" tab, and the "Environment Variables" button, then adding the M2_HOME variable in the user variables with the value C:\Program Files\Apache Software Foundation\apache-maven-3.1.0. Be sure to omit any quotation marks around the path even if it contains spaces. Note: For Maven   2.0.9, also be sure that the M2_HOME doesn't have a '\' as last character.
+
+3. In the same dialog, add the M2 environment variable in the user variables with the value %M2_HOME%\bin.
+
+4. Optional: In the same dialog, add the MAVEN_OPTS environment variable in the user variables to specify JVM properties, e.g. the value -Xms256m -Xmx512m. This environment variable can be used to supply extra options to Maven.
+
+5. In the same dialog, update/create the Path environment variable in the user variables and prepend the value %M2% to add Maven available in the command line.
+
+6. In the same dialog, make sure that JAVA_HOME exists in your user variables or in the system variables and it is set to the location of your JDK, e.g. C:\Program Files\Java\jdk1.5.0_02 and that %JAVA_HOME%\bin is in your Path environment variable.
+
+7. Open a new command prompt (Winkey + R then type cmd) and run mvn --version to verify that it is correctly installed.
+
+###Unix-based Operating Systems(Linux, Solaris and Mac OS X)
+
+1. Extract the distribution archive, i.e. apache-maven-3.1.0-bin.tar.gz to the directory you wish to install Maven 3.1.0. These instructions assume you chose /usr/local/apache-maven. The subdirectory apache-maven-3.1.0 will be created from the archive.
+
+2. In a command terminal, add the M2_HOME environment variable, e.g. export M2_HOME=/usr/local/apache-maven/apache-maven-3.1.0.
+
+3. Add the M2 environment variable, e.g. export M2=$M2_HOME/bin.
+
+4. Optional: Add the MAVEN_OPTS environment variable to specify JVM properties, e.g. export MAVEN_OPTS="-Xms256m -Xmx512m". This environment variable can be used to supply extra options to Maven.
+
+5. Add M2 environment variable to your path, e.g. export PATH=$M2:$PATH.
+
+6. Make sure that JAVA_HOME is set to the location of your JDK, e.g. export JAVA_HOME=/usr/java/jdk1.5.0_02 and that $JAVA_HOME/bin is in your PATH environment variable.
+
+7. Run mvn --version to verify that it is correctly installed.
 
 ## Configuring Maven
+Maven configuration occurs at 3 levels:
+
+- Project - most static configuration occurs in pom.xml
+- Installation - this is configuration added once for a Maven installation
+- User - this is configuration specific to a particular user
+
+The separation is quite clear - the project defines information that applies to the project, no matter who is building it, while the others both define settings for the current environment.
+
+**Note:** the installation and user configuration can not be used to add shared project information - for example, setting `<organization>` or `<distributionManagement>` company-wide.
+
+For this, you should have your projects inherit from a company-wide parent pom.xml.
+
+You can specify your configuration in `${user.home}/.m2/settings.xml`.
+
+###Quick Overview
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          http://maven.apache.org/xsd/settings-1.0.0.xsd">
+      <localRepository/>
+      <interactiveMode/>
+      <usePluginRegistry/>
+      <offline/>
+      <pluginGroups/>
+      <servers/>
+      <mirrors/>
+      <proxies/>
+      <profiles/>
+      <activeProfiles/>
+    </settings>
+
+###Configuring your Local Repository
+    <settings>
+      ...
+      <localRepository>/path/to/local/repo/</localRepository>
+      <interactiveMode>true</interactiveMode>
+      <usePluginRegistry>false</usePluginRegistry>
+      <offline>false</offline>
+      ...
+    </settings>
+
+Note: The local repository must be an absolute path.
+
+###Plugin Groups
+    <settings>
+      ...
+      <pluginGroups>
+        <pluginGroup>org.mortbay.jetty</pluginGroup>
+      </pluginGroups>
+      ...
+    </settings>
+
+For example, given the above settings the Maven command line may execute org.mortbay.jetty:jetty-maven-plugin:run with the truncated command:
+
+    mvn jetty:run
+
+###Security and Deployment Settings
+Repositories to deploy to are defined in a project in the <distributionManagement> section. However, you cannot put your username, password, or other security settings in that project. For that reason, you should add a server definition to your own settings with an id that matches that of the deployment repository in the project.
+
+    <settings>
+      ...
+      <servers>
+        <server>
+          <id>repo1</id>
+          <username>repouser</username>
+          <!-- other optional elements:
+            <password>my_login_password</password>
+            <privateKey>/path/to/identity</privateKey> (default is ~/.ssh/id_dsa)
+            <passphrase>my_key_passphrase</passphrase>
+          -->
+        </server>
+      ...
+      </servers>
+      ...
+    </settings>
+
+To encrypt passwords in these sections, refer to [Encryption Settings](http://maven.apache.org/guides/mini/guide-encryption.html).
+
+###Using Mirrors for Repositories
+Some reasons to use a mirror are:
+
+- There is a synchronized mirror on the internet that is geographically closer and faster
+- You want to replace a particular repository with your own internal repository which you have greater control over
+- You want to run a repository manager to provide a local cache to a mirror and need to use its URL instead
+
+    <settings>
+      ...
+      <mirrors>
+        <mirror>
+          <id>UK</id>
+          <name>UK Central</name>
+          <url>http://uk.maven.org/maven2</url>
+          <mirrorOf>central</mirrorOf>
+        </mirror>
+      </mirrors>
+      ...
+    </settings>
+
+You can force Maven to use a single repository by having it mirror all repository requests. To achieve this, set mirrorOf to *.
+
+Refer to [Guide to Mirror Settings](http://maven.apache.org/guides/mini/guide-configuring-maven.html) for more details.
+
+###Configuring a proxy
+    <settings>
+      .
+      .
+      <proxies>
+       <proxy>
+          <active>true</active>
+          <protocol>http</protocol>
+          <host>proxy.somewhere.com</host>
+          <port>8080</port>
+          <username>proxyuser</username>
+          <password>somepassword</password>
+          <nonProxyHosts>www.google.com|*.somewhere.com</nonProxyHosts>
+        </proxy>
+      </proxies>
+      .
+      .
+    </settings>
+
+For more information, see the [Guide to using a Proxy](http://maven.apache.org/guides/mini/guide-proxies.html).
+
+###Configuring Parallel Artifact Resolution
+By default, Maven 2.1.0+ will download up to 5 artifacts (from different groups) at once. To change the size of the thread pool, start Maven using -Dmaven.artifact.threads.
+
+    mvn -Dmaven.artifact.threads=1 clean install
+    export MAVEN_OPTS=-Dmaven.artifact.threads=3
 
 ## Maven Build Lifecycle
-
-## Creating Maven Project
-
-## REFERENCES
-- [Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-- [Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
-- [Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
-
-
-## What is Maven?
-At first glance Maven can appear to be many things, but in a nutshell Maven is an attempt to apply patterns to a project's build infrastructure in order to promote comprehension and productivity by providing a clear path in the use of best practices. Maven is essentially a project management and comprehension tool and as such provides a way to help with managing:
-
-- Builds
-- Documentation
-- Reporting
-- Dependencies
-- SCMs
-- Releases
-- Distribution
-
-## How do I make my first Maven project?
-In order to create the simplest of Maven projects, execute the following from the command line:
-
-    mvn archetype:generate \
-    -DarchetypeGroupId=org.apache.maven.archetypes \
-    -DgroupId=com.mycompany.app \
-    -DartifactId=my-app
-
-Once you have executed this command, you will notice a few things have happened. First, you will notice that a directory named my-app has been created for the new project, and this directory contains a file named pom.xml that should look like this:
-
-    <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany.app</groupId>
-    <artifactId>my-app</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>Maven Quick Start Archetype</name>
-    <url>http://maven.apache.org</url>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    </project>
-
-## Build Lifecycle
 Maven 2.0 is based around the central concept of a build lifecycle. What this means is that the process for building and distributing a particular artifact (project) is clearly defined.
 
-For the person building a project, this means that it is only necessary to learn a small set of commands to build any Maven project, and the POM will ensure they get the results they desired.
+There are three built-in build lifecycles: default, clean and site. The default lifecycle handles your project deployment, the clean lifecycle handles project cleaning, while the site lifecycle handles the creation of your project's site documentation.
 
-There are three built-in build lifecycles: default, clean, site. The default lifecycle handles your project deployment, the clean lifecycle handles project cleaning, while the site lifecycle handles the creation of your project's site documentation.
+- A Build Lifecycle is Made Up of Phases.
+- A Build Phase is Made up of Plugin Goals.
+
+###Setting Up Your Project to Use the Build Lifecycle
+
+####Packaging
+The first, and most common way, is to set the packaging for your project via the equally named POM element `<packaging>`. Some of the valid packaging values are `jar, war, ear and pom`. If no packaging value has been specified, it will default to jar.
+
+####Plugins
+The second way to add goals to phases is to configure plugins in your project. Plugins are artifacts that provide goals to Maven.
+
+For example, the Modello plugin binds by default its goal modello:java to the generate-sources phase (Note: The modello:java goal generates Java source codes). 
+
+    ...
+     <plugin>
+       <groupId>org.codehaus.modello</groupId>
+       <artifactId>modello-maven-plugin</artifactId>
+       <version>1.4</version>
+       <executions>
+         <execution>
+           <configuration>
+             <models>
+               <model>src/main/mdo/maven.mdo</model>
+             </models>
+             <version>4.0.0</version>
+           </configuration>
+           <goals>
+             <goal>java</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+    ...
 
 ###Clean Lifecycle
     pre-clean               executes processes needed prior to the actual project cleaning
@@ -108,11 +252,13 @@ There are three built-in build lifecycles: default, clean, site. The default lif
     post-site 	            executes processes needed to finalize the site generation, and to prepare for site deployment
     site-deploy 	        deploys the generated site documentation to the specified web server
 
-## POM (Project Object Model)
-A Project Object Model or POM is the fundamental unit of work in Maven. It is an XML file that contains information about the project and configuration details used by Maven to build the project. It contains default values for most projects. Examples for this is the build directory, which is target; the source directory, which is src/main/java; the test source directory, which is src/main/test; and so on.
+## Introduction to the POM
+A Project Object Model or POM is the fundamental unit of work in Maven. It is an XML file that contains information about the project and configuration details used by Maven to build the project.
 
 ###Super POM
-The Supper POM s Maven's default POM. All POMs extend the Super POM unless explicitly set, meaning the configuration specified in the Super POM is inherited by the POMs you created for your projects.
+The Super POM is Maven's default POM. All POMs extend the Super POM unless explicitly set, meaning the configuration specified in the Super POM is inherited by the POMs you created for your projects.
+
+    ${M2_HOME}/lib/maven-model-builder-3.0.5.jar-->/org/apache/maven/model/pom-4.0.0.xml
 
 ###Minimal POM
 The minimum requirement for a POM are the following:
@@ -121,9 +267,7 @@ The minimum requirement for a POM are the following:
 - modelVersion - should be set to 4.0.0
 - groupId - the id of the project's group.
 - artifactId - the id of the artifact (project)
-- version - the version of the artifact under the specified group
-
-Here's an example:
+- verstion - the version of the artifact under the specified group
 
     <project>
       <modelVersion>4.0.0</modelVersion>
@@ -132,65 +276,139 @@ Here's an example:
       <version>1.0.0</version>
     </project>
 
-## Installation
-Maven is a Java tool, so you must have [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) installed in order to proceed.
+###Project Inheritance (继承)
+Elements in the POM that are merged are the following:
 
-First, [download Maven](http://maven.apache.org/download.html) and follow the [installation instructions](http://maven.apache.org/download.html#Installation). After that, type the following in a terminal or in a command prompt:
+- dependencies
+- developers and contributors
+- plugin lists (including reports)
+- plugin executions with matching ids
+- plugin configuration
+- resources
 
-    mvn --version
+####Parent POM
+    <project>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.mycompany.app</groupId>
+      <artifactId>my-app</artifactId>
+      <version>1</version>
+    </project>
 
-Depending upon your network setup, you may require extra configuration. Check out the [Guide to Configuring Maven](http://maven.apache.org/guides/mini/guide-configuring-maven.html) if necessary.
+####Module POM 1
+    <project>
+      <parent>
+        <groupId>com.mycompany.app</groupId>
+        <artifactId>my-app</artifactId>
+        <version>1</version>
+      </parent>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.mycompany.app</groupId>
+      <artifactId>my-module</artifactId>
+      <version>1</version>
+    </project>
 
-## Creating a Project
-You will need somewhere for your project to reside, create a directory somewhere and start a shell in that directory. On your command line, execute the following Maven goal:
+####Module POM 2
+    <project>
+      <parent>
+        <groupId>com.mycompany.app</groupId>
+        <artifactId>my-app</artifactId>
+        <version>1</version>
+        <relativePath>../parent/pom.xml</relativePath>
+      </parent>
+      <modelVersion>4.0.0</modelVersion>
+      <artifactId>my-module</artifactId>
+    </project>
 
-    mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+###Project Aggregation (聚集)
+Project Aggregation is similar to Project Inheritance. But instead of specifying the parent POM from the module, it specifies the modules from the parent POM. To do Project Aggregation, you must do the following:
 
-### Build the Project
-    mvn package
+- Change the parent POMs packaging to the value "pom" .
+- Specify in the parent POM the directories of its modules (children POMs)
 
-Unlike the first command executed `archetype:generate` you may notice the second is simply a single work - package. Rather than a goal, this is a phase. A phase is a step in the [build lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html), which is an ordered sequence of phases. When a phase is given, Maven will execute every phase in the sequence up to and including the one defined. For example, if we execute compile phase, the phases that actually get executed are:
+####my-app
+    <project>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.mycompany.app</groupId>
+      <artifactId>my-app</artifactId>
+      <version>1</version>
+      <packaging>pom</packaging>
 
-    1. validate
-    2. generate-sources
-    3. process-sources
-    4. generate-resources
-    5. process-resources
-    6. compile
+      <modules>
+        <module>my-module</module>
+      </modules>
+    </project>
 
-You may test the newly compiled and packaged JAR with the following command:
+####my-module
+    <project>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.mycompany.app</groupId>
+      <artifactId>my-module</artifactId>
+      <version>1</version>
+    </project>
 
-    java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
+###Project Interpolation and Variables
+One of the practices that Maven encourages is do not repeat yourself.
 
-## Running Maven Tools
+####Project Model Variables
+Any field of the model that is a single value element can be referenced as a variable. For example, ${project.groupId}, ${project.version}, ${project.build.sourceDirectory} and so on.
 
-###Maven Phases
-Although hardly a comprehensive list, these are the most common default lifecycle phases executed.
+####Special Variables
+    project.basedir         The directory that the current project resides in.
+    project.baseUri         The directory that the current project resides in, represented as an URI. Since Maven 2.1.0
+    maven.build.timestamp   The timestamp that denotes the start of the build. Since Maven 2.1.0-M1
 
-- validate: validate the project is correct and all necessary information is available.
-- compile: compile the source code of the project.
-- test: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed.
-- package: take the compiled code and package it in its distributable format, such as a JAR.
-- integration-test: process and deploy the package if necessary into an environment where integration tests can be run.
-- verify: run any checks to verify the package is valid and meets quality criteria.
-- install: install the package into the local repository, for use as a dependency in other projects locally.
-- deploy: done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.
+    <project>
+      ...
+      <properties>
+        <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
+      </properties>
+      ...
+    </project>
 
-There are two other Maven lifecycles of note beyond the default list above. They are
+####Properties
+    <project>
+      ...
+      <properties>
+        <mavenVersion>2.1</mavenVersion>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.maven</groupId>
+          <artifactId>maven-artifact</artifactId>
+          <version>${mavenVersion}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.maven</groupId>
+          <artifactId>maven-project</artifactId>
+          <version>${mavenVersion}</version>
+        </dependency>
+      </dependencies>
+      ...
+    </project>
 
-- clean: cleans up artifacts created by prior builds.
-- site: generates site documentation for this project.
+## Maven by Example
 
-An interesting thing to note is that phases and goals may be executed in sequence.
+###A Simple Maven Project
+    $ mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -Dpackage=com.cbay -DgroupId=com.cbay.simple -DartifactId=simple -Dversion=1.0-SNAPSHOT -DinteractiveMode=false
+    $ cd simple
+    $ mvn install
+    
+    $ java -cp target/simple-1.0-SNAPSHOT.jar com.cbay.App
+    Hello World!
+    
+    $ mvn exec:java -Dexec.mainClass=com.cbay.App
+    Hello World!
 
-    mvn clean dependency:copy-dependencies package
 
-This command will clean the project, copy dependencies, and package the project (executing all phases up to package, of course).
-
-###Generating the Site
-    mvn site
-
-This phase generates a site based upon information on the project's pom.
-
-
+## REFERENCES
+- [What is Maven?](http://maven.apache.org/what-is-maven.html)
+- [Download Apache Maven](http://maven.apache.org/download.cgi)
+- [Configuring Maven](http://maven.apache.org/guides/mini/guide-configuring-maven.html)
+- [Settings Reference](http://maven.apache.org/settings.html)
+- [Introduction to the Build Lifecycle](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
+- [Introduction to the POM](http://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
+- [Maven in 5 Minutes](http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+- [Maven Getting Started Guide](http://maven.apache.org/guides/getting-started/index.html)
+- [Sonatype Books](http://www.sonatype.com/resources/books)
+- [Maven by Example](http://books.sonatype.com/mvnex-book/reference/index.html)
 

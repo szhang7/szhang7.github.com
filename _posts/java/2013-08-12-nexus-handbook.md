@@ -8,7 +8,7 @@ tags: [nexus, handbook, java]
 {% include JB/setup %}
 
 ## Introduction
-[Sonatype Nexus](http://www.sonatype.org/nexus) manages software "artifacts" required for development, deployment, and provisioning. If you develop software, Nexus can help you share those artifacts with other developers and end-users. Maven’s central repository has always served as a great convenience for users of Maven, but it has always been recommended to maintain your own repositories to ensure stability within your organization. Nexus greatly simplifies the maintenance of your own internal repositories and access to external repositories. With Nexus you can completely control access to, and deployment of, every artifact in your organization from a single location.
+[Sonatype Nexus](http://www.sonatype.org/nexus) manages software "artifacts" required for development, deployment, and provisioning. If you develop software, Nexus can help you share those artifacts with other developers and end-users. Maven鈥檚 central repository has always served as a great convenience for users of Maven, but it has always been recommended to maintain your own repositories to ensure stability within your organization. Nexus greatly simplifies the maintenance of your own internal repositories and access to external repositories. With Nexus you can completely control access to, and deployment of, every artifact in your organization from a single location.
 
 ## Install Nexus
 
@@ -194,8 +194,8 @@ Security-->Users
 
 ## REFERENCES
 - [Repository Management with Nexus](http://books.sonatype.com/nexus-book/reference/index.html)
-- [用nexus搭建maven私服](http://www.iteye.com/topic/1126678)
-- [Nexus入门指南（图文）](http://juvenshun.iteye.com/blog/349534)
+- [鐢╪exus鎼缓maven绉佹湇](http://www.iteye.com/topic/1126678)
+- [Nexus鍏ラ棬鎸囧崡锛堝浘鏂囷級](http://juvenshun.iteye.com/blog/349534)
 - [Configure Maven to Download from Nexus](https://support.sonatype.com/entries/20943003-Configure-Maven-to-Download-from-Nexus)
 - [Configure Maven to Deploy to Nexus](https://support.sonatype.com/entries/21283268-Configure-Maven-to-Deploy-to-Nexus)
 

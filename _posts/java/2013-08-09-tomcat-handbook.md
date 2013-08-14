@@ -76,10 +76,10 @@ $CATALINA_BASE/conf/tomcat-users.xml is assigned to the roles.
 
 ###Available roles
 
-- manager-gui ¡ª Access to the HTML interface.
-- manager-status ¡ª Access to the "Server Status" page only.
-- manager-script ¡ª Access to the tools-friendly plain text interface that is described in this document, and to the "Server Status" page.
-- manager-jmx ¡ª Access to JMX proxy interface and to the "Server Status" page.
+- manager-gui â€” Access to the HTML interface.
+- manager-status â€” Access to the "Server Status" page only.
+- manager-script â€” Access to the tools-friendly plain text interface that is described in this document, and to the "Server Status" page.
+- manager-jmx â€” Access to JMX proxy interface and to the "Server Status" page.
 
 The HTML interface is protected against CSRF (Cross-Site Request Forgery) attacks, but the text and JMX interfaces cannot be protected. To maintain the CSRF protection:
 
