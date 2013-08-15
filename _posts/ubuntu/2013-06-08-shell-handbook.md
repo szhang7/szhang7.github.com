@@ -59,7 +59,10 @@ Collect some common shell scripts.
     touch $FILE_NAME                        #when file not exist, create an empty file.
     echo -n>$FILE_NAME                      #create an empty file
     echo -e "Hello, world.">>$FILE_NAME     #write string into file
-
+    
+    # create directories
+    mkdir -p guicmd/{bin,lib,src,share/version,doc/{html,pdf,info,man}}
+    
     # merge files
     cat $FILE1 $FILE2 |grep -a "关键字" > $MERGE_FILE
     
@@ -68,6 +71,15 @@ Collect some common shell scripts.
     
     # remove all files
     for i in `ls`; do rm $i; done
+    ls|xargs -n20 rm -rf
+    find -type f|xargs -n20 rm -rf
+    
+    # remove all .svn
+    find -name '.svn'|xargs rm -rf
+    
+    # remove all directories in current directory
+    ls * -d|xargs -n20 rm -rf
+    find -type d|xargs -n20 rm -rf
     
     # get the number of files in the current directory
     find . -type f|wc -l
@@ -207,10 +219,6 @@ Collect some common shell scripts.
         echo $line
     done
     
-    #delete number of files
-    ls|xargs -n 20 rm -rf
-    # 20 files as a group
-
 ## Mathematical calculations summary
 The default processing in shell is base on string.
 
@@ -263,6 +271,7 @@ The default processing in shell is base on string.
     }
 
 ###Load function
+
 ####shell test
     #!/bin/bash
     . hello     #load file hello

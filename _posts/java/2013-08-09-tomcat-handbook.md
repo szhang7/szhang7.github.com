@@ -94,11 +94,10 @@ The HTML interface is protected against CSRF (Cross-Site Request Forgery) attack
     <user username="admin" password="admin" roles="manager-gui"/>
 
 ###Tomcat6 configuration
-    <role rolename="standard"/>
     <role rolename="manager-gui"/>
+    <role rolename="manager-status"/>
     <role rolename="manager-script"/>
     <role rolename="manager-jmx"/>
-    <role rolename="manager-status"/>
     <user username="admin" password="admin" roles="manager-gui"/>
 
 ## Q&A
