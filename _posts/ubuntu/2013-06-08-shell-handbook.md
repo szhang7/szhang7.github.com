@@ -152,6 +152,13 @@ Collect some common shell scripts.
     # ',' delimiter
 
 ## if statement
+    if [ CONDITIONS ]; then
+        COMMANDS
+    elif [ CONDITIONS ]; then
+        COMMANDS
+    else
+        COMMANDS
+    fi
 
 ###is the last statement executed successfully?
     echo test>test.md
@@ -187,6 +194,10 @@ Collect some common shell scripts.
     fi
 
 ## for statement
+    for ... in STATEMENT
+    do
+        COMMANDS
+    done
 
 ###Scan directory
     #filelist=`ls ${PWD}`
@@ -206,7 +217,51 @@ Collect some common shell scripts.
         fi
     done
 
+###Numbers
+    for i in 1 2 3 4 5
+    do
+        echo $i
+    done
+
+###Files
+    for i in `ls *.sh`
+    do
+        name=`echo "$i"|awk -F. '{print $1}'`
+        echo $name
+    done
+
+###Lots of files
+    for i in `find . -type f -name "*.sh"`
+    do
+        name=`echo "$i" | awk -F/ '{print $2}'`
+        echo $name
+    done
+
+###Double brackets
+    for((i=1;i<100;i++))
+    do
+        if((i%3==0))
+        then
+            echo $i
+            continue
+        fi
+    done
+
+###seq
+    for i in `seq 100`
+    do
+        if((i%3==0))
+        then
+            echo $i
+            continue
+        fi
+    done
+
 ## while statement
+    while CONDITIONS
+    do
+        COMMANDS
+    done
 
 ###loop read lines
     while read line
@@ -218,7 +273,98 @@ Collect some common shell scripts.
     do
         echo $line
     done
+
+###Expression
+    min=1
+    max=100
+    while [ $min -le $max ]
+    do
+        echo $min
+        min=`expr $min + 1`
+    done
+
+###Double brackets
+    i=1
+    while(($i<100))
+    do
+        if(($i%4==0))
+        then
+            echo $i
+        fi
+        i=$(($i+1))
+    done
+
+##until
+    until CONDITIONS
+    do
+        COMMANDS
+    done
+
+###Double brackets
+    a=10
+    until [[ $a -lt 0 ]]; do
+        echo $a
+        ((a--))
+    done
+
+##case
+    case $arg in
+    pattern|sample)
+    #arg in pattern or sample
+    ;;
+    pattern1)
+    #arg in pattern1
+    ;;
+    *)
+    #default
+    esac
     
+    pattern1 is regular expression:
+    *       :string
+    ?       :character
+    [abc]   :a character of a,b,c
+    [a-n]   :a character from a to n
+    |       :multiple choice
+
+###multiple choice
+    case $1 in
+    start | begin)
+        echo "start something" 
+        ;;
+    stop | end)
+        echo "stop something" 
+        ;;
+    *)
+        echo "Ignorant" 
+        ;;
+    esac
+
+## select
+    select var in {...}
+    do
+        COMMANDS
+    done
+
+###menu
+    select ch in "begin" "end" "exit"
+    do
+    case $ch in
+    "begin")
+        echo "start something" 
+        ;;
+    "end")
+        echo "stop something" 
+        ;;
+    "exit")
+        echo "exit" 
+        break;
+        ;;
+    *)
+        echo "Ignorant" 
+        ;;
+    esac
+    done
+
 ## Mathematical calculations summary
 The default processing in shell is base on string.
 
@@ -458,4 +604,6 @@ The default processing in shell is base on string.
 - <http://blog.163.com/clevertanglei900@126/blog/static/111352259201162553652150/>
 - <http://hi.baidu.com/ajarne/item/a871b7f9d30411c60dd1c80f>
 - <http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=218853>
+- [Shell for while 循环详细总结](http://www.linuxidc.com/Linux/2012-02/53030.htm)
+- [linux shell 流程控制if,for,while,case,select语句实例](http://www.cnblogs.com/chengmo/archive/2010/10/14/1851434.html)
 

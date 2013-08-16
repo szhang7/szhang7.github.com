@@ -656,4 +656,20 @@ default path is the current directory; default expression is -print expression m
     [--verbose] [--exit] [--no-run-if-empty] [--arg-file=file]
     [--version] [--help] [command [initial-arguments]]
 
+###seq
+Print numbers from FIRST to LAST, in steps of INCREMENT.
+
+    seq [OPTION]... LAST
+    seq [OPTION]... FIRST LAST
+    seq [OPTION]... FIRST INCREMENT LAST
+
+####Options
+    -f, --format=FORMAT      use printf style floating-point FORMAT
+    -s, --separator=STRING   use STRING to separate numbers (default: \n)
+    -w, --equal-width        equalize width by padding with leading zeroes
+    --help     display this help and exit
+    --version  output version information and exit
+
+    If FIRST or INCREMENT is omitted, it defaults to 1.  That is, an omitted INCREMENT defaults to 1 even when LAST is smaller than FIRST. FIRST, INCREMENT, and LAST are interpreted as floating point values. INCREMENT is usually positive if FIRST is smaller than LAST, and INCREMENT is usually negative if FIRST is greater than LAST. FORMAT must be suitable for printing one argument of type `double'; it defaults to %.PRECf if FIRST, INCREMENT, and LAST are all fixed point decimal numbers with maximum precision PREC, and to %g otherwise.
+
 

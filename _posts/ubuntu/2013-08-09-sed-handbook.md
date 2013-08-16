@@ -179,6 +179,12 @@ Addresses in a sed script can be in any of the following forms:
     # print lines which contain "my".
     sed -n '/my/p' $FILE_NAME
     
+    # print line number
+    sed '=' $FILE_NAME | sed 'N;s/\n/:/'
+    
+    # print lines which contains more than 50 characters.
+    sed -n '/^.\{50\}/p' $FILE_NAME
+    
     # delete the last line, and print others
     sed '$d' $FILE_NAME
     
@@ -193,6 +199,9 @@ Addresses in a sed script can be in any of the following forms:
     
     # delete lines from the line containing "My" to line 10.
     sed '/My,10d' $FILE_NAME
+    
+    # delete even (偶数,odd-奇数) lines
+    sed 'n;d' $FILE_NAME
     
     #'s/regexp/replacement/flags'
     sed -i '{'s/9080/8080/g'}' pom.xml
@@ -209,6 +218,15 @@ Addresses in a sed script can be in any of the following forms:
     # sed -e variables
     sed -e '1,10d' -e 's/My/You/g' $FILE_NAME
     sed -e $var1'i \'"$var2" $FILE_NAME
+    
+    sed '{
+        i\        <tr align="center">
+        s/.*/            <td>&<\/td>/   #<td>content of current line</td>
+        n;                              #read next line
+        s/.*/            <td>&<\/td>/
+        a\        <\/tr>
+    }' $FILE_NAME
+
     
     sed -e ":begin; /<port>/,/<\/port>/ { /<\/port>/! { $! { N; b begin }; }; s/<port>.*<\/port>/<port>8080<\/port>/; };" pom.xml
     
@@ -234,5 +252,5 @@ Addresses in a sed script can be in any of the following forms:
 - [linux sed命令详解](http://www.iteye.com/topic/587673)
 - [SED(带-E参数)变量传递问题](http://bbs.chinaunix.net/thread-796205-1-1.html)
 - [sed命令详解](http://www.cnblogs.com/edwardlost/archive/2010/09/17/1829145.html)
-
+- [关于linux 一些例子(gred,sed,awk等命令)](http://www.cnblogs.com/mailingfeng/archive/2011/07/25/2115735.html)
 

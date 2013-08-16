@@ -107,7 +107,7 @@ For example, given the above settings the Maven command line may execute org.mor
     mvn tomcat:run
 
 ###Security and Deployment Settings
-Repositories to deploy to are defined in a project in the <distributionManagement> section. However, you cannot put your username, password, or other security settings in that project. For that reason, you should add a server definition to your own settings with an id that matches that of the deployment repository in the project.
+Repositories to deploy to are defined in a project in the `<distributionManagement>` section. However, you cannot put your username, password, or other security settings in that project. For that reason, you should add a server definition to your own settings with an id that matches that of the deployment repository in the project.
 
     <settings>
       ...
@@ -148,14 +148,12 @@ Some reasons to use a mirror are:
       ...
     </settings>
 
-You can force Maven to use a single repository by having it mirror all repository requests. To achieve this, set mirrorOf to *.
+You can force Maven to use a single repository by having it mirror all repository requests. To achieve this, set mirrorOf to `*`.
 
 Refer to [Guide to Mirror Settings](http://maven.apache.org/guides/mini/guide-configuring-maven.html) for more details.
 
 ###Configuring a proxy
     <settings>
-      .
-      .
       <proxies>
        <proxy>
           <active>true</active>
@@ -167,8 +165,6 @@ Refer to [Guide to Mirror Settings](http://maven.apache.org/guides/mini/guide-co
           <nonProxyHosts>www.google.com|*.somewhere.com</nonProxyHosts>
         </proxy>
       </proxies>
-      .
-      .
     </settings>
 
 For more information, see the [Guide to using a Proxy](http://maven.apache.org/guides/mini/guide-proxies.html).
