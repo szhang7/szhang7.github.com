@@ -533,6 +533,144 @@ Or add the groupId in your ${M2_HOME}/conf/settings.xml
     $ mvn tomcat:redeploy
     $ mvn tomcat:exploded
 
+###Maven jar plugin
+
+####Generate runnable jar 1
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>lib/</classpathPrefix>
+                        <mainClass>com.cbay.hardware.GetInfo</mainClass>
+                    </manifest>
+                </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+####Generate runnable jar 2
+    <build>
+        <!-- <finalName>...</finalName>  -->
+        <sourceDirectory>src/main/java</sourceDirectory>  
+        <resources>  
+            <!-- 控制资源文件的拷贝 -->  
+            <resource>  
+                <directory>src/main/resources</directory>  
+                <targetPath>${project.build.directory}</targetPath>  
+            </resource>  
+        </resources>  
+        <plugins>  
+            <!-- 设置源文件编码方式 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <configuration>  
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>  
+                    <source>1.6</source>  
+                    <target>1.6</target>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  
+            <!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-jar-plugin</artifactId>  
+                <configuration>  
+                    <archive>  
+                        <manifest>  
+                            <addClasspath>true</addClasspath>  
+                            <classpathPrefix>lib/</classpathPrefix>  
+                            <mainClass>com.cbay.hardware.GetInfo</mainClass>  
+                        </manifest>  
+                    </archive>  
+                </configuration>  
+            </plugin>  
+            <!-- 拷贝依赖的jar包到lib目录 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-dependency-plugin</artifactId>  
+                <executions>  
+                    <execution>  
+                        <id>copy</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>copy-dependencies</goal>  
+                        </goals>
+                        <configuration>  
+                            <outputDirectory>  
+                                ${project.build.directory}/lib  
+                            </outputDirectory>  
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+            <!-- 解决资源文件的编码问题 -->  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-resources-plugin</artifactId>  
+                <version>2.3</version>  
+                <configuration>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  
+            <!-- 打包source文件为jar文件 -->  
+            <plugin>  
+                <artifactId>maven-source-plugin</artifactId>  
+                <version>2.1</version>  
+                <configuration>  
+                    <attach>true</attach>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+                <executions>  
+                    <execution>  
+                        <phase>compile</phase>  
+                        <goals>  
+                            <goal>jar</goal>  
+                        </goals>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+        </plugins>
+    </build>
+
+###Maven Plugins
+
+####log4j
+    <properties>
+		<log4j.version>1.2.17</log4j.version>
+    </properties>
+
+    <dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+    </dependencies>
+
+
 ## Maven by Example
 
 ###Archetypes
@@ -635,4 +773,6 @@ Or add the groupId in your ${M2_HOME}/conf/settings.xml
 - [Sonatype Books](http://www.sonatype.com/resources/books)
 - [Maven by Example](http://books.sonatype.com/mvnex-book/reference/index.html)
 - [Maven常用命令](http://www.cnblogs.com/PatrickLee/archive/2012/10/31/2747398.html)
+- [maven打包可运行的JAR](http://blog.163.com/coffee_hc/blog/static/4485331920121274422988/)
+- [maven工程打包成runnable的jar包，拷贝资源和依赖jar包](http://ajita.iteye.com/blog/1635470)
 

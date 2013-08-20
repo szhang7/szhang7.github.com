@@ -149,6 +149,25 @@ AsciiDoc is a text document format for writing notes, documentation, articles, b
     Gateway: 192.168.2.1
     DNS: 8.8.8.8 or 202.102.128.68                          # Unicom
 
+## axel
+    $ sudo apt-get install axel
+    $ axel http://svn.hyperic.org/projects/sigar_bin/dist/SIGAR_1_6_4/lib/libsigar-x86-linux.so
+    Usage: axel [options] url1 [url2] [url...]
+
+    --max-speed=x		-s x	Specify maximum speed (bytes per second)
+    --num-connections=x	-n x	Specify maximum number of connections
+    --output=f		-o f	Specify local output file
+    --search[=x]		-S [x]	Search for mirrors and download from x servers
+    --header=x		-H x	Add header string
+    --user-agent=x		-U x	Set user agent
+    --no-proxy		-N	Just don't use any proxy server
+    --quiet			-q	Leave stdout alone
+    --verbose		-v	More status information
+    --alternate		-a	Alternate progress indicator
+    --help			-h	This information
+    --version		-V	Version information
+
+
 ## Mount Windows Share folder
 
     $ sudo apt-get install smbfs        # install smbfs if not installed

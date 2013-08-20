@@ -150,6 +150,59 @@ Collect some common shell scripts.
     #Exclude duplicate content
     awk -F',' '!a[$1]++' "$FILE_NAME"
     # ',' delimiter
+## read command
+    read [-ers] [-a array] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]
+
+###Basic read
+    echo -n "Enter your name:"
+    read name
+    echo "hello $name, welcome to my program"
+    exit 0
+    
+    read -p "Enter your name:" name
+    echo "hello $name, welcome to my program"
+    exit 0
+    
+    #if no variable, the received data is placed in the environment variable REPLY.
+    read -p "Enter your name:"
+    echo "hello $REPLY, welcome to my program"
+    exit 0
+
+###Timing input
+    if read -t 5 -p "please enter your name:" name
+    then
+        echo "hello $name, welcome to my script"
+    else
+        echo "sorry, too slow"
+    fi
+    exit 0
+    
+###Set the count of input characters
+    read n1 -p "Do you want to continue [Y/N]?" answer
+    case $answer in
+    Y|y)
+        echo "fine, continue";;
+    N|n)
+        echo "ok, good bye";;
+    *)
+        echo "error choice";;
+    esac
+    exit 0
+
+###Silently read (input is not displayed on the monitor)
+    read -s -p "Enter your password:" pass
+    echo "your password is $pass"
+    exit 0
+
+###read file
+    count=1     #assign statement, no spaces
+    cat test | while read line
+    do
+        echo "Line $count: $line"
+        count=$[ $count+1 ]     #note that the spaces in the brackets
+    done
+    echo "finish"
+    exit 0
 
 ## if statement
     if [ CONDITIONS ]; then
@@ -606,4 +659,6 @@ The default processing in shell is base on string.
 - <http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=218853>
 - [Shell for while 循环详细总结](http://www.linuxidc.com/Linux/2012-02/53030.htm)
 - [linux shell 流程控制if,for,while,case,select语句实例](http://www.cnblogs.com/chengmo/archive/2010/10/14/1851434.html)
+- [shell中read参数](http://blog.sina.com.cn/s/blog_4077692e0100r7ct.html)
+
 
