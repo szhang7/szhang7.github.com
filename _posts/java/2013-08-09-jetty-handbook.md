@@ -118,6 +118,7 @@ This goal is new in jetty-7.6.0. This goal is designed to be used with an execut
     <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
+        <version>7.6.10.v20130312</version>
         <configuration>
             <scanIntervalSeconds>10</scanIntervalSeconds>
             <stopKey>foo</stopKey>

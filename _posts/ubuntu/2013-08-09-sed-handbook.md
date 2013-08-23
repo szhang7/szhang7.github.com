@@ -226,7 +226,16 @@ Addresses in a sed script can be in any of the following forms:
         s/.*/            <td>&<\/td>/
         a\        <\/tr>
     }' $FILE_NAME
-
+    
+    #用4个N合并“0 112.94.29.153 TCP_HIT:DIRECT”下面的4行，然后匹配替换
+    sed '/0 112.94.29.153 TCP_HIT:DIRECT/{N;N;N;N;s/.*/test line/}' "$FILE_NAME"
+    
+    #search "<groupId>log4jdbc<\/groupId>", and replace the following 3 lines
+    sed -i '/<groupId>log4jdbc<\/groupId>/{N;N;c\
+    <groupId>org.bgee.log4jdbc-log4j2</groupId>\
+    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>\
+    <version>1.15</version>
+	}' "$FILE_NAME"
     
     sed -e ":begin; /<port>/,/<\/port>/ { /<\/port>/! { $! { N; b begin }; }; s/<port>.*<\/port>/<port>8080<\/port>/; };" pom.xml
     
