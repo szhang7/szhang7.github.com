@@ -8,7 +8,7 @@ tags: [git, handbook, github]
 {% include JB/setup %}
 
 ## Introduction
-In software development, Git is a distributed version control and source code management (SCM) system with an emphasis on speed. Initially designed and developed by Linus Torvalds for Linux kernel development, Git has since been adopted by many other projects.
+In software development, Git is a distributed version control and source code management `(SCM)` system with an emphasis on speed. Initially designed and developed by Linus Torvalds for Linux kernel development, Git has since been adopted by many other projects.
 
 Every Git working directory is a full-fledged repository with complete history and full version tracking capabilities, not dependent on network access or a central server.
 

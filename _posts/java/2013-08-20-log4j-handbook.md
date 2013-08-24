@@ -18,7 +18,7 @@ Log4j has three main components: loggers, appenders and layouts. These three typ
 ###Loggers
     log4j.rootLogger=[level], appdendName1, appenderName2...
 
-level is priorities: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF `TRACE<DEBUG<INFO<WARN<ERROR<FATAL<OFF`. Log4j recommends to use only four levels: DEBUG, INFO, WARN, ERROR.
+level is priorities: TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF `TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF`. Log4j recommends to use only four levels: DEBUG, INFO, WARN, ERROR.
 
 ####Basic Selection Rule
     A log request of level p in a logger with (either assigned or inherited, whichever is appropriate) level q, is enabled if p >= q.
@@ -70,10 +70,10 @@ Appenders are inherited additively from the logger hierarchy. Log4j allows loggi
 ###Layouts
 The PatternLayout, part of the standard log4j distribution, lets the user specify the output format according to conversion patterns similar to the C language printf function. 
 
-　　org.apache.log4j.HTMLLayout（以HTML表格形式布局），
-　　org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
-　　org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
-　　org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
+    org.apache.log4j.HTMLLayout（以HTML表格形式布局），
+    org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
+    org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
+    org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
 　　
 ####HTMLLayout 选项
     LocationInfo=true:默认值是false,输出java文件名称和行号
@@ -86,9 +86,10 @@ The PatternLayout, part of the standard log4j distribution, lets the user specif
 log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 ####log4j.appender.A1.layout.ConversionPattern=%-4r %-5p %d{yyyy-MM-dd HH:mm:ssS} %c %m%n
-　　#TTCC layout
+    #TTCC layout
     %r [%t] %-5p %c %x - %m%n
     %-6r [%15.15t] %-5p %30.30c %x - %m%n
+
 
 <div align="center">
 <table cellspacing="0" cellpadding="4" width="640" border="1" style="font-size:12px; font-family:Arial;">
@@ -162,7 +163,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 </div>
 
 ## Configuring log4j
-Inserting log requests into the application code requires a fair amount of planning and effort. Observation shows that approximately 4 percent of code is dedicated to logging. Currently, configuration files can be written in XML or in Java properties (key=value) format.
+Inserting log requests into the application code requires a fair amount of planning and effort. Observation shows that approximately 4 percent of code is dedicated to logging. Currently, configuration files can be written in XML or in Java properties `(key=value)` format.
 
 ###Create Logger Instance
     import org.apache.log4j.Logger;
@@ -177,17 +178,17 @@ Inserting log requests into the application code requires a fair amount of plann
     PropertyConfigurator.configure("log4j.properties");
 
 ###Insert logging info
-　　Logger.debug(Object message);//调试信息
-　　Logger.info(Object message);//一般信息
-　　Logger.warn(Object message);//警告信息
-　　Logger.error(Object message);//错误信息
-　　Logger.fatal(Object message);//致命错误信息
+    Logger.debug(Object message);//调试信息
+    Logger.info(Object message);//一般信息
+    Logger.warn(Object message);//警告信息
+    Logger.error(Object message);//错误信息
+    Logger.fatal(Object message);//致命错误信息
 
 ###Default Initialization Procedure
 1. Setting the log4j.defaultInitOverride system property to any other value then "false" will cause log4j to skip the default initialization procedure.
 2. Set the resource string variable to the value of the log4j.configuration system property.The preferred way to specify the default initialization file is through the log4j.configuration system property. In case the system property log4j.configuration is not defined, then set the string variable resource to its default value "log4j.properties".
 3. Attempt to convert the resource variable to a URL.
-4. If the resource variable cannot be converted to a URL, for example due to a MalformedURLException, then search for the resource from the classpath by calling org.apache.log4j.helpers.Loader.getResource(resource, Logger.class) which returns a URL. Note that the string "log4j.properties" constitutes a malformed URL.
+4. If the resource variable cannot be converted to a URL, for example due to a MalformedURLException, then search for the resource from the classpath by calling org.apache.log4j.helpers.Loader.getResource\(resource, Logger.class\) which returns a URL. Note that the string "log4j.properties" constitutes a malformed URL.
 5. If no URL could not be found, abort default initialization. Otherwise, configure log4j from the URL. 
 
 ## Example Configurations
@@ -216,7 +217,7 @@ Inserting log requests into the application code requires a fair amount of plann
         }
     }
 
-The invocation of the BasicConfigurator.configure method creates a rather simple log4j setup. This method is hardwired to add to the root logger a ConsoleAppender. The output will be formatted using a PatternLayout set to the pattern "%-4r [%t] %-5p %c %x - %m%n".
+The invocation of the BasicConfigurator.configure method creates a rather simple log4j setup. This method is hardwired to add to the root logger a ConsoleAppender. The output will be formatted using a PatternLayout set to the pattern `%-4r [%t] %-5p %c %x - %m%n`.
 
 ###Simple configuration file
     import com.foo.Bar;
