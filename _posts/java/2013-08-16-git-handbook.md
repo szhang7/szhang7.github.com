@@ -421,4 +421,479 @@ In a nutshell, you can use `git diff` to see how a project has changed since a k
 - [Git Reference](http://gitref.org/index.html)
 - [Git 常用命令](http://www.cnblogs.com/1-2-3/archive/2010/07/18/git-commands.html)
 
+## APPENDIX A
 
+###git commands
+    function gm(){
+    PARAM=$1
+    # main menu
+    clear
+    echo "--------------------------------------------------------------------------------"
+    time=`date +"%d%m%Y"`
+    echo -e "USER:$USER\tHOST:$HOSTNAME\tDATE:$time"
+    echo "--------------------------------------------------------------------------------"
+    #Getting and Creating Projects
+    echo -e "1.git init         -initializes a directory as a Git repository"
+    echo -e "2.git clone        -copy a git repository so you can add to it"
+    #Basic Snapshotting
+    echo -e "3.git status       -view the status of your files and staging area"
+    echo -e "4.git add          -adds file contents to the staging area"
+    echo -e "5.git commit       -records a snapshot of the staging area"
+    echo -e "6.git reset        -undo changes and commits"
+    echo -e "7.git rm           -remove files from the staging area"
+    echo -e "8.git stash        -save changes for later"
+    #Branching and Merging
+    echo -e "9.git branch       -list,create and manage working contexts"
+    echo -e "c.git checkout     -switch to a new branch context"
+    echo -e "m.git merge        -merge a branch context into your current one"
+    echo -e "t.git tag          -tag a point in history as important"
+    #Sharing and Updating Projects
+    echo -e "r.git remote       -list,add and delete remote repository aliases"
+    echo -e "f.git fetch,pull   -download new branches and data from a remote repo"
+    echo -e "p.git push         -fetch from a remote and try to merge into the current"
+    #Inspection and Comparison"
+    echo -e "l.git log          -filter your commit history"
+    echo -e "d.git diff        -show diff of what is staged and what is modified but unstaged"
+    echo "--------------------------------------------------------------------------------"
+    echo -n "Your choice [1,2,3,4,5,6,7,8,9,c,m,t,l,d]:"
+    read -n1 choice
+    echo 
+    echo "--------------------------------------------------------------------------------"
+    if [ "$choice" = "1" ]; then
+        echo -e "1.git init"
+        if [ -z "$PARAM" ]; then
+            read -p "Please type a repository name:" PARAM
+        fi
+        if [ -n "$PARAM" ]; then
+            if [ ! -d "$PARAM" ]; then
+                mkdir "$PARAM"
+            fi
+            cd "$PARAM"
+            git init
+            cd ..
+        else
+            git init
+        fi
+    elif [ "$choice" = "2" ]; then
+        echo -e "2.git clone"
+        if [ -z "$PARAM" ]; then
+            read -p "Please type URL:" PARAM
+        fi
+        if [ -n "$PARAM" ]; then
+            git clone $PARAM
+        else
+            echo -e "[ERROR] URL is required!"
+        fi
+    elif [ "$choice" = "3" ]; then
+        echo -e "3.git status"
+        if [ "$PARAM" = "-s" ]; then
+            git status -s
+        else
+            git status
+        fi
+    elif [ "$choice" = "4" ]; then
+        echo -e "4.git add"
+        git status -s
+        if [ -z "$PARAM" ]; then
+            read -p "Please type untracked files (. add all files):" PARAM
+        fi
+        if [ -n "$PARAM" ]; then
+            git add $PARAM
+        else
+            echo -e "[ERROR] file is required!"
+        fi
+    elif [ "$choice" = "5" ]; then
+        echo -e "5.git commit"
+        git status -s
+        if [ -z "$PARAM" ]; then
+            read -p "Please type commit message:" PARAM
+        fi
+        if [ -n "$PARAM" ]; then
+            #-a automatically stage all tracked, modified files before the commit
+            git commit -am "$PARAM"
+        else
+            echo -e "[ERROR] file is required!"
+        fi
+    elif [ "$choice" = "6" ]; then
+        clear
+        echo -e "6.git reset"
+    echo "--------------------------------------------------------------------------------"
+        git status -s
+        echo -e "1.git reset HEAD         -unstage files"
+        echo -e "2.git reset --soft HEAD~ -undone the last commit"
+        echo -e "3.git reset --hard HEAD  -undone the last commit, unstage files"
+        read -n1 -p "Your choice:[1,2,3]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] undo the last commit and unstage the files"
+            git reset HEAD
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] undo the last commit"
+            git reset --soft HEAD~
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] undo the last commit, unstage files AND undo any changes in the working directory"
+            git reset --hard HEAD
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "7" ]; then
+        echo -e "7.git rm"
+        ls
+        if [ -z "$PARAM" ]; then
+            read -p "Please type files:" PARAM
+        fi
+        if [ -n "$PARAM" ]; then
+            git rm "$PARAM"
+        else
+            echo -e "[ERROR] file is required!"
+        fi
+    elif [ "$choice" = "8" ]; then
+        clear
+        echo -e "8.git stash"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git stash        -add current changes to the stack"
+        echo -e "2.git stash list   -view stashes currently on the stack"
+        echo -e "3.git stash apply  -grab the item from the stash list and apply to current working directory"
+        echo -e "4.git stash drop   -remove an item from the stash list"
+        echo -e "5.git stash clear  -remove all of the stored items"
+        read -n1 -p "Your choice:[1,2,3,4,5]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] add current changes to the stack"
+            git status -s
+            git stash
+            git status
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] view stashes currently on the stack"
+            git stash list
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] grab the item from the stash list and apply to current working directory"
+            git stash list
+            git stash apply
+        elif [ "$response" = "4" ]; then
+            echo -e "[INFO] remove an item from the stash list"
+            git stash list
+            if [ -z "$PARAM" ]; then
+                read -p "Please type list:" PARAM
+            fi
+            if [ -n "$PARAM" ]; then
+                git stash drop "$PARAM"
+            else
+                #remove the last added stash item.
+                git stash drop
+            fi
+        elif [ "$response" = "5" ]; then
+            echo -e "[INFO] remove all of the stored items"
+            git stash list
+            git stash clear
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "9" ]; then
+        clear
+        echo -e "9.git branch"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git branch                       -list your available branches"
+        echo -e "2.git branch branchname            -create a new branch"
+        echo -e "3.git branch -v                    -see the last commit on each branch"
+        echo -e "4.git branch -d branchname         -delete a branch"
+        echo -e "5.git push remote-name :branchname -delete a remote branch"
+        read -n1 -p "Your choice:[1,2,3,4,5]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] list your available branches"
+            git branch
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] create a new branch"
+            git branch
+            read -p "Please type branchname:" PARAM
+            git branch $PARAM
+            git branch
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] see the last commit on each branch"
+            git branch -v
+        elif [ "$response" = "4" ]; then
+            echo -e "[INFO] delete a branch"
+            git branch
+            read -p "Please type branchname:" PARAM
+            git branch -d $PARAM
+            git branch
+        elif [ "$response" = "5" ]; then
+            echo -e "[INFO] delete a remote branch"
+            git remote
+            read -p "Please type branchname:" PARAM
+            git push remote-name :$PARAM
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "c" ] || [ "$choice" = "C" ]; then
+        echo -e "c.git checkout"
+        git branch
+        read -p "Please type branchname:" PARAM
+        git checkout $PARAM
+    elif [ "$choice" = "m" ] || [ "$choice" = "M" ]; then
+        echo -e "m.git merge"
+        git branch
+        read -p "Please type branchname:" PARAM
+        git merge $PARAM
+    elif [ "$choice" = "t" ] || [ "$choice" = "T" ]; then
+        echo -e "t.git tag"
+        git log --oneline --decorate --graph
+        read -p "Please type version (v1.0):" PARAM
+        read -p "Please type a tag message:" PARAM1
+        git tag -a $PARAM -m "$PARAM1"
+        #tag a released commit 558151a
+        #git tag -a v0.9 558151a
+    elif [ "$choice" = "r" ] || [ "$choice" = "R" ]; then
+        clear
+        echo -e "r.git remote"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git remote           -list your remote aliases"
+        echo -e "2.git remote add       -add a new remote repo"
+        echo -e "3.git remote -v        -see the actual URL on each alias"
+        echo -e "4.git remote rm        -removing an existing remote alias"
+        echo -e "5.git remote rename [old-alias] [new-alias] -rename remote aliases"
+        echo -e "6.git remote set-url   -update an existing remote URL"
+        read -n1 -p "Your choice:[1,2,3,4,5,6]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] list your remote aliases"
+            git remote
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] add a new remote repo of your project"
+            git remote
+            read -p "Please type alias:" PARAM
+            read -p "Please type url:" PARAM1
+            git remote add $PARAM $PARAM1
+            git remote -v
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] see the actual URL for each alias"
+            git remote -v
+        elif [ "$response" = "4" ]; then
+            echo -e "[INFO] removing an existing remote alias"
+            git remote -v
+            read -p "Please type alias:" PARAM
+            git remote rm $PARAM
+            git remote -v
+        elif [ "$response" = "5" ]; then
+            echo -e "[INFO] rename remote aliases"
+            git remote -v
+            read -p "Please type old-alias:" PARAM
+            read -p "Please type new-alias:" PARAM1
+            git remote rename $PARAM $PARAM1
+        elif [ "$response" = "6" ]; then
+            echo -e "[INFO] update an existing remote URL"
+            git remote -v
+            read -p "Please type alias:" PARAM
+            read -p "Please type url:" PARAM1
+            git remote set-url $PARAM $PARAM1
+            git remote -v
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "f" ] || [ "$choice" = "F" ]; then
+        clear
+        echo -e "f.get fetch, pull"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git fetch    -download new branches and data from a remote repo"
+        echo -e "2.git merge    -merge a branch context into your current one"
+        echo -e "3.git pull     -fetch from remote repo and merge into current branch"
+        read -n1 -p "Your choice:[1,2,3]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] download new branches and data from a remote repo"
+            git remote -v
+            read -p "Please type alias:" PARAM
+            if [ -z "$PARAM" ]; then
+                git fetch origin
+            else
+                git fetch $PARAM
+            fi
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] merge a branch context into your current one"
+            git remote -v
+            git branch -v
+            read -p "Please type alias:" PARAM
+            if [ -z "$PARAM" ]; then
+                git log origin/master ^master
+                git merge origin/master
+            else
+                read -p "Please type branch:" PARAM1
+                git log $PARAM/$PARAM1 ^$PARAM1
+                git merge $PARAM/$PARAM1
+            fi
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] fetch from a remote repo and try to merge into the current branch"
+            git remote -v
+            git branch -v
+            read -p "Please type alias:" PARAM
+            if [ -z "$PARAM" ]; then
+                git pull origin master
+            else
+                read -p "Please type branch:" PARAM1
+                git pull $PARAM $PARAM1
+            fi
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "p" ] || [ "$choice" = "P" ]; then
+        echo -e "p.git push [alias] [branch]"
+        git remote -v
+        git branch -v
+        read -p "Please type alias:" PARAM
+        if [ -z "$PARAM" ]; then
+            git push origin master
+        else
+            read -p "Please type branch:" PARAM1
+            git push $PARAM $PARAM1
+        fi
+    elif [ "$choice" = "l" ] || [ "$choice" = "L" ]; then
+        clear
+        echo -e "l.git log"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git log --author  -look for only commits from a specific author"
+        echo -e "2.git log --since --before    -filter commits by date committed"
+        echo -e "3.git log --grep    -filter commits by commit message"
+        echo -e "4.git log -S        -filter by introduced diff"
+        echo -e "5.git log -p        -show patch introduced at each commit"
+        echo -e "6.git log --stat    -show diffstat of changes introduced at each commit"
+        echo -e "7.git log --oneline -shorthand for --pretty=oneline --abbrev-commit"
+        echo -e "8.git log --no-merges  -remove merge commits"
+        echo -e "9.git log -[number]    -limit the results to the last [number] commits"
+        echo -e "a.git log --all-match  -will logically AND all arguments"
+        echo -e "f.git log --format     -format the results"
+        read -n1 -p "Your choice:[1,2,3,4,5,6,7,8,9,a,f]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] look for only commits from a specific author"
+            read -p "Please type author:" PARAM
+            if [ -z "$PARAM" ]; then
+                git log --oneline -5
+            else
+                git log --author="$PARAM" --oneline
+            fi
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] filter commits by date committed"
+            echo -e "--since --before"
+            echo -e "--after --before"
+            echo -e "--after --until"
+            read -p "Please type since date:" PARAM
+            read -p "Please type before date:" PARAM1
+            if [ -z "$PARAM" ]; then
+                if [ -z "$PARAM1" ]; then
+                    git log --oneline -5
+                else
+                    git log --before={$PARAM1} --oneline
+                fi
+            else
+                if [ -z "$PARAM1" ]; then
+                    git log --after={$PARAM} --oneline
+                else
+                    git log --after={$PARAM} --before={$PARAM1} --oneline
+                fi
+            fi
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] filter commits by commit message"
+            read -p "Please type para:" PARAM
+            if [ -z "$PARAM" ]; then
+                git log --oneline -5
+            else
+                git log --grep="$PARAM" --oneline
+            fi
+        elif [ "$response" = "4" ]; then
+            echo -e "[INFO] filter by introduced diff"
+            read -p "Please type para:" PARAM
+            if [ -z "$PARAM" ]; then
+                git log --oneline -5
+            else
+                git log -S"$PARAM" --oneline
+            fi
+        elif [ "$response" = "5" ]; then
+            echo -e "[INFO] show patch introduced at each commit"
+            git log -p -2
+        elif [ "$response" = "6" ]; then
+            echo -e "[INFO] show diffstat of changes introduced at each commit"
+            git log --stat -5
+        elif [ "$response" = "7" ]; then
+            echo -e "[INFO] shorthand for --pretty=oneline --abbrev-commit"
+            git log --oneline -5
+        elif [ "$response" = "8" ]; then
+            echo -e "[INFO] remove merge commits"
+            git log --no-merges -5
+        elif [ "$response" = "9" ]; then
+            echo -e "[INFO] limit the results to the last [number] commits"
+            read -p "Please type number:" PARAM
+            if [ -z "$PARAM" ]; then
+                git log --oneline -5
+            else
+                git log -$PARAM --oneline
+            fi
+        elif [ "$response" = "a" ]; then
+            echo -e "[INFO] will logically AND all arguments"
+            read -p "Please type para:" PARAM
+            read -p "Please type author:" PARAM1
+            git log --grep="$PARAM" --author="$PARAM1" --format="%h %an %s"
+        elif [ "$response" = "f" ]; then
+            echo -e "[INFO] format the results"
+            git log --format="%h %an %s" -5
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    elif [ "$choice" = "d" ] || [ "$choice" = "D" ]; then
+        clear
+        echo -e "d.git diff"
+    echo "--------------------------------------------------------------------------------"
+        echo -e "1.git diff          -show diff of unstaged changes"
+        echo -e "2.git diff --cached -show diff of staged changes"
+        echo -e "3.git diff HEAD     -show diff of all staged or unstaged changes"
+        echo -e "4.git diff --stat   -show summary of changes instead of a full diff"
+        echo -e "5.git diff version  -see what changed since the last release"
+        echo -e "6.git diff master...branchname  -see what is on branch compared to master"
+        read -n1 -p "Your choice:[1,2,3,4,5,6]:" response
+        echo 
+        if [ "$response" = "1" ]; then
+            echo -e "[INFO] show diff of unstaged changes"
+            git status -s
+            git diff
+        elif [ "$response" = "2" ]; then
+            echo -e "[INFO] show diff of staged changes"
+            git status -s
+            git diff --cached
+        elif [ "$response" = "3" ]; then
+            echo -e "[INFO] show diff of all staged or unstaged changes"
+            git diff HEAD
+        elif [ "$response" = "4" ]; then
+            echo -e "[INFO] show summary of changes instead of a full diff"
+            git status -s
+            git diff --stat
+            git diff --cached --stat
+            git diff HEAD --stat
+        elif [ "$response" = "5" ]; then
+            echo -e "[INFO] see what changed since the last release"
+            git log --oneline --decorate --all
+            read -p "Please type tag:" PARAM
+            if [ -n "$PARAM" ]; then
+                git diff $PARAM --stat
+                git diff $PARAM
+            else
+                echo -e "[WARNING] tag is required!"
+            fi
+        elif [ "$response" = "6" ]; then
+            echo -e "[INFO] see what is on branch compared to master"
+            git branch
+            read -p "Please type branch:" PARAM
+            if [ -n "$PARAM" ]; then
+                #git diff master...$PARAM --stat
+                git diff --stat $(git merge-base master $PARAM) $PARAM
+            else
+                echo -e "[WARNING] branch is required!"
+            fi
+            
+        else
+            echo -e "[WARNING] Invalid choice!"
+        fi
+    else
+        echo -e "[WARNING] Invalid choice!"
+    fi
+    echo "--------------------------------------------------------------------------------"
+    }

@@ -469,6 +469,16 @@ The default processing in shell is base on string.
         [return int;]
     }
 
+###Get the current directory name
+    CURR_DIR=$(basename `pwd`)
+    echo $CURR_DIR
+    CURR_DIR=echo ${PWD##*/}
+    echo $CURR_DIR
+    CURR_DIR=$(pwd | rev | awk -F \/ '{print $1}' | rev)
+    echo $CURR_DIR
+    CURR_DIR=$(pwd | sed 's,^\(.*/\)\?\([^/]*\),\2,')
+    echo $CURR_DIR
+
 ###Load function
 
 ####shell test
@@ -660,5 +670,5 @@ The default processing in shell is base on string.
 - [Shell for while 循环详细总结](http://www.linuxidc.com/Linux/2012-02/53030.htm)
 - [linux shell 流程控制if,for,while,case,select语句实例](http://www.cnblogs.com/chengmo/archive/2010/10/14/1851434.html)
 - [shell中read参数](http://blog.sina.com.cn/s/blog_4077692e0100r7ct.html)
-
+- [shell获取当前目录名的几种方法](http://blog.sina.com.cn/s/blog_54108600010106bg.html)
 
