@@ -78,12 +78,14 @@ The PatternLayout, part of the standard log4j distribution, lets the user specif
 ####HTMLLayout 选项
     LocationInfo=true:默认值是false,输出java文件名称和行号
     Title=my app file: 默认值是 Log4J Log Messages.
+    
 ####PatternLayout 选项
     ConversionPattern=%m%n :指定怎样格式化指定的消息。
+    
 ####XMLLayout  选项
     LocationInfo=true:默认值是false,输出java文件和行号　　
 
-log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+    log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 
 ####log4j.appender.A1.layout.ConversionPattern=%-4r %-5p %d{yyyy-MM-dd HH:mm:ssS} %c %m%n
     #TTCC layout
@@ -167,22 +169,39 @@ Inserting log requests into the application code requires a fair amount of plann
 
 ###Create Logger Instance
     import org.apache.log4j.Logger;
+    
     static Logger logger = Logger.getLogger(ServerWithLog4j.class.getName());
 
 ###Read configure file
     BasicConfigurator.configure()：自动快速地使用缺省Log4j环境。
     PropertyConfigurator.configure(String configFilename)：读取使用Java的特性文件编写的配置文件。
     DOMConfigurator.configure(String filename)：读取XML形式的配置文件。
-    实际使用：
+    
+    实际使用:
+    import org.apache.log4j.BasicConfigurator;
     import org.apache.log4j.PropertyConfigurator;
-    PropertyConfigurator.configure("log4j.properties");
+    import org.apache.log4j.xml.DOMConfigurator;
+
+    BasicConfigurator.configure();           //加载默认配置ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+    //DOMConfigurator.configure("log4j.xml");//加载.xml文件
+    //PropertyConfigurator.configure("log4j.properties");//加载.properties文件
 
 ###Insert logging info
+    Log4j Levels: DEBUG, INFO, WARN, ERROR, FATAL
+    
     Logger.debug(Object message);//调试信息
     Logger.info(Object message);//一般信息
     Logger.warn(Object message);//警告信息
     Logger.error(Object message);//错误信息
     Logger.fatal(Object message);//致命错误信息
+    
+    Logger.log(Priority priority, Object message);
+    
+    import static org.apache.log4j.Priority.*;//warning: [deprecation] WARN in Priority has been deprecated
+    import static org.apache.log4j.Level.*;
+    
+    Logger.log(Priority.DEBUG, "Debug Infor in Alternate Form");//warning: Priority has been deprecated
+    Logger.log(Level.DEBUG, "Debug Infor in Alternate Form");   //Deprecated. Use Level.DEBUG instead.
 
 ###Default Initialization Procedure
 1. Setting the log4j.defaultInitOverride system property to any other value then "false" will cause log4j to skip the default initialization procedure.
@@ -193,52 +212,26 @@ Inserting log requests into the application code requires a fair amount of plann
 
 ## Example Configurations
 
-###BasicConfigurator.configure
-    import com.foo.Bar;
-
-    // Import log4j classes.
-    import org.apache.log4j.Logger;
-    import org.apache.log4j.BasicConfigurator;
-
-    public class MyApp {
-
-        // Define a static logger variable so that it references the
-        // Logger instance named "MyApp".
-        static Logger logger = Logger.getLogger(MyApp.class);
-
-        public static void main(String[] args) {
-             // Set up a simple configuration that logs on the console.
-             BasicConfigurator.configure();
-
-             logger.info("Entering application.");
-             Bar bar = new Bar();
-             bar.doIt();
-             logger.info("Exiting application.");
-        }
-    }
+###Common Output Format
+    -X   :Information output left-align.
+    %p   :Used to output the priority of the logging event.
+    %d{} :Used to output the date of the logging event.
+    %c   :Used to output the category of the logging event (package and class).
+    %m   :Used to output the application supplied message associated with the logging event.
+    %n   :Outputs the platform dependent line separator character or characters.
+    %L   :Used to output the line number from where the logging request was issued.
+    %F   :Used to output the file name where the logging request was issued.
 
 The invocation of the BasicConfigurator.configure method creates a rather simple log4j setup. This method is hardwired to add to the root logger a ConsoleAppender. The output will be formatted using a PatternLayout set to the pattern `%-4r [%t] %-5p %c %x - %m%n`.
 
+    %d{yyy-MMM-dd HH:mm:ss,SSS} output: 2002-Sep-18 22:10:28,921
+    %d{yyy-MM-dd HH:mm:ss,SSS}  output: 2002-10-18 22:10:28,921
+    
+    log4j.appender.Console.layout=org.apache.log4j.PatternLayout
+    #log4j.appender.Console.layout.ConversionPattern=%d [%t] %-5p [%c] - %m%n
+    log4j.appender.Console.layout.ConversionPattern=%d %-5p [%t] (%-13F:%L) - %m%n
+
 ###Simple configuration file
-    import com.foo.Bar;
-
-    import org.apache.log4j.Logger;
-    import org.apache.log4j.PropertyConfigurator;
-
-    public class MyApp {
-
-        static Logger logger = Logger.getLogger(MyApp.class.getName());
-
-        public static void main(String[] args) {
-            // BasicConfigurator replaced with PropertyConfigurator.
-            PropertyConfigurator.configure(args[0]);
-
-            logger.info("Entering application.");
-            Bar bar = new Bar();
-            bar.doIt();
-            logger.info("Exiting application.");
-        }
-    }
 
 ####log4j.properties
     # Set root logger level to DEBUG and its only appender to A1.
@@ -344,6 +337,166 @@ The invocation of the BasicConfigurator.configure method creates a rather simple
     set TOMCAT_OPTS=-Dlog4j.configuration=foobar.lcf -Dlog4j.configuratorClass=com.foo.BarConfigurator
     set TOMCAT_OPTS=-Dlog4j.configuration=file:/c:/foobar.lcf
 
+## Example
+
+###Log4jApp.java
+    package com.cbay;
+
+    import org.apache.log4j.Logger;
+    import org.apache.log4j.BasicConfigurator;
+    import org.apache.log4j.PropertyConfigurator;
+    import org.apache.log4j.xml.DOMConfigurator;
+
+    //Deprecated. Use Level.WARN instead Priority.WARN
+    import static org.apache.log4j.Level.*;
+
+    public class Log4jApp {
+
+        //private static Logger log=Logger.getLogger("com.cbay.Log4jApp");
+        private static Logger log=Logger.getLogger(Log4jApp.class.getName());
+
+        public static void main(String[] args) {
+            //BasicConfigurator.configure();           //加载默认配置ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+            //DOMConfigurator.configure("log4j.xml");//加载.xml文件
+            PropertyConfigurator.configure("log4j.properties");//加载.properties文件
+            
+            //Log4j Levels: DEBUG, INFO, WARN, ERROR, FATAL
+            log.trace("Trace Info");
+            log.debug("Debug Info");
+            log.log(DEBUG, "Debug Infor in Alternate Form");
+            log.info("Info Info");
+            log.log(INFO, "Info Infor in Alternate Form");
+            log.warn("Warn Info");
+            log.log(WARN, "Warn Infor in Alternate Form");
+            log.error("Error Info");
+            log.log(ERROR, "Error Infor in Alternate Form");
+            log.fatal("Fatal Info");
+            log.log(FATAL, "Fatal Infor in Alternate Form");
+        }
+    }
+
+###log4j.xml
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+    <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+        <!-- ========================== 自定义输出格式说明================================ -->
+          <!-- %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL -->
+          <!-- %r 输出自应用启动到输出该log信息耗费的毫秒数  -->
+          <!-- %c 输出所属的类目，通常就是所在类的全名 -->
+          <!-- %t 输出产生该日志事件的线程名 -->
+          <!-- %n 输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n” -->
+          <!-- %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如:
+               %d{yyy-MMM-dd HH:mm:ss,SSS} 输出: 2002-Sep-18 22:10:28,921
+               %d{yyy-MM-dd HH:mm:ss,SSS}  输出: 2002-10-18 22:10:28,921
+          -->
+          <!-- %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例:Testlog4.main(TestLog4.java:10)  -->
+          <!-- ========================================================================== -->
+
+          <!-- ========================== 输出方式说明================================ -->
+          <!-- Log4j提供的appender有以下几种:  -->
+          <!-- org.apache.log4j.ConsoleAppender(控制台),  -->
+          <!-- org.apache.log4j.FileAppender(文件),  -->
+          <!-- org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件), -->
+          <!-- org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件),  -->
+          <!-- org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方)   -->
+      <!-- ========================================================================== -->
+
+        <!-- ConsoleAppender  -->
+        <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+            <!--param name="Threshold" value="INFO"  为打印logger 去掉Threshold参数配置 /-->
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{yyy-MM-dd HH:mm:ss} [%t] %-5p [%c] - %m%n" />
+            </layout>
+        </appender>
+
+        <!-- DailyRollingFileAppender  -->
+        <appender name="DailyRollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+            <param name="File" value="logs/Log4jApp.log" />
+            <!--日志过滤门槛，记录warn以上级别日志  -->
+            <param name="Threshold" value="WARN" />
+            <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d [%t] %-5p [%c] - %m%n" />
+            </layout>
+        </appender>
+
+        <!-- RollingFileAppender  -->
+        <appender name="RollingFile" class="org.apache.log4j.RollingFileAppender">
+            <param name="File" value="logs/Log4jAppRF.log"/>
+            <param name="Append" value="true"/>
+            <param name="MaxFileSize" value="5KB"/>
+            <param name="MaxBackupIndex" value="2"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d [%t] %-5p [%c] - %m%n"/>
+            </layout>
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">
+                <param name="LevelMin" value="INFO"/>
+                <param name="LevelMax" value="INFO"/>
+            </filter>
+        </appender>
+
+       <!-- 打印具体类或包中的指定级别以上的日志
+        <category name="com.cbay">
+            <priority value="INFO" />
+            <appender-ref ref="RollingDaily" />
+            <appender-ref ref="RollingFile" />
+        </category> -->
+
+        <!-- 打印具体类或包中的指定级别以上的日志 -->
+        <logger name="com.cbay">
+            <level value="DEBUG" />
+            <appender-ref ref="DailyRollingFile" />
+            <appender-ref ref="RollingFile" />
+        </logger>
+
+        <!-- 设置默认过滤优先级，如果appender没有设置filter或Threshold 默认采用该级别，但定义的logger不会被过滤 -->
+        <root>
+            <priority value="DEBUG" />
+            <appender-ref ref="Console" />
+        </root>
+    </log4j:configuration>
+
+###log4j.properties
+    # Output pattern : date [thread] priority category - message   FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 
+
+    #Console
+    log4j.appender.Console=org.apache.log4j.ConsoleAppender
+    log4j.appender.Console.layout=org.apache.log4j.PatternLayout
+    #log4j.appender.Console.layout.ConversionPattern=%d [%t] %-5p [%c] - %m%n
+    log4j.appender.Console.layout.ConversionPattern=%d %-5p [%t] (%-13F:%L) - %m%n
+
+    #DailyRollingFileAppender
+    log4j.appender.DailyRollingFile=org.apache.log4j.DailyRollingFileAppender
+    log4j.appender.DailyRollingFile.File=logs/Log4jApp.log
+    log4j.appender.DailyRollingFile.Threshold=WARN
+    log4j.appender.DailyRollingFile.DatePattern='.'yyyy-MM-dd'.log'
+    log4j.appender.DailyRollingFile.layout=org.apache.log4j.PatternLayout
+    #log4j.appender.DailyRollingFile.layout.ConversionPattern=%d [%t] %-5p [%c] - %m%n
+    log4j.appender.DailyRollingFile.layout.ConversionPattern=%d %-5p [%t] (%-13F:%L) - %m%n
+
+    #RollingFileAppender
+    log4j.appender.RollingFile=org.apache.log4j.RollingFileAppender
+    log4j.appender.RollingFile.File=logs/Log4jAppRF.log
+    log4j.appender.RollingFile.MaxFileSize=5KB
+    log4j.appender.RollingFile.MaxBackupIndex=2
+    log4j.appender.RollingFile.layout=org.apache.log4j.PatternLayout
+    #log4j.appender.RollingFile.layout.ConversionPattern=%d [%t] %-5p [%c] - %m%n
+    log4j.appender.RollingFile.layout.ConversionPattern=%d %-5p [%t] (%-13F:%L) - %m%n
+    log4j.appender.RollingFile.filter.F1=org.apache.log4j.varia.LevelRangeFilter
+    log4j.appender.RollingFile.filter.F1.LevelMin=INFO
+    log4j.appender.RollingFile.filter.F1.LevelMax=INFO
+    #log4j.appender.RollingFile.filter.F2=org.apache.log4j.varia.LevelMatchFilter
+    #log4j.appender.RollingFile.filter.F2.levelToMatch=INFO
+    #log4j.appender.RollingFile.filter.F2.acceptOnMatch=false
+
+    #Project defalult level
+    log4j.logger.com.cbay=DEBUG, DailyRollingFile, RollingFile
+
+    #root 
+    log4j.rootLogger=WARN, Console
+    #By default the message priority should be no lower than info. That is, by default debug message should not be seen in the logs. 
+
 ## Conclusions
 Log4j is a popular logging package written in Java. One of its distinctive features is the notion of inheritance in loggers. Using a logger hierarchy it is possible to control which log statements are output at arbitrary granularity. This helps reduce the volume of logged output and minimize the cost of logging.
 
@@ -353,4 +506,10 @@ One of the advantages of the log4j API is its manageability. Once the log statem
 - [Short introduction to log4j](http://logging.apache.org/log4j/1.2/manual.html)
 - [log4j 详解](http://www.blogjava.net/hwpok/archive/2008/08/23/223891.html)
 - [log4j 配置](http://www.blogjava.net/fancydeepin/archive/2012/10/11/java_log4j.html)
+- [常用log4j配置](http://fanqiang.chinaunix.net/app/other/2006-06-22/4640.shtml)
+- [java log4j.xml配置与使用](http://blog.csdn.net/coolcoffee168/article/details/6368924)
+- [Log4J基础详解及示例大全](http://blog.csdn.net/NearEast/article/details/7584385#comments)
+- [Apache通用日志工具commons-logging和Log4j使用总结](http://lavasoft.blog.51cto.com/62575/26134/)
+- [log4j xml 配置](http://houwen.iteye.com/blog/446721)
+- [Log4j 分级输出](http://wendal.net/219.html)
 

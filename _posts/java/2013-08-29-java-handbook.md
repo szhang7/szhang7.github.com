@@ -2802,7 +2802,7 @@ The FileVisitor methods return a FileVisitResult value. You can abort the file w
     } else {
         System.out.format("'%s' does not match.%n", filename);
     }
-    
+
     System.out.println("");
     System.out.println("[INFO] testFinder()");
     TestFinder tf = new TestFinder();
@@ -2849,7 +2849,7 @@ The order of events in an event processing loop follow:
 #####Retrieving the File Name
     WatchEvent<Path> ev = (WatchEvent<Path>)event;
     Path filename = ev.context();
-    
+
     @SuppressWarnings("unchecked")      //avoid 'uses unchecked or unsafe operations' error.
     static <T> WatchEvent<T> cast(WatchEvent<?> event) {
         return (WatchEvent<Path>)event;
@@ -2885,7 +2885,7 @@ MIME - Multipurpose Internet Mail Extensions.
 
 #####File System's File Stores
 A file system has one or more file stores to hold its files and directories. The file store represents the underlying storage device.
-    
+
     FileSystem fs = FileSystems.getDefault();
     for (FileStore store: fs.getFileStores()) {
         DiskUsage.printFileStore(store);
@@ -2905,7 +2905,7 @@ The java.io.File class provides the toPath method, which converts an old style F
     } catch (IOException ex) {
         System.err.println(ex.toString());
     }
-    
+
 ## Concurrency
 
     java.util.concurrent
@@ -3064,11 +3064,11 @@ Memory consistency errors occur when different threads have inconsistent views o
 
 ####Synchronized Methods
 The Java programming language provides two basic synchronization idioms: synchronized methods and synchronized statements. `To make a method synchronized, simply add the synchronized keyword to its declaration`
-    
+
     public synchronized void increment() {
         c++;
     }
-    
+
 ####Intrinsic Locks and Synchronization
 Synchronization is built around an internal entity known as the intrinsic lock or monitor lock. Intrinsic locks play a role in both aspects of synchronization: enforcing exclusive access to an object's state and establishing happens-before relationships that are essential to visibility.
 
@@ -3187,7 +3187,7 @@ An object is considered immutable if its state cannot change after it is constru
 
 ####A Strategy for Defining Immutable Objects
 The following rules define a simple strategy for creating immutable objects.
-    
+
     Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
     Make all fields final and private.
     Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final. A more sophisticated approach is to make the constructor private and construct instances in factory methods.
@@ -3282,12 +3282,12 @@ After these changes, we have ImmutableRGB:
                 }
                 return myLock && yourLock;
             }
-                
+
             public void bow(Friend bower) {
                 if (impendingBow(bower)) {
                     try {
                         System.out.format("%s: %s has"
-                            + " bowed to me!%n", 
+                            + " bowed to me!%n",
                             this.name, bower.getName());
                         bower.bowBack(this);
                     } finally {
@@ -3318,7 +3318,7 @@ After these changes, we have ImmutableRGB:
                 this.bower = bower;
                 this.bowee = bowee;
             }
-        
+
             public void run() {
                 Random random = new Random();
                 for (;;) {
@@ -3329,7 +3329,7 @@ After these changes, we have ImmutableRGB:
                 }
             }
         }
-                
+
 
         public static void main(String[] args) {
             final Friend alphonse =
@@ -3371,14 +3371,268 @@ An important advantage of the fixed thread pool is that applications using it de
     Several factory methods are ScheduledExecutorService versions of the above executors.
 
 #####Fork/Join
+The fork/join framework is an implementation of the ExecutorService interface that helps you take advantage of multiple processors.
 
+######Basic Use
+    if (my portion of the work is small enough)
+        do the work directly
+    else
+        split my work into two pieces
+        invoke the two pieces and wait for the results
+
+######Blurring for Clarity
+    public class ForkBlur extends RecursiveAction {
+        private int[] mSource;
+        private int mStart;
+        private int mLength;
+        private int[] mDestination;
+
+        // Processing window size; should be odd.
+        private int mBlurWidth = 15;
+
+        public ForkBlur(int[] src, int start, int length, int[] dst) {
+            mSource = src;
+            mStart = start;
+            mLength = length;
+            mDestination = dst;
+        }
+
+        protected void computeDirectly() {
+            int sidePixels = (mBlurWidth - 1) / 2;
+            for (int index = mStart; index < mStart + mLength; index++) {
+                // Calculate average.
+                float rt = 0, gt = 0, bt = 0;
+                for (int mi = -sidePixels; mi <= sidePixels; mi++) {
+                    int mindex = Math.min(Math.max(mi + index, 0),
+                                        mSource.length - 1);
+                    int pixel = mSource[mindex];
+                    rt += (float)((pixel & 0x00ff0000) >> 16)
+                          / mBlurWidth;
+                    gt += (float)((pixel & 0x0000ff00) >>  8)
+                          / mBlurWidth;
+                    bt += (float)((pixel & 0x000000ff) >>  0)
+                          / mBlurWidth;
+                }
+
+                // Reassemble destination pixel.
+                int dpixel = (0xff000000     ) |
+                       (((int)rt) << 16) |
+                       (((int)gt) <<  8) |
+                       (((int)bt) <<  0);
+                mDestination[index] = dpixel;
+            }
+        }
+
+      ...
+
+
+Now you implement the abstract compute() method, which either performs the blur directly or splits it into two smaller tasks. A simple array length threshold helps determine whether the work is performed or split.
+
+    protected static int sThreshold = 100000;
+    protected void compute() {
+        if (mLength < sThreshold) {
+            computeDirectly();
+            return;
+        }
+
+        int split = mLength / 2;
+         invokeAll(new ForkBlur(mSource, mStart, split, mDestination),
+                  new ForkBlur(mSource, mStart + split, mLength - split,
+                               mDestination));
+    }
+
+If the previous methods are in a subclass of the RecursiveAction class, then setting up the task to run in a ForkJoinPool is straightforward, and involves the following steps:
+
+    1.Create a task that represents all of the work to be done.
+    // source image pixels are in src
+    // destination image pixels are in dst
+    ForkBlur fb = new ForkBlur(src, 0, src.length, dst);
+    2.Create the ForkJoinPool that will run the task.
+    ForkJoinPool pool = new ForkJoinPool();
+    3.Run the task.
+    pool.invoke(fb);
+
+######Standard Implementations
+    java.util.Array parallelSort()
+    java.util.streams
+
+####Concurrent Collections
+categorized by the collection interfaces provided:
+
+    BlockingQueue defines a first-in-first-out data structure that blocks or times out when you attempt to add to a full queue, or retrieve from an empty queue.
+    ConcurrentMap is a subinterface of java.util.Map that defines useful atomic operations. These operations remove or replace a key-value pair only if the key is present, or add a key-value pair only if the key is absent. Making these operations atomic helps avoid synchronization. The standard general-purpose implementation of ConcurrentMap is ConcurrentHashMap, which is a concurrent analog of HashMap.
+    ConcurrentNavigableMap is a subinterface of ConcurrentMap that supports approximate matches. The standard general-purpose implementation of ConcurrentNavigableMap is ConcurrentSkipListMap, which is a concurrent analog of TreeMap.
+
+####Atomic Variables
+The `java.util.concurrent.atomic` package defines classes that support atomic operations on single variables.
+
+    import java.util.concurrent.atomic.AtomicInteger;
+
+    class AtomicCounter {
+        private AtomicInteger c = new AtomicInteger(0);
+
+        public void increment() {
+            c.incrementAndGet();
+        }
+
+        public void decrement() {
+            c.decrementAndGet();
+        }
+
+        public int value() {
+            return c.get();
+        }
+
+    }
+
+####Concurrent Random Numbers
+    import java.util.concurrent.ThreadLocalRandom;
+
+    int r = ThreadLocalRandom.current().nextInt(4, 77);
+
+## The Platform Environment
+An application runs in a platform environment, defined by the underlying operating system, the Java virtual machine, the class libraries, and various configuration data supplied when the application is launched.
+
+###Configuration Utilities
+
+####Properties
+Properties are configuration values managed as `key/value` pairs. In each pair, the key and value are both String values. To manage properties, create instances of `java.util.Properties`. This class provides methods for the following:
+
+    loading key/value pairs into a Properties object from a stream,
+    retrieving a value from its key,
+    listing the keys and their values,
+    enumerating over the keys, and
+    saving the properties to a stream.
+
+#####Properties in the Application Life Cycle
+1. Starting up:
+
+    Loads default properties from well-known default location.
+    Loads values from last invocation from well-known location.
+    Initializes itself based on default and remembered properties.
+
+2. Running:
+
+    Set or modifies various properties based on user interaction.
+
+3. Exiting
+
+    Saves values to well-known location from next time.
+
+#####Setting Up the Properties Object
+    // create and load default properties
+    Properties defaultProps = new Properties();
+    FileInputStream in = new FileInputStream("defaultProperties");
+    defaultProps.load(in);
+    in.close();
+
+    // create application properties with default
+    Properties applicationProps = new Properties(defaultProps);
+
+    // now load properties
+    // from last invocation
+    in = new FileInputStream("appProperties");
+    applicationProps.load(in);
+    in.close();
+
+#####Saving Properties
+    FileOutputStream out = new FileOutputStream("appProperties");
+    applicationProps.store(out, "---No Comment---");
+    out.close();
+
+#####Getting Property Information
+
+    contains(Object value) and containsKey(Object key) - Returns true if the value or the key is in the Properties object.
+    getProperty(String key) and getProperty(String key, String default) - Returns the value for the specified property.
+    list(PrintStream s) and list(PrintWriter w) - Writes all of the properties to the specified stream or writer.
+    elements(), keys(), and propertyNames() - Returns an Enumeration containing the keys or values (as indicated by the method name) contained in the Properties object.
+    stringPropertyNames() - Like propertyNames, but returns a Set<String>, and only returns names of properties where both key and value are strings.
+    size() - Returns the current number of key/value pairs.
+
+#####Setting Properties
+
+    setProperty(String key, String value) - Puts the key/value pair in the Properties object.
+    remove(Object key) - Removes the key/value pair associated with key.
+
+####Command-Line Arguments
+A Java application can accept any number of arguments from the command line.
+
+#####Echoing Command-Line Arguments
+    public class Echo {
+        public static void main (String[] args) {
+            for (String s: args) {
+                System.out.println(s);
+            }
+        }
+    }
+
+#####Parsing Numeric Command-Line Arguments
+    int firstArg;
+    if (args.length > 0) {
+        try {
+            firstArg = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.err.println("Argument" + " must be an integer");
+            System.exit(1);
+        }
+    }
+
+####Environment Variables
+
+#####Querying Environment Variables
+On the Java platform, an application uses `System.getenv` to retrieve environment variable values.
+
+    import java.util.Map;
+
+    public class EnvMap {
+        public static void main (String[] args) {
+            Map<String, String> env = System.getenv();
+            for (String envName : env.keySet()) {
+                System.out.format("%s=%s%n",
+                                  envName,
+                                  env.get(envName));
+            }
+        }
+    }
+
+#####Passing Environment Variables to New Processes
+When a Java application uses a ProcessBuilder object to create a new process, the default set of environment variables passed to the new process is the same set provided to the application's virtual machine process.
+
+#####Platform Dependency Issues
+There are many subtle differences between the way environment variables are implemented on different systems.
+
+####Other Configuration Utilities
+- The Preferences API allows applications to store and retrieve configuration data in an implementation-dependent backing store.
+- An application deployed in a JAR archive uses a manifest to describe the contents of the archive.
+- The configuration of a Java Web Start application is contained in a JNLP file.
+- The configuration of a Java Plug-in applet is partially determined by the HTML tags used to embed the applet in the web page.
+- The class java.util.ServiceLoader provides a simple service provider facility.
+
+###System Utilities
+The System class implements a number of system utilities.
+
+####Command-Line I/O Objects
+System provides several predefined I/O objects that are useful in a Java application that is meant to be launched from the command line.
+
+####System Properties
+The System class maintains a Properties object that describes the configuration of the current working environment.
+
+#####Reading System Properties
+    getProperty(String key)
+    getProperty(String key, String defaultValue)
+
+    System.getProperty("path.separator");   //If the property does not exist, returns null.
+    System.getProperty("subliminal.message", "Buy StayPuft Marshmallows!"); //If not exist, return "Buy .."
+
+#####Writing System Properties
+To modify the existing set of system properties, use `System.setProperties`.
 
 
 
 
 ## Q & A
 
-###warning: unchecked call to getDeclaredMethod as a member of the raw type Class
+###1. warning: unchecked call to getDeclaredMethod as a member of the raw type Class
 ####Example
     import java.lang.reflect.Method;
 
@@ -3409,7 +3663,7 @@ To remove the warning, the declaration of c should be modified to include an app
 
 (Read more: <http://docs.oracle.com/javase/6/docs/technotes/guides/reflection/enhancements.html>)
 
-###warning: unchecked call to put(K,V) as a member of the raw type Map
+###2. warning: unchecked call to put(K,V) as a member of the raw type Map
 
 ####Example
     Map actions = new HashMap();
@@ -3423,6 +3677,27 @@ To remove the warning, the declaration of c should be modified to include an app
     Map<Object, Object> actions = new HashMap<Object, Object>();
 
 (Read more: <http://www.open-open.com/lib/view/open1353144198545.html>)
+
+###3. try...catch...finally
+    try {
+        ...
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        ...
+    }
+
+###4. Coding Standards
+
+####Pascal Standards
+    Capitalize the first letter of all words. For example, UserNameTable.
+    
+####Camel Standards
+    In addition to the first word, capitalize the first letter of all other words. For example, userNameTable
+    
+####Hungarian Standards
+    Name = attribute+type+object description, For example, iMyData.
+
 
 ## REFERENCES
 - [The Java Tutorials](http://docs.oracle.com/javase/tutorial/index.html)
