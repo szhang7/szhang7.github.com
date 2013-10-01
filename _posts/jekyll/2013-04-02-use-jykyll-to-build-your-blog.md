@@ -180,6 +180,26 @@ Horizontal rules are created by placing three or more hyphens(\-), asterisks(\*)
 
 (Read more:<http://en.wikipedia.org/wiki/Markdown>)
     
+####Two Special Characters
+    <   &lt;
+    &   &amp;
+
+####Backslash
+Markdown supports these symbols preceded by a backslash to help insert common symbols:
+
+    \   Backslash
+    `   Backticks
+    *   Asterisk
+    _   Underscore
+    {}  Braces
+    []  Brackets
+    ()  Brackets
+    #   Pound sign
+    +   Plus
+    -   Minus
+    .   English period
+    !   Exclamation
+
 ## Github Release commands
 
     $ git clone git@github.com:USERNAME/USERNAME.github.com.git # grap a complete copy
@@ -219,12 +239,9 @@ Download [ruby source code](http://archive.ubuntu.com/ubuntu/pool/universe/r/rub
 For more details to see [gem install error](http://www.linuxidc.com/Linux/2012-06/62073.htm)
 
 ## Refrences
-
 - [Jekyll Install] (https://github.com/mojombo/jekyll/wiki/Install)
-
 - [Jekyll Introduction](http://jekyllbootstrap.com/lessons/jekyll-introduction.html)
-
 - [The Quickest Way to Blog with Jekyll.](http://jekyllbootstrap.com/)
-
 - [使用github+jekyll搭建blog环境，完美替代wordpress](http://www.heiniuhaha.com/lessons/2012/08/09/use-jekyll-build-blog/)
+- [Markdown 语法说明](http://wowubuntu.com/markdown/)
 
