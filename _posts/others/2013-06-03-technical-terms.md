@@ -27,4 +27,8 @@ Hyper Text Transfer Protocol
 ###WWW
 World Wide Web
 
+###XML
+eXtensible Markup Language
+
+
 

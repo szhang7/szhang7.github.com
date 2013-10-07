@@ -3,7 +3,7 @@ layout: post
 title: "JQuery Handbook"
 description: "JQuery Handbook"
 category: javascript
-tags: [JavaScript, JQuery, Handbook]
+tags: [JavaScript, jQuery, Handbook]
 ---
 {% include JB/setup %}
 
