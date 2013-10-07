@@ -24,6 +24,9 @@ Hyper Text Markup Language
 ###HTTP
 Hyper Text Transfer Protocol
 
+###JSON
+JavaScript Object Notation
+
 ###WWW
 World Wide Web
 
