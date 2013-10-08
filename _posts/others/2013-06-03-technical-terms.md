@@ -27,6 +27,9 @@ Hyper Text Transfer Protocol
 ###JSON
 JavaScript Object Notation
 
+###W3C
+World Wide Web Consortium
+
 ###WWW
 World Wide Web
 
