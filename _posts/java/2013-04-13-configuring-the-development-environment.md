@@ -317,27 +317,57 @@ Readmore:
 ###emma--mysql GUI
     $ sudo apt-get install emma                         # Install emma
     $ sudo gedit /usr/share/emma/emmalib/__init__.py    # emma configure file
+    
     "db_encoding": "latin1" --> "db_encoding": "utf8"   # change to utf8
+    
+    $ sudo gedit /usr/share/emma/emmalib/mysql_host.py    # set names utf8
+    def _use_db(self, name, do_query=True):             # line 155
+        if self.current_db and name == self.current_db.name: return    
+        if do_query:     
+            self.query("use `%s`" % name, False)    
+            self.query("set names utf8",  False)        # add this line
+        try:    
+            self.current_db = self.databases[name]   
 
 (Read more: <http://blog.csdn.net/lcz_ptr/article/details/7798510>)
 
+  
 ###Q&A
 1. bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
 
+####Solution
     $ sudo apt-get install libaio-dev
     
 2. emma: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'
 
-    $ sudo mkdir /run/mysqld
-    $ sudo ln -s /tmp/mysql.sock  /run/mysqld/mysqld.sock
+####Analysis of the causes
+    You have started the mysqld server with the --socket=/path/to/socket option, but forgotten to tell client programs the new name of the socket file.
 
-(Read more: <http://www.2cto.com/kf/201305/210034.html>)
+####Solution
+    $ sudo gedit /usr/share/emma/emmalib/mysql_host.py  #def connect(self):
+    
+    def connect(self):
+		c = {
+			"host": self.host, 
+			"user": self.user, 
+			"passwd": self.password, 
+			"unix_socket": '/tmp/mysql.sock',                 # add this line
+			"connect_timeout": int(self.connect_timeout)
+			}
+
+
+Read more:
+
+- <http://dev.mysql.com/doc/refman/5.6/en/can-not-connect-to-server.html>
+- <http://www.cnblogs.com/trams/archive/2012/01/04/2311783.html>
 
 3. can't import long script
 
+####Analysis of the causes
     mysql>source data.sql      #size 99M
     Error
     
+####Solution
     modify my.cnf
     max_allowed_packet=100M
 

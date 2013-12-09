@@ -98,10 +98,37 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
     Optional
     $ sudo apt-get install nautilus-share       # File Manager
 
+### Samba ports
+    1）Port 137 (UDP) - NetBIOS 名字服务 ； nmbd
+    2）Port 138 (UDP) - NetBIOS 数据报服务
+    3）Port 139 (TCP) - 文件和打印共享 ； smbd （基于SMB(Server Message Block)协议，主要在局域网中使用，文件共享协议）
+    4）Port 389 (TCP) - 用于 LDAP (Active Directory Mode)
+    5）Port 445 (TCP) - NetBIOS服务在windos 2000及以后版本使用此端口, (Common Internet File System，CIFS，它是SMB协议扩展到Internet后，实现Internet文件共享)
+    6）Port 901 (TCP) - 用于 SWAT，用于网页管理Samba
+
 ###Q & A
+
+####1. no samba command
     $ sudo /etc/init.d/samba restart            # command not found
     $ sudo apt-get install samba-common-bin     # install common bin
     $ sudo cp /etc/cron.daily/samba /etc/init.d/
+
+####2. Can't connect to smb server
+    $ sudo ufw enable
+    $ sudo ufw allow 445
+    $ smbclient -L //localhost/data
+    
+    # ufw commands
+    $ sudo ufw disable                          # disable the firewall
+    $ sudo ufw enable                           # enable  the firewall
+    $ sudo ufw status                           # show firewall status
+    $ sudo ufw default ARG                      # set default policy
+    $ sudo allow ARGS                           # add allow rule
+    $ sudo allow 445                            # allow port 445 (samba port)
+    $ sudo deny ARGS                            # add deny rule
+    $ sudo deny 8080                            # deny port 8080
+    $ sudo ufw delete RULE|NUM                  # delete RULE
+    $ sudo ufw delete allow 139
     
 (Read more: <http://blog.sina.com.cn/s/blog_502691720100w8dl.html>)
 

@@ -760,6 +760,90 @@ Or add the groupId in your ${M2_HOME}/conf/settings.xml
 
 ###A Multi-module Project
 
+###Building Java Projects with Maven
+
+####Create the directory structure
+    $ mkdir hello-maven
+    $ cd hello-maven
+    $ mkdir -p src/main/java/hello
+
+####Create Java classes
+    src/main/java/hell/HelloWorld.java
+    
+    package hello;
+    import org.joda.time.LocalTime;
+    public class HelloWorld {
+      public static void main(String[] args) {
+        LocalTime currentTime = new LocalTime();
+        System.out.println("The current local time is: " + currentTime);
+        
+        Greeter greeter = new Greeter();
+        System.out.println(greeter.sayHello());
+      }
+    }
+    
+    src/main/java/hello/Greeter.java
+    
+    package hello;
+    public class Greeter {
+      public String sayHello() {
+        return "Hello World!";
+      }
+    }
+
+####Define a simple Maven build
+    pom.xml
+    
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.cbay</groupId>
+      <artifactId>hello-maven</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <packaging>jar</packaging>
+
+      <dependencies>
+          <dependency>
+              <groupId>joda-time</groupId>
+              <artifactId>joda-time</artifactId>
+              <version>2.2</version>
+          </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>2.3.2</version>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+              <execution>
+              <phase>test</phase>
+              <goals>
+                <goal>java</goal>
+              </goals>
+              <configuration>
+                <mainClass>hello.HelloWorld</mainClass>
+                <arguments>
+                  <argument>arg0</argument>
+                  <argument>arg1</argument>
+                </arguments>
+              </configuration>
+              </execution>
+            </executions>
+           </plugin>
+        </plugins>
+      </build>
+    </project>
+
+####Build Java code
+    $ mvn compile
+    $ mvn test
 
 ## REFERENCES
 - [What is Maven?](http://maven.apache.org/what-is-maven.html)
@@ -775,4 +859,5 @@ Or add the groupId in your ${M2_HOME}/conf/settings.xml
 - [Maven常用命令](http://www.cnblogs.com/PatrickLee/archive/2012/10/31/2747398.html)
 - [maven打包可运行的JAR](http://blog.163.com/coffee_hc/blog/static/4485331920121274422988/)
 - [maven工程打包成runnable的jar包，拷贝资源和依赖jar包](http://ajita.iteye.com/blog/1635470)
+- [Building Java Projects with Maven](http://spring.io/guides/gs/maven/)
 
