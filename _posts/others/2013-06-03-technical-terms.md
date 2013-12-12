@@ -27,6 +27,9 @@ Create, Retrieve, Update, Delete (增加、查询、更新、删除)
 ###DAO
 Data Access Object (数据访问对象)
 
+###DDD
+Domain-Driven Design (领域驱动设计)
+
 ###DOM
 Document Object Model (文件对象模型)
 

@@ -373,6 +373,19 @@ Read more:
 
 (Read more: <http://www.hackbase.com/tech/2011-03-23/63052.html>)
 
+4. Error querying database in ubuntu
+
+####Analysis of the causes
+    Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'focusns.tb_project_category' doesn't exist
+    
+    In linux, mysql table names are case sensitive.
+    
+####Solution
+    # 0: case sensitive, 1: not case-sensitive
+    lower_case_table_names=1
+
+
+
 ###Appendix
     my.cnf
     
