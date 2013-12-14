@@ -66,9 +66,32 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
 
 ## Solve rhythmbox Chinse garbled--解决中文乱码
 
+###Solution 1
     $ sudo apt-get install python-mutagen       # install mid3iconv
     $ cd ~/Music                                # go to music directory
     $ mid3iconv -e GBK *.mp3                    # converts ID3 tags from GBK to UTF-8
+
+###Solution 2
+    function Rhythmbox_garbled() {
+    #--begin
+    local FILE_NAME
+    FILE_NAME=~/.profile
+    if ( test -f "$FILE_NAME") then
+      COUNT=$(grep -ic 'GST_ID3_TAG_ENCODING' "$FILE_NAME")
+      if( test $COUNT = 0 ) then
+        sed -i '$a \
+    export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030\
+    export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030' "${FILE_NAME}"
+        #echo "export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030" >> "${FILE_NAME}"
+        #echo "export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030" >> "${FILE_NAME}"
+        source ${FILE_NAME}
+      fi
+    else
+      echo "[ERROR] $FILE_NAME not exist"
+      return 1
+    fi
+    #--end
+    }
 
 ## Samba server configuration
 
@@ -81,6 +104,7 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
     netbios name = ubuntu                       # computer name(terminal, after @)
     
     ;name resolve order = lmhosts host wins bcast # remove ;
+    
     Then, saved and close gedit
     
     $ sudo gedit /etc/nsswitch.conf
@@ -97,6 +121,24 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
 
     Optional
     $ sudo apt-get install nautilus-share       # File Manager
+
+### Mapping different usernames
+    $ sudo gedit /etc/samba/smb.conf
+    
+    [global]
+    ;username map = /etc/samba/smbusers         # remove ;
+    
+    Then save and close gedit.
+    
+    $ sudo gedit /etc/samba/smbusers
+    
+    sam = admin
+    # sam(ubuntu username) is mapped to admin(win7 username)
+    
+    If you set the same password, then you can use admin to log into samba.
+    $ sudo smbpasswd -a sam
+    ****
+    ****
 
 ### Samba ports
     1）Port 137 (UDP) - NetBIOS 名字服务 ； nmbd
@@ -143,6 +185,14 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
     $ sudo mount -a                            # or restart your computer.
 
 (Read more: <http://blog.chinaunix.net/uid-25100840-id-271088.html>)
+
+## Click the right mouse button to open a terminal in the current directory
+    $ gedit ~/.gnome2/nautilus-scripts/open\ in\ terminal
+    
+    #!bin/bash
+    gnome-terminal --working-directory=$PWD
+    
+    After saving it, click the right mouse button on the directory you want to run the terminal. Scripts-->open in terminal
 
 ## Install skype
 
