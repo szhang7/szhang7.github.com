@@ -33,6 +33,14 @@ tags: [ubuntu, Handbook, fdisk, mount, fstab]
     
 (Read more: <http://askubuntu.com/questions/78924/is-it-possible-to-share-a-folder-using-ubuntu-one-outside-the-home-folder>)
 
+## start a program automatically on boot
+    $ sudo gedit /etc/init.d/aa
+    #!/bin/bash
+    mplayer /home/aa.avi -fs -vo fbdev -vf scale=800:600
+    
+    $ sudo chmod 755 /etc/init.d/aa
+    $ sudo ln -s /etc/init.d/aa /etc/rc2.d/S100aa
+
 ## Chinese Input Method
 
     System->Startup Application->Add    # Config ibus
